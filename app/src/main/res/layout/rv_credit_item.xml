@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        >
+        <TextView
+            android:id="@+id/tvCreditName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="left"
+            tools:text="На еду"
+            />
+
+        <TextView
+            android:id="@+id/tvCreditAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvCreditName"
+            android:layout_alignStart="@id/tvCreditName"
+            android:layout_alignLeft="@id/tvCreditName"
+            android:gravity="left"
+            tools:text="Amount 5000000"
+            />
+        <TextView
+            android:id="@+id/tvCreditMonthCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvCreditName"
+            android:layout_alignEnd="@id/tvCreditName"
+            android:layout_alignRight="@id/tvCreditName"
+            android:layout_toEndOf="@id/tvCreditAmount"
+            android:layout_toRightOf="@id/tvCreditAmount"
+            android:gravity="center"
+            tools:text="24 month"
+            />
+
+        <TextView
+            android:id="@+id/tvCreditRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvCreditAmount"
+            android:layout_alignStart="@+id/tvCreditAmount"
+            android:layout_alignLeft="@+id/tvCreditAmount"
+            android:gravity="left"
+            tools:text="18%"
+            />
+
+        <TextView
+            android:id="@+id/tvCreditType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvCreditMonthCount"
+            android:layout_alignEnd="@id/tvCreditMonthCount"
+            android:layout_alignRight="@id/tvCreditMonthCount"
+            android:layout_toEndOf="@id/tvCreditRate"
+            android:layout_toRightOf="@id/tvCreditRate"
+            android:gravity="center"
+            tools:text="Differencial payout"
+            />
+
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>
