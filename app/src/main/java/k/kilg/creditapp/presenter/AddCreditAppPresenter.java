@@ -1,5 +1,7 @@
 package k.kilg.creditapp.presenter;
 
+import android.util.Log;
+
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
 import k.kilg.creditapp.entities.Credit;
@@ -21,6 +23,7 @@ public class AddCreditAppPresenter  extends MvpBasePresenter<AddCreditAppViewInt
 
     @Override
     public void loadCredit() {
+        Log.d("###", ">!> Presenter: loadCredit" );
         getView().showLoading(false);
         if (!model.isModelEmpty()) {
             getView().setData(model.getCredit());
@@ -30,11 +33,13 @@ public class AddCreditAppPresenter  extends MvpBasePresenter<AddCreditAppViewInt
 
     @Override
     public void setCredit(Credit credit) {
+        Log.d("###", ">!> Presenter: setCredit" );
         model.setModel(credit);
     }
 
     @Override
     public Credit getCredit() {
+        Log.d("###", ">!> Presenter: getCredit" );
         return model.getCredit();
     }
 

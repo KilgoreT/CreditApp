@@ -22,33 +22,29 @@ public class Credit {
     private Date date; //дату выдачи (обязательно, дата не должна быть больше текущей, и недолжна быть меньше 2000 года)
     private Integer monthCount = 0; //срок в месяцах
     private Integer amount = 0; //сумму в рублях (обязательно, минимум 1 рубль, максимум 1 000 000 000)
-    private float rate; //процентную ставку (обязательно, минимум 1%, максимум 99%). Ставка может быть дробной (например 13.5%)
+    private Float rate; //процентную ставку (обязательно, минимум 1%, максимум 99%). Ставка может быть дробной (например 13.5%)
 
 
     public Credit() {
     }
 
-    public Credit(String name, boolean annuity, int monthCount, int amount, float rate) {
-        try {
+    public Credit(String name, boolean annuity, int monthCount, int amount, float rate) throws IllegalArgumentException{
             this.setName(name);
             this.setAnnuity(annuity);
             this.setMonthCount(monthCount);
             this.setAmount(amount);
             this.setRate(rate);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) throws IllegalAccessException {
+    public void setName(String name) throws IllegalArgumentException {
         if (name.length() >= MIN_LENGTH_NAME && name.length() <= MAX_LENGTH_NAME) {
             this.name = name;
         } else {
-            throw new IllegalAccessException("Wrong credit name(max length: 64)!");
+            throw new IllegalArgumentException("Wrong credit name(max length: 64)!");
         }
     }
 
@@ -80,11 +76,11 @@ public class Credit {
         return amount;
     }
 
-    public void setAmount(int amount) throws IllegalAccessException {
-        if (amount >= MIN_AMOUNT && amount < MAX_AMOUNT) {
+    public void setAmount(int amount) throws IllegalArgumentException {
+        if (amount >= MIN_AMOUNT && amount <= MAX_AMOUNT) {
             this.amount = amount;
         } else {
-            throw new IllegalAccessException("Wrong credit amount(Range: 1 - 1 000 000 000)!");
+            throw new IllegalArgumentException("Wrong credit amount(Range: 1 - 1 000 000 000)!");
         }
     }
 
@@ -92,11 +88,11 @@ public class Credit {
         return rate;
     }
 
-    public void setRate(float rate) throws IllegalAccessException {
+    public void setRate(float rate) throws IllegalArgumentException {
         if (rate >= MIN_RATE && rate <= MAX_RATE) {
             this.rate = rate;
         } else {
-            throw new IllegalAccessException("Wrong credit rate(Range: 1 - 99%)!");
+            throw new IllegalArgumentException("Wrong credit rate(Range: 1 - 99%)!");
         }
     }
 }

@@ -21,11 +21,46 @@
             android:layout_height="wrap_content"
             android:hint="Credit name"
             />
+        <RadioGroup
+            android:id="@+id/addCredit_rgCreditType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/addCredit_rgCreditAnnuity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Annuity payout"
+                android:layout_weight="1"
+                />
+            <RadioButton
+                android:id="@+id/addCredit_rgCreditDifferential"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Differential payout"
+                android:layout_weight="1"
+                android:checked="true"
+                />
+
+        </RadioGroup>
         <EditText
             android:id="@+id/addCredit_etAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Credit amount"
+            />
+        <EditText
+            android:id="@+id/addCredit_etRate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Credit rate"
+            />
+        <EditText
+            android:id="@+id/addCredit_etMonthCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Credit month count"
             />
 
         <Button
