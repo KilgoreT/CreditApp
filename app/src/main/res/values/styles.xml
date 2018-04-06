@@ -1,59 +1,44 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/background</item>
     </style>
 
     <style name="AcLaunch" parent="AppTheme">
-        <item name="android:paddingLeft">20dp</item>
-        <item name="android:paddingRight">20dp</item>
-        <item name="android:paddingTop">100dp</item>
         <item name="android:background">@color/colorPrimaryDark</item>
     </style>
 
-    <style name="AcLaunch.TextView" parent="AcLaunch">
-        <item name="android:padding">2dp</item>
-        <item name="android:textSize">32sp</item>
-    </style>
+    <style name="AcLaunch.TextView" parent="AppTheme"></style>
 
     <style name="AcLaunch.TextView.Wellcome" parent="AcLaunch.TextView">
-        <item name="android:layout_marginBottom">30dp</item>
+        <item name="android:textSize">64sp</item>
     </style>
 
     <style name="AcLaunch.TextView.Register" parent="AcLaunch.TextView">
-        <item name="android:layout_marginTop">20dp</item>
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="AcLaunch.EditText" parent="AcLaunch">
-        <item name="android:padding">2dp</item>
-        <item name="android:background">@color/colorPrimary</item>
-        <!--<item name="android:background">@color/et_backgroung</item>-->
-        <item name="android:layout_margin">2dp</item>
+    <style name="EditText" parent="AppTheme">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">26sp</item>
     </style>
 
-    <style name="AcLaunch.Button" parent="AcLaunch">
-     <!--   <item name="android:padding">2dp</item>-->
-    </style>
+    <style name="EditText.Email"></style>
+    <style name="EditText.Password"></style>
+
+    <style name="Button"></style>
+    <style name="Button.SignIn" parent="Button"></style>
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+   <!-- <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
@@ -61,6 +46,6 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
+    </style>-->
 
 </resources>

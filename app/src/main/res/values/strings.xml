@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CreditApp</string>
-    <string name="ac_launch_wellcome_tv">Please, Log In</string>
-    <string name="ac_launch_register_tv">or, Register</string>
+    <string name="ac_launch_wellcome_tv">Sign In</string>
+    <string name="ac_launch_register_tv">or</string>
     <string name="ac_launch_signin_btn">signin</string>
     <string name="ac_launch_register_btn">register</string>
     <string name="ac_launch_authentication">authentication</string>

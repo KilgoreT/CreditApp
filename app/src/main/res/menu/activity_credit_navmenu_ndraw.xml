@@ -4,11 +4,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_credits"
-            android:icon="@drawable/ic_credits_24dp"
+            android:icon="@drawable/ic_attach_money"
             android:title="@string/menu_credits" />
         <item
             android:id="@+id/menu_payout"
-            android:icon="@drawable/ic_payout_24dp"
+            android:icon="@drawable/ic_payout"
             android:title="@string/menu_payout" />
     </group>
 
@@ -16,7 +16,7 @@
         <menu>
             <item
                 android:id="@+id/menu_signout"
-                android:icon="@drawable/ic_exit_24dp"
+                android:icon="@drawable/ic_exit"
                 android:title="@string/menu_signout" />
         </menu>
     </item>

@@ -60,11 +60,11 @@ public class CreditAppModel implements CreditAppModelInterface {
 
     @Override
     public void addCredit(Credit credit) {
-        dbRef
+        /*dbRef
                 .child("users")
                 .child(currentUser.getUid())
                 .push()
-                .setValue(credit);
+                .setValue(credit);*/
         //credits.add(credit);
     }
 

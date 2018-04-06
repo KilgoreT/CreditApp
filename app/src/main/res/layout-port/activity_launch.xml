@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LaunchActivity"
+    style="@style/AcLaunch"
+    >
+
+    <TextView
+        android:id="@+id/tvWellcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ac_launch_wellcome_tv"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="160dp"
+        android:gravity="center"
+        style="@style/AcLaunch.TextView.Wellcome"
+        tools:text="Wellcome"
+        />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:layout_below="@+id/tvWellcome"
+        android:layout_marginTop="16dp"
+        android:hint="Email"
+        android:gravity="center"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/edittext_rounded_primary_color"
+        style="@style/EditText.Email"
+        />
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:layout_below="@+id/etEmail"
+        android:hint="Password"
+        android:gravity="center"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/edittext_rounded_primary_color"
+        style="@style/EditText.Password"
+        />
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ac_launch_signin_btn"
+        android:layout_below="@+id/etPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        style="@style/Button.SignIn"
+        />
+    <TextView
+        android:id="@+id/tvRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ac_launch_register_tv"
+        android:gravity="center"
+        android:layout_below="@+id/btnSignIn"
+        style="@style/AcLaunch.TextView.Register"
+        />
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ac_launch_register_btn"
+        android:layout_below="@+id/tvRegister"
+        android:layout_centerHorizontal="true"
+        />
+        <!--style="@style/AcLaunch.Button"-->
+
+
+</RelativeLayout>

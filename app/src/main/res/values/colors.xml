@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ff8688</color>
-    <color name="colorPrimaryDark">#f20f13</color>
-    <color name="colorAccent">#4046ff</color>
-
-    <color name="ac_launch_backgroung">#e7e7ea</color>
-    <color name="et_backgroung">#d7d7dc</color>
+    <color name="colorPrimary">#6db7fc</color>
+    <color name="colorPrimaryDark">#0181f9</color>
+    <color name="colorAccent">#ed0000</color>
+    <color name="background">#aeadad</color>
+    <color name="et_background">#737272</color>
 </resources>

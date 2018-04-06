@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
         >
 
 
@@ -20,12 +22,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Credit name"
+            android:background="@drawable/edittext_rounded_background_color"
+            android:layout_marginTop="8dp"
+            style="@style/EditText"
             />
         <RadioGroup
             android:id="@+id/addCredit_rgCreditType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:background="@drawable/edittext_rounded_background_color"
+            android:layout_marginTop="4dp"
             >
             <RadioButton
                 android:id="@+id/addCredit_rgCreditAnnuity"
@@ -44,30 +51,36 @@
                 />
 
         </RadioGroup>
+
         <EditText
             android:id="@+id/addCredit_etAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Credit amount"
+            android:background="@drawable/edittext_rounded_background_color"
+            style="@style/EditText"
+            android:layout_marginTop="4dp"
+            android:inputType="number"
             />
         <EditText
             android:id="@+id/addCredit_etRate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Credit rate"
+            android:background="@drawable/edittext_rounded_background_color"
+            style="@style/EditText"
+            android:layout_marginTop="4dp"
+            android:inputType="number"
             />
         <EditText
             android:id="@+id/addCredit_etMonthCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Credit month count"
-            />
-
-        <Button
-            android:id="@+id/btnOk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btnOk"
+            android:background="@drawable/edittext_rounded_background_color"
+            style="@style/EditText"
+            android:layout_marginTop="4dp"
+            android:inputType="number"
             />
 
     </LinearLayout>

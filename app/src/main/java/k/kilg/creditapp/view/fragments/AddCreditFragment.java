@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
@@ -31,7 +32,7 @@ import k.kilg.creditapp.view.AddCreditAppViewInterface;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AddCreditFragment.OnFragmentInteractionListener} interface
+ * {@link AddCreditFragment.OnAddCreditFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link AddCreditFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -50,7 +51,6 @@ public class AddCreditFragment extends MvpLceViewStateFragment<LinearLayout, Cre
     private static final int CREDIT_AMOUNT_INDEX = 2;
     private static final int CREDIT_RATE_INDEX = 3;
     private static final int CREDIT_MONTH_COUNT_INDEX = 4;
-    private static final int CREDIT_BUTTON_OK_INDEX = 5;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -63,7 +63,6 @@ public class AddCreditFragment extends MvpLceViewStateFragment<LinearLayout, Cre
     private RadioGroup mRgCreditType;
     private EditText mEtCreditRate;
     private EditText mEtCreditMonthCount;
-    private Button mBtnOk;
     private Credit mCredit;
 
     private OnAddCreditFragmentInteractionListener mListener;
@@ -90,7 +89,7 @@ public class AddCreditFragment extends MvpLceViewStateFragment<LinearLayout, Cre
         mEtCreditAmount = (EditText) contentView.getChildAt(CREDIT_AMOUNT_INDEX);
         mEtCreditRate = (EditText) contentView.getChildAt(CREDIT_RATE_INDEX);
         mEtCreditMonthCount = (EditText) contentView.getChildAt(CREDIT_MONTH_COUNT_INDEX);
-        mBtnOk = (Button) contentView.getChildAt(CREDIT_BUTTON_OK_INDEX);
+        /*mBtnOk = (Button) contentView.getChildAt(CREDIT_BUTTON_OK_INDEX);
         mBtnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,13 +97,10 @@ public class AddCreditFragment extends MvpLceViewStateFragment<LinearLayout, Cre
                 if(validateForm()) {
                     getPresenter().setCredit(createClass());
                     clearFields();
-                    if (getPresenter().getCredit() == null) {
-                        Log.d("###", "Empty credit!!!!!!!!!!");
-                    }
                     mListener.onAddCreditFragmentClose(getPresenter().getCredit());
                 }
             }
-        });
+        });*/
     }
 
 
@@ -182,10 +178,14 @@ public class AddCreditFragment extends MvpLceViewStateFragment<LinearLayout, Cre
         return inflater.inflate(R.layout.fragment_add_credit, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Credit credit) {
+
+    public void onFabPressed() {
         if (mListener != null) {
-            mListener.onAddCreditFragmentClose(credit);
+            if(validateForm()) {
+                getPresenter().setCredit(createClass());
+                clearFields();
+                mListener.onAddCreditFragmentClose(getPresenter().getCredit());
+            }
         }
     }
 
@@ -272,7 +272,6 @@ public class AddCreditFragment extends MvpLceViewStateFragment<LinearLayout, Cre
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnAddCreditFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onAddCreditFragmentClose(Credit credit);
     }
 }

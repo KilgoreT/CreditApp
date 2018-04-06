@@ -37,7 +37,6 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
         btnRegister = (Button) findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(this);
 
-
         //mAuth = FirebaseAuth.getInstance();
     }
 
@@ -65,6 +64,7 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
         if (!validateForm()) {
             return;
         }
+        //todo: допилить верификацию по мылу
         mAuth
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -86,6 +86,8 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
         if (!validateForm()) {
             return;
         }
+        Log.d("###", "Mail: " + mEtEmail.getText().toString());
+        Log.d("###", "Pass: " + mEtPassword.getText().toString());
         mAuth
                 .signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

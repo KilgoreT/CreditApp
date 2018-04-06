@@ -36,6 +36,7 @@ public class CreditActivity extends AppCompatActivity implements
     CreditFragment creditFragment = new CreditFragment();
     AddCreditFragment addCreditFragment = new AddCreditFragment();
 
+    private FloatingActionButton fab;
     private NavigationView mNavigationView;
     private TextView mHeaderEmail;
 
@@ -59,20 +60,21 @@ public class CreditActivity extends AppCompatActivity implements
 
         setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setFragment(addCreditFragment, ADD_CREDIT_FRAGMENT_TAG);
+                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.creditFragment);
+                if (fragment instanceof CreditFragment) {
+                    setFragment(addCreditFragment, ADD_CREDIT_FRAGMENT_TAG);
                 }
+                if (fragment instanceof AddCreditFragment) {
+                    ((AddCreditFragment) fragment).onFabPressed();
+                }
+            }
         });
 
         updateHeaderUI();
-        //todo: вынести обновление хэдера в updateHeaderUI();
-       /* View header = mNavigationView.getHeaderView(0);
-        mHeaderEmail = (TextView) header.findViewById(R.id.header_tvEmail);
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        mHeaderEmail.setText(currentUser.getEmail());*/
     }
 
     private void updateHeaderUI() {
@@ -85,6 +87,7 @@ public class CreditActivity extends AppCompatActivity implements
 
 
     private void setFragment(Fragment fragment, String tag) {
+        updateFab(fragment);
         FragmentTransaction frTrans;
         Fragment currentFragment = getSupportFragmentManager()
                 .findFragmentById(R.id.creditFragment);
@@ -103,6 +106,21 @@ public class CreditActivity extends AppCompatActivity implements
                     .beginTransaction()
                     .add(R.id.creditFragment, fragment)
                     .commit();
+        }
+    }
+
+    private void updateFab(Fragment fragment) {
+        //todo: обработать null
+        if (fab == null) {
+            return;
+        }
+        if (fragment instanceof CreditFragment) {
+            //fab.setVisibility(View.VISIBLE);
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add));
+        }
+        if (fragment instanceof AddCreditFragment) {
+            //fab.setVisibility(View.VISIBLE);
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
         }
     }
 

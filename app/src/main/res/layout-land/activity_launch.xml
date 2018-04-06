@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:text="@string/ac_launch_wellcome_tv"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         style="@style/AcLaunch.TextView.Wellcome"
         tools:text="Wellcome"
@@ -26,9 +27,13 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:layout_below="@+id/tvWellcome"
-        android:hint="Enter Email"
+        android:layout_marginTop="16dp"
+        android:hint="Email"
         android:gravity="center"
-        style="@style/AcLaunch.EditText"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:background="@drawable/edittext_rounded_primary_color"
+        style="@style/EditText.Email"
         />
     <EditText
         android:id="@+id/etPassword"
@@ -36,9 +41,13 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:layout_below="@+id/etEmail"
-        android:hint="Enter Password"
+        android:hint="Password"
         android:gravity="center"
-        style="@style/AcLaunch.EditText"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/edittext_rounded_primary_color"
+        style="@style/EditText.Password"
         />
     <Button
         android:id="@+id/btnSignIn"
@@ -47,8 +56,9 @@
         android:text="@string/ac_launch_signin_btn"
         android:layout_below="@+id/etPassword"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        style="@style/Button.SignIn"
         />
-        <!--style="@style/AcLaunch.Button"-->
     <TextView
         android:id="@+id/tvRegister"
         android:layout_width="match_parent"
@@ -66,7 +76,7 @@
         android:layout_below="@+id/tvRegister"
         android:layout_centerHorizontal="true"
         />
-        <!--style="@style/AcLaunch.Button"-->
+    <!--style="@style/AcLaunch.Button"-->
 
 
 </RelativeLayout>
