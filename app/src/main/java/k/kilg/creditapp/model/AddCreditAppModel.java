@@ -9,16 +9,23 @@ import k.kilg.creditapp.entities.Credit;
  * 10:56
  */
 public class AddCreditAppModel implements AddCreditAppModelInterface {
-    private Credit mCredit = new Credit();
+    private Credit mCredit;
 
     @Override
     public Credit getCredit() {
-        return mCredit;
+        if (!isModelEmpty()) {
+            return mCredit;
+        }
+        return null;
+        //todo: add message
+        //throw new IllegalArgumentException("Model is empty");
     }
 
     @Override
     public void setModel(Credit credit) {
-        mCredit = credit;
+        if (credit != null) {
+            mCredit = credit;
+        }
     }
 
     @Override

@@ -23,23 +23,20 @@ public class AddCreditAppPresenter  extends MvpBasePresenter<AddCreditAppViewInt
 
     @Override
     public void loadCredit() {
-        Log.d("###", ">!> Presenter: loadCredit" );
         getView().showLoading(false);
-        if (!model.isModelEmpty()) {
+        //if (!model.isModelEmpty()) {
             getView().setData(model.getCredit());
-        }
+        //}
         getView().showContent();
     }
 
     @Override
     public void setCredit(Credit credit) {
-        Log.d("###", ">!> Presenter: setCredit" );
         model.setModel(credit);
     }
 
     @Override
     public Credit getCredit() {
-        Log.d("###", ">!> Presenter: getCredit" );
         return model.getCredit();
     }
 

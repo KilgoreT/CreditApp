@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -35,6 +36,7 @@ public class CreditActivity extends AppCompatActivity implements
     CreditFragment creditFragment = new CreditFragment();
     AddCreditFragment addCreditFragment = new AddCreditFragment();
 
+    private NavigationView mNavigationView;
     private TextView mHeaderEmail;
 
     @Override
@@ -52,8 +54,8 @@ public class CreditActivity extends AppCompatActivity implements
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
         setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
 
@@ -61,29 +63,41 @@ public class CreditActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
                 setFragment(addCreditFragment, ADD_CREDIT_FRAGMENT_TAG);
                 }
         });
 
+        updateHeaderUI();
         //todo: вынести обновление хэдера в updateHeaderUI();
-        View header = navigationView.getHeaderView(0);
+       /* View header = mNavigationView.getHeaderView(0);
+        mHeaderEmail = (TextView) header.findViewById(R.id.header_tvEmail);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mHeaderEmail.setText(currentUser.getEmail());*/
+    }
+
+    private void updateHeaderUI() {
+        View header = mNavigationView.getHeaderView(0);
         mHeaderEmail = (TextView) header.findViewById(R.id.header_tvEmail);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         mHeaderEmail.setText(currentUser.getEmail());
     }
 
 
+
     private void setFragment(Fragment fragment, String tag) {
+        FragmentTransaction frTrans;
         Fragment currentFragment = getSupportFragmentManager()
                 .findFragmentById(R.id.creditFragment);
         if (currentFragment != null) {
-            getSupportFragmentManager()
+            frTrans = getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.creditFragment, fragment, tag)
-                    .addToBackStack(null)
-                    .commit();
+                    .replace(R.id.creditFragment, fragment, tag);
+            if (currentFragment instanceof AddCreditFragment) {
+                frTrans.commit();
+            } else {
+                frTrans.addToBackStack(null)
+                        .commit();
+            }
         } else {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -121,10 +135,5 @@ public class CreditActivity extends AppCompatActivity implements
     public void onAddCreditFragmentClose(Credit credit) {
         setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
         creditFragment.addCredit(credit);
-    }
-
-    @Override
-    public void onAddCreditFragmentInteraction(Uri uri) {
-
     }
 }

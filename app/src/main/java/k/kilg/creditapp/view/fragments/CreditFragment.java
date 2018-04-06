@@ -8,10 +8,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 import com.hannesdorfmann.mosby.mvp.viewstate.RestorableViewState;
 import com.hannesdorfmann.mosby.mvp.viewstate.lce.LceViewState;
@@ -109,20 +112,6 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
         return new RetainingLceViewState<List<Credit>, CreditAppViewInterface>();
     }
 
-/*    @Override
-    public void saveInstanceState(@NonNull Bundle out) {
-
-    }
-
-    @Override
-    public RestorableViewState restoreInstanceState(Bundle in) {
-        return null;
-    }
-
-    @Override
-    public void apply(MvpView view, boolean retained) {
-
-    }*/
 
 
     /**
@@ -188,6 +177,9 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
 
     @Override
     public void addCredit(Credit credit) {
+        if (credit == null) {
+            Log.d("###", "Emptyyy");
+        }
         getPresenter().addCredit(credit);
     }
 

@@ -24,7 +24,6 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
     private EditText mEtPassword;
     private Button btnSignIn;
     private Button btnRegister;
-    private Button btnEmailVerification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +36,6 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
         btnSignIn.setOnClickListener(this);
         btnRegister = (Button) findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(this);
-        btnEmailVerification = (Button) findViewById(R.id.btnEmailVerification);
-        btnEmailVerification.setOnClickListener(this);
 
 
         //mAuth = FirebaseAuth.getInstance();
@@ -60,9 +57,6 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.btnRegister:
                 registerAccount(mEtEmail.getText().toString(), mEtPassword.getText().toString());
-                break;
-            case R.id.btnEmailVerification:
-                //sendEmailVerification();
                 break;
         }
     }
@@ -117,7 +111,8 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
         updateUI(null);
     }
 
-    private void sendEmailVerification(FirebaseUser currentUser) {
+    //todo: fix email verification
+   /* private void sendEmailVerification(FirebaseUser currentUser) {
         btnEmailVerification.setEnabled(false);
         if (currentUser == null) {
             btnEmailVerification.setEnabled(true);
@@ -138,7 +133,7 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     }
                 });
-    }
+    }*/
 
     private boolean validateForm() {
         return true;
@@ -160,7 +155,6 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
             mEtPassword.setVisibility(View.VISIBLE);
             btnSignIn.setVisibility(View.VISIBLE);
             btnRegister.setVisibility(View.VISIBLE);
-            btnEmailVerification.setVisibility(View.VISIBLE);
 
         }
     }
