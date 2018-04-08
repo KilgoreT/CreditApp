@@ -1,7 +1,9 @@
 package k.kilg.creditapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -71,6 +73,17 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(LaunchActivity.this);
+                            builder
+                                    .setTitle("Verify account!")
+                                    .setIcon(R.drawable.ic_attach_money)
+                                    .setCancelable(false)
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    });
                             FirebaseUser currentUser = mAuth.getCurrentUser();
                             updateUI(currentUser);
                         } else {
@@ -137,6 +150,7 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
                 });
     }*/
 
+   //todo: do validate form
     private boolean validateForm() {
         return true;
     }
