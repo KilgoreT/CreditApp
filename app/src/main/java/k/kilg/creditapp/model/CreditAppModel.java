@@ -1,5 +1,6 @@
 package k.kilg.creditapp.model;
 
+import android.app.Fragment;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import k.kilg.creditapp.entities.Credit;
+import k.kilg.creditapp.view.fragments.CreditFragment;
 
 /**
  * Created by apomazkin on 04.04.2018.
@@ -24,48 +26,74 @@ import k.kilg.creditapp.entities.Credit;
  */
 public class CreditAppModel implements CreditAppModelInterface {
 
-    private List<Credit> credits;
+    private static final String USERS = "users";
+    List<Credit> credits;
     private FirebaseUser currentUser;
     private DatabaseReference dbRef;
+    private CreditFragment fragment;
 
-    public CreditAppModel() {
+    public CreditAppModel(CreditFragment fragment) {
+        this.fragment = fragment;
         credits = new ArrayList<>();
         dbRef = FirebaseDatabase.getInstance().getReference();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         initDbListener();
-        //this.credits = new ArrayList<>();
-        //credits.add(new Credit("First", true, 24, 5000000, 10));
     }
 
 
     @Override
     public List<Credit> getCredits() {
-        dbRef
-                .child("users")
+        Log.d("###", ">>" + getClass().getSimpleName() + ":getCredits");
+       /* dbRef
+                .child(USERS)
                 .child(currentUser.getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Credit credit = dataSnapshot.getValue(Credit.class);
-                        credits.add(credit);
+                        Log.d("###", ">>" + getClass().getSimpleName() + ":getCredits onDataChange: credits.size = " + credits.size());
+                        for (DataSnapshot creditSnapshot : dataSnapshot.getChildren()) {
+                            Credit credit = creditSnapshot.getValue(Credit.class);
+                            credits.add(credit);
+                            Log.d("###", ">>" + getClass().getSimpleName() + ":getCredits onDataChange iter: credits.size = " + credits.size());
+                        }
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        //todo: обработать ошибку
+
                     }
-                });
-        return credits;
+                });*/
+        //Log.d("###", ">>" + getClass().getSimpleName() + ":getCredits after callback: credits.size = " + credits.size());
+       /*if (credits.size() == 0) {
+           return null;
+       }*/
+
+        Log.d("###", ">>" + getClass().getSimpleName() + ":getCredits size = " + credits.size());
+       return credits;
     }
 
     @Override
     public void addCredit(Credit credit) {
-        /*dbRef
-                .child("users")
+        dbRef
+                .child(USERS)
                 .child(currentUser.getUid())
                 .push()
-                .setValue(credit);*/
-        //credits.add(credit);
+                .setValue(credit);
+    }
+
+    @Override
+    public void removeCredit(Credit credit) {
+        Log.d("###", ">>" + getClass().getSimpleName() + ":removeCredit: " + credit.getName() + ":" + credit.getKey());
+        dbRef
+                .child("users")
+                .child(currentUser.getUid())
+                .child(credit.getKey())
+                .removeValue();
+    }
+
+    public void delCredit(Credit credit) {
+        boolean deleted = credits.remove(credit);
+        Log.d("###", ">>" + getClass().getSimpleName() + "is deleted in method:" + deleted);
     }
 
     private void initDbListener() {
@@ -75,8 +103,11 @@ public class CreditAppModel implements CreditAppModelInterface {
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Log.d("###", "onChildAdded:" + dataSnapshot.getKey());
                         Credit credit = dataSnapshot.getValue(Credit.class);
+                        credit.setKey(dataSnapshot.getKey());
                         credits.add(credit);
+                        fragment.getPresenter().loadCredits();
                     }
 
                     @Override
@@ -88,6 +119,25 @@ public class CreditAppModel implements CreditAppModelInterface {
                     @Override
                     public void onChildRemoved(DataSnapshot dataSnapshot) {
                         Log.d("###", "onChildRemoved:");
+                        /*Credit credit = dataSnapshot.getValue(Credit.class);
+                        Log.d("###", ">>" + getClass().getSimpleName() + "remove credit name is: " + credit.getName());
+                        Log.d("###", ">>" + getClass().getSimpleName() + "before list credits:");
+
+                        for (Credit credit1: credits) {
+                            Log.d("###", ">>" + getClass().getSimpleName() + "before list: " + credit1.getName());
+                        }
+
+                        Log.d("###", ">>" + getClass().getSimpleName() + "credits size:" + credits.size());
+
+                        boolean deleted = credits.remove(credit);
+                        Log.d("###", ">>" + getClass().getSimpleName() + "is deleted:" + deleted);
+
+
+                        Log.d("###", ">>" + getClass().getSimpleName() + "after list credits:");
+                        for (Credit credit1: credits) {
+                            Log.d("###", ">>" + getClass().getSimpleName() + "after list: " + credit1.getName());
+                        }*/
+                        fragment.getPresenter().loadCredits();
                     }
 
                     @Override

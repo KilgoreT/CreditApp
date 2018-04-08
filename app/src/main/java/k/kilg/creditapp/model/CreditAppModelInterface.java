@@ -11,8 +11,7 @@ import k.kilg.creditapp.entities.Credit;
  * 14:46
  */
 public interface CreditAppModelInterface {
-
     List<Credit> getCredits();
-
     void addCredit(Credit credit);
+    void removeCredit(Credit credit);
 }

@@ -10,6 +10,6 @@ import k.kilg.creditapp.entities.Credit;
  */
 public interface AddCreditAppModelInterface {
     Credit getCredit();
-    void setModel(Credit credit);
+    void setCredit(Credit credit);
     boolean isModelEmpty();
 }

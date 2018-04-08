@@ -1,25 +1,34 @@
 package k.kilg.creditapp.view.fragments;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.hannesdorfmann.mosby.mvp.viewstate.RestorableViewState;
 import com.hannesdorfmann.mosby.mvp.viewstate.lce.LceViewState;
 import com.hannesdorfmann.mosby.mvp.viewstate.lce.MvpLceViewStateFragment;
 import com.hannesdorfmann.mosby.mvp.viewstate.lce.data.RetainingLceViewState;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import k.kilg.creditapp.R;
 import k.kilg.creditapp.entities.Credit;
@@ -28,6 +37,7 @@ import k.kilg.creditapp.model.AddCreditAppModelInterface;
 import k.kilg.creditapp.presenter.AddCreditAppPresenter;
 import k.kilg.creditapp.presenter.AddCreditAppPresenterInterface;
 import k.kilg.creditapp.view.AddCreditAppViewInterface;
+import k.kilg.creditapp.view.dialogs.DatePickerFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,9 +48,7 @@ import k.kilg.creditapp.view.AddCreditAppViewInterface;
  * create an instance of this fragment.
  */
 
-//todo: пусть после бэкстека поля очищались.
-//todo: нужна ли в добавлении кредита fab? заменить button на fab?
-public class AddCreditFragment extends MvpLceViewStateFragment<LinearLayout, Credit, AddCreditAppViewInterface, AddCreditAppPresenterInterface> implements
+public class AddCreditFragment extends MvpLceViewStateFragment<RelativeLayout, Credit, AddCreditAppViewInterface, AddCreditAppPresenterInterface> implements
         AddCreditAppViewInterface{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,11 +66,15 @@ public class AddCreditFragment extends MvpLceViewStateFragment<LinearLayout, Cre
 
     private AddCreditAppModelInterface mModel;
     private AddCreditAppPresenterInterface mPresenter;
+    private LinearLayout mLLNameAndType;
+    private LinearLayout mLLAmountAndRate;
+    private LinearLayout mLLMonthCountAndDate;
     private EditText mEtCreditName;
     private EditText mEtCreditAmount;
     private RadioGroup mRgCreditType;
     private EditText mEtCreditRate;
     private EditText mEtCreditMonthCount;
+    private TextView mTvCreditDate;
     private Credit mCredit;
 
     private OnAddCreditFragmentInteractionListener mListener;
@@ -81,43 +93,32 @@ public class AddCreditFragment extends MvpLceViewStateFragment<LinearLayout, Cre
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //todo: мутно как то через чилд
-        mEtCreditName = (EditText) contentView.getChildAt(CREDIT_NAME_INDEX);
-        mRgCreditType = (RadioGroup) contentView.getChildAt(CREDIT_TYPE_INDEX);
-        mEtCreditAmount = (EditText) contentView.getChildAt(CREDIT_AMOUNT_INDEX);
-        mEtCreditRate = (EditText) contentView.getChildAt(CREDIT_RATE_INDEX);
-        mEtCreditMonthCount = (EditText) contentView.getChildAt(CREDIT_MONTH_COUNT_INDEX);
-        /*mBtnOk = (Button) contentView.getChildAt(CREDIT_BUTTON_OK_INDEX);
-        mBtnOk.setOnClickListener(new View.OnClickListener() {
+        mLLNameAndType = (LinearLayout) contentView.getChildAt(0);
+        mEtCreditName = (EditText) mLLNameAndType.getChildAt(0);
+        mRgCreditType = (RadioGroup) mLLNameAndType.getChildAt(1);
+        mLLAmountAndRate = (LinearLayout) contentView.getChildAt(1);
+        mEtCreditAmount = (EditText) mLLAmountAndRate.getChildAt(0);
+        mEtCreditRate = (EditText) mLLAmountAndRate.getChildAt(1);
+        mLLMonthCountAndDate = (LinearLayout) contentView.getChildAt(2);
+        mEtCreditMonthCount = (EditText) mLLMonthCountAndDate.getChildAt(0);
+        mTvCreditDate = (TextView) mLLMonthCountAndDate.getChildAt(1);
+        mTvCreditDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo: тут получается дважды валидация, тут и в getData. избавиться от одного
-                if(validateForm()) {
-                    getPresenter().setCredit(createClass());
-                    clearFields();
-                    mListener.onAddCreditFragmentClose(getPresenter().getCredit());
-                }
+                DialogFragment dpf = new DatePickerFragment();
+                dpf.show(getFragmentManager(), "DatePickerTag");
             }
-        });*/
-    }
+        });
 
+    }
 
 
 
     @Override
     public Credit getData(){
-        /*Log.d("###", "getData");
-        Credit credit = new Credit();
-        if(validateForm()) {
-            credit.setName(mEtCreditName.getText().toString());
-            credit.setAmount(Integer.valueOf(mEtCreditAmount.getText().toString()));
-            credit.setAnnuity(mRgCreditType.getCheckedRadioButtonId() == R.id.addCredit_rgCreditAnnuity);
-            credit.setMonthCount(Integer.valueOf(mEtCreditMonthCount.getText().toString()));
-            credit.setRate(Float.valueOf(mEtCreditRate.getText().toString()));
-            return credit;
-        }*/
        return null;
     }
 
@@ -181,11 +182,11 @@ public class AddCreditFragment extends MvpLceViewStateFragment<LinearLayout, Cre
 
     public void onFabPressed() {
         if (mListener != null) {
-            if(validateForm()) {
+            //if(validateForm()) {
                 getPresenter().setCredit(createClass());
-                clearFields();
+               // clearFields();
                 mListener.onAddCreditFragmentClose(getPresenter().getCredit());
-            }
+            //}
         }
     }
 
@@ -198,18 +199,51 @@ public class AddCreditFragment extends MvpLceViewStateFragment<LinearLayout, Cre
             throw new RuntimeException(context.toString()
                     + " must implement OnAddCreditFragmentInteractionListener");
         }
+        Log.d("###", ">>" + getClass().getSimpleName() + ":onAttach");
     }
 
     @Override
     public void onDetach() {
-        Log.d("###", "Detaching...");
+        Log.d("###", ">>" + getClass().getSimpleName() + ":onDetach");
         super.onDetach();
         mListener = null;
     }
 
 
+//todo: объединить валидацию с созданием класса, чтобы дважды не создавался
+  /*  private boolean validateForm() {
+        Log.d("###", ">>" + getClass().getSimpleName());
+        Log.d("###", ">>" + getClass().getSimpleName() + " field: " + mTvCreditDate.getText().toString());
+        Credit credit = new Credit();
+        if (!TextUtils.isEmpty(mEtCreditName.getText())
+                && !TextUtils.isEmpty(mEtCreditAmount.getText().toString())
+                && !TextUtils.isEmpty(mEtCreditMonthCount.getText().toString())
+                && !TextUtils.isEmpty(mEtCreditRate.getText().toString())
+                //&& mTvCreditDate.getText().toString() == "Edit date"
+                ) {
+            try {
+                credit.setName(mEtCreditName.getText().toString());
+                credit.setAmount(Integer.valueOf(mEtCreditAmount.getText().toString()));
+                credit.setAnnuity(mRgCreditType.getCheckedRadioButtonId() == R.id.addCredit_rgCreditAnnuity);
+                credit.setMonthCount(Integer.valueOf(mEtCreditMonthCount.getText().toString()));
+                credit.setRate(Float.valueOf(mEtCreditRate.getText().toString()));
+                credit.setDate(mTvCreditDate.getText().toString());
 
-    private boolean validateForm() {
+            } catch (IllegalArgumentException e) {
+                showSnackbar(e.getMessage());
+                return false;
+            }
+
+        } else {
+            //todo: edit message
+            showSnackbar("Fill filds!!!");
+            return false;
+        }
+        return true;
+    }*/
+
+    private Credit createClass() {
+        Log.d("###", ">>" + getClass().getSimpleName() + ":createClass");
         Credit credit = new Credit();
         if (!TextUtils.isEmpty(mEtCreditName.getText())
                 && !TextUtils.isEmpty(mEtCreditAmount.getText().toString())
@@ -222,31 +256,30 @@ public class AddCreditFragment extends MvpLceViewStateFragment<LinearLayout, Cre
                 credit.setAnnuity(mRgCreditType.getCheckedRadioButtonId() == R.id.addCredit_rgCreditAnnuity);
                 credit.setMonthCount(Integer.valueOf(mEtCreditMonthCount.getText().toString()));
                 credit.setRate(Float.valueOf(mEtCreditRate.getText().toString()));
+                credit.setDate(mTvCreditDate.getText().toString());
+
             } catch (IllegalArgumentException e) {
                 showSnackbar(e.getMessage());
-                return false;
+                //return null;
             }
 
         } else {
             //todo: edit message
             showSnackbar("Fill filds!!!");
-            return false;
+            return null;
         }
-        return true;
-    }
 
-    private Credit createClass() {
-        Log.d("###", "createClass");
-        Credit credit = new Credit();
-        if(validateForm()) {
+       /* if(validateForm()) {
             credit.setName(mEtCreditName.getText().toString());
             credit.setAmount(Integer.valueOf(mEtCreditAmount.getText().toString()));
             credit.setAnnuity(mRgCreditType.getCheckedRadioButtonId() == R.id.addCredit_rgCreditAnnuity);
             credit.setMonthCount(Integer.valueOf(mEtCreditMonthCount.getText().toString()));
             credit.setRate(Float.valueOf(mEtCreditRate.getText().toString()));
+            credit.setDate(mTvCreditDate.getText().toString());
             return credit;
         }
-        return null;
+        return null;*/
+       return credit;
     }
 
     public void clearFields()  {
@@ -257,7 +290,9 @@ public class AddCreditFragment extends MvpLceViewStateFragment<LinearLayout, Cre
     }
 
     private void showSnackbar(String msg) {
-        Snackbar.make(getView(), msg, Snackbar.LENGTH_LONG).show();
+        if (getView() != null) {
+            Snackbar.make(getView(), msg, Snackbar.LENGTH_LONG).show();
+        }
     }
 
 

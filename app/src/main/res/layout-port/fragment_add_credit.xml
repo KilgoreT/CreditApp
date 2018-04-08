@@ -7,74 +7,127 @@
     tools:context=".view.fragments.AddCreditFragment"
     >
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/contentView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         >
 
-
-        <EditText
-            android:id="@+id/addCredit_etName"
+        <LinearLayout
+            android:id="@+id/addCredit_llNameAndType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Credit name"
-            android:background="@drawable/edittext_rounded_background_color"
-            style="@style/EditText"
-            />
-        <RadioGroup
-            android:id="@+id/addCredit_rgCreditType"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            >
+
+            <EditText
+                android:id="@+id/addCredit_etName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/credit_name"
+                android:background="@drawable/edittext_rounded_background_color"
+                style="@style/EditText"
+                android:inputType="text"
+                />
+            <RadioGroup
+                android:id="@+id/addCredit_rgCreditType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <RadioButton
+                    android:id="@+id/addCredit_rgCreditAnnuity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/annuity"
+                    android:layout_weight="1"
+                    />
+                <RadioButton
+                    android:id="@+id/addCredit_rgCreditDifferential"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/differential"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/addCredit_etRate_llAmountAndRate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@drawable/edittext_rounded_background_color"
+            android:layout_below="@+id/addCredit_llNameAndType"
             android:layout_marginTop="4dp"
             >
-            <RadioButton
-                android:id="@+id/addCredit_rgCreditAnnuity"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/addCredit_etAmount"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Annuity payout"
-                android:layout_weight="1"
+                android:hint="@string/credit_amount"
+                android:background="@drawable/edittext_rounded_background_color"
+                android:inputType="number"
+                android:gravity="center"
+                android:layout_weight="3"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                style="@style/EditText"
                 />
-            <RadioButton
-                android:id="@+id/addCredit_rgCreditDifferential"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/addCredit_etRate"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Differential payout"
+                android:hint="@string/credit_rate"
+                android:background="@drawable/edittext_rounded_background_color"
+                android:inputType="number"
+                android:gravity="center"
                 android:layout_weight="1"
-                android:checked="true"
+                style="@style/EditText"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/addCredit_llMonthCountAndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/addCredit_etRate_llAmountAndRate"
+            android:layout_marginTop="4dp"
+            >
+            <EditText
+                android:id="@+id/addCredit_etMonthCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/month_count"
+                android:background="@drawable/edittext_rounded_background_color"
+                android:inputType="number"
+                android:gravity="center"
+                style="@style/EditText"
+                android:layout_weight="1"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
                 />
 
-        </RadioGroup>
-        <EditText
-            android:id="@+id/addCredit_etAmount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Credit amount"
-            android:background="@drawable/edittext_rounded_background_color"
-            android:inputType="number"
-            />
-        <EditText
-            android:id="@+id/addCredit_etRate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Credit rate"
-            android:background="@drawable/edittext_rounded_background_color"
-            android:inputType="number"
-            />
-        <EditText
-            android:id="@+id/addCredit_etMonthCount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Credit month count"
-            android:background="@drawable/edittext_rounded_background_color"
-            android:inputType="number"
-            />
+            <TextView
+                android:id="@+id/addCredit_tvDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/edit_date"
+                android:gravity="center"
+                style="@style/TextView"
+                />
 
-    </LinearLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
     <TextView
         android:id="@+id/errorView"
         android:layout_width="match_parent"

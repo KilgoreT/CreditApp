@@ -7,19 +7,23 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorBackground">@color/background</item>
+        <item name="windowActionModeOverlay">true</item>
     </style>
 
     <style name="AcLaunch" parent="AppTheme">
         <item name="android:background">@color/colorPrimaryDark</item>
     </style>
 
-    <style name="AcLaunch.TextView" parent="AppTheme"></style>
+    <style name="TextView" parent="AppTheme">
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:textSize">26sp</item>
+    </style>
 
-    <style name="AcLaunch.TextView.Wellcome" parent="AcLaunch.TextView">
+    <style name="AcLaunch.TextView.Wellcome" parent="TextView">
         <item name="android:textSize">64sp</item>
     </style>
 
-    <style name="AcLaunch.TextView.Register" parent="AcLaunch.TextView">
+    <style name="AcLaunch.TextView.Register" parent="TextView">
         <item name="android:textSize">16sp</item>
     </style>
 
@@ -27,6 +31,7 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">26sp</item>
     </style>
+
 
     <style name="EditText.Email"></style>
     <style name="EditText.Password"></style>

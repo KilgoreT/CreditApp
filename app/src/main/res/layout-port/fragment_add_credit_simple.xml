@@ -11,40 +11,33 @@
         android:id="@+id/contentView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="32dp"
-        android:paddingRight="32dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         >
 
         <LinearLayout
             android:id="@+id/addCredit_llNameAndType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
             >
+
             <EditText
                 android:id="@+id/addCredit_etName"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/credit_name"
                 android:background="@drawable/edittext_rounded_background_color"
-                android:layout_marginTop="8dp"
-                android:inputType="text"
                 style="@style/EditText"
-                android:layout_weight="2"
-                android:layout_marginEnd="4dp"
-                android:layout_marginRight="4dp"
+                android:inputType="text"
                 />
             <RadioGroup
                 android:id="@+id/addCredit_rgCreditType"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="4dp"
-                android:layout_weight="1"
-                android:layout_gravity="center"
                 >
-
                 <RadioButton
                     android:id="@+id/addCredit_rgCreditAnnuity"
                     android:layout_width="wrap_content"
@@ -65,14 +58,13 @@
 
         </LinearLayout>
 
-
-
         <LinearLayout
             android:id="@+id/addCredit_etRate_llAmountAndRate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@+id/addCredit_llNameAndType"
+            android:layout_marginTop="4dp"
             >
             <EditText
                 android:id="@+id/addCredit_etAmount"
@@ -80,22 +72,23 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/credit_amount"
                 android:background="@drawable/edittext_rounded_background_color"
-                style="@style/EditText"
-                android:layout_marginTop="4dp"
                 android:inputType="number"
-                android:layout_weight="2"
+                android:gravity="center"
+                android:layout_weight="3"
                 android:layout_marginEnd="4dp"
-                android:layout_marginRight="4dp" />
+                android:layout_marginRight="4dp"
+                style="@style/EditText"
+                />
             <EditText
                 android:id="@+id/addCredit_etRate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/credit_rate"
                 android:background="@drawable/edittext_rounded_background_color"
-                style="@style/EditText"
-                android:layout_marginTop="4dp"
                 android:inputType="number"
+                android:gravity="center"
                 android:layout_weight="1"
+                style="@style/EditText"
                 />
         </LinearLayout>
 
@@ -113,12 +106,14 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/month_count"
                 android:background="@drawable/edittext_rounded_background_color"
-                style="@style/EditText"
                 android:inputType="number"
-                android:layout_weight="2"
+                android:gravity="center"
+                style="@style/EditText"
+                android:layout_weight="1"
                 android:layout_marginEnd="2dp"
                 android:layout_marginRight="2dp"
                 />
+
             <TextView
                 android:id="@+id/addCredit_tvDate"
                 android:layout_width="0dp"
@@ -128,19 +123,22 @@
                 android:gravity="center"
                 style="@style/TextView"
                 />
+
         </LinearLayout>
-        
+
 
     </RelativeLayout>
     <TextView
         android:id="@+id/errorView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         />
     <ProgressBar
         android:id="@+id/loadingView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         />
 
 

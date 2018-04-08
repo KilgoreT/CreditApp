@@ -1,7 +1,5 @@
 package k.kilg.creditapp.presenter;
 
-import android.util.Log;
-
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
 import k.kilg.creditapp.entities.Credit;
@@ -32,7 +30,7 @@ public class AddCreditAppPresenter  extends MvpBasePresenter<AddCreditAppViewInt
 
     @Override
     public void setCredit(Credit credit) {
-        model.setModel(credit);
+        model.setCredit(credit);
     }
 
     @Override

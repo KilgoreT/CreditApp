@@ -1,5 +1,7 @@
 package k.kilg.creditapp.model;
 
+import android.util.Log;
+
 import k.kilg.creditapp.entities.Credit;
 
 /**
@@ -13,18 +15,18 @@ public class AddCreditAppModel implements AddCreditAppModelInterface {
 
     @Override
     public Credit getCredit() {
-        if (!isModelEmpty()) {
-            return mCredit;
+        if (mCredit == null) {
+            Log.d("###", ">>" + getClass().getSimpleName() + ":getCredit mCredit = null");
         }
-        return null;
-        //todo: add message
-        //throw new IllegalArgumentException("Model is empty");
+        return mCredit;
     }
 
     @Override
-    public void setModel(Credit credit) {
+    public void setCredit(Credit credit) {
+        Log.d("###", ">>" + getClass().getSimpleName() + "setCredit mCredit");
         if (credit != null) {
             mCredit = credit;
+            Log.d("###", ">>" + getClass().getSimpleName() + "setCredit mCredit != null");
         }
     }
 

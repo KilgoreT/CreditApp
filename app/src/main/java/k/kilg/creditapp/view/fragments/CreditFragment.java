@@ -6,17 +6,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.hannesdorfmann.mosby.mvp.MvpView;
-import com.hannesdorfmann.mosby.mvp.viewstate.RestorableViewState;
 import com.hannesdorfmann.mosby.mvp.viewstate.lce.LceViewState;
 import com.hannesdorfmann.mosby.mvp.viewstate.lce.MvpLceViewStateFragment;
 import com.hannesdorfmann.mosby.mvp.viewstate.lce.data.RetainingLceViewState;
@@ -24,6 +22,7 @@ import com.hannesdorfmann.mosby.mvp.viewstate.lce.data.RetainingLceViewState;
 import java.util.HashMap;
 import java.util.List;
 
+import k.kilg.creditapp.CreditActivity;
 import k.kilg.creditapp.R;
 import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.model.CreditAppModel;
@@ -42,7 +41,8 @@ import k.kilg.creditapp.view.adapters.CreditRVAdapter;
  * create an instance of this fragment.
  */
 public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<Credit>, CreditAppViewInterface, CreditAppPresenterInterface> implements
-        CreditAppViewInterface {
+        CreditAppViewInterface,
+        CreditRVAdapter.CreditRVAdapterListener{
         //, RestorableViewState {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -70,7 +70,7 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
 
     @Override
     public CreditAppPresenterInterface createPresenter() {
-        mModel = new CreditAppModel();
+        mModel = new CreditAppModel(this);
         mPresenter = new CreditAppPresenter(mModel);
         return mPresenter;
     }
@@ -80,9 +80,9 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
         super.onViewCreated(view, savedInstanceState);
         mRv = (RecyclerView) view.findViewById(R.id.contentView);
         mAdapter = new CreditRVAdapter();
+        mAdapter.setListener(this);
         mRv.setAdapter(mAdapter);
         mRv.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        //loadData(false);
     }
 
     @Override
@@ -165,7 +165,7 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
             mListener = (OnCreditFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnAddCreditSimpleFragmentInteractionListener");
         }
     }
 
@@ -177,10 +177,26 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
 
     @Override
     public void addCredit(Credit credit) {
-        if (credit == null) {
-            Log.d("###", "Emptyyy");
+        if (credit != null) {
+            getPresenter().addCredit(credit);
+        } else {
+            Log.d("###", ">>" + getClass().getSimpleName() + ":addCredit credit == null");
         }
-        getPresenter().addCredit(credit);
+    }
+
+
+    @Override
+    public void removeCredit(Credit credit) {
+        mAdapter.removeCredit(credit);
+        getPresenter().removeCredit(credit);
+
+    }
+
+
+    @Override
+    public void showActionMode(ActionMode.Callback callback) {
+        ((CreditActivity)getActivity()).startSupportActionMode(callback);
+        ((CreditActivity) getActivity()).setFabVisible(false);
     }
 
 

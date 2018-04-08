@@ -24,21 +24,26 @@ import com.google.firebase.auth.FirebaseUser;
 
 import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.view.fragments.AddCreditFragment;
+import k.kilg.creditapp.view.fragments.AddCreditSimpleFragment;
 import k.kilg.creditapp.view.fragments.CreditFragment;
 
 public class CreditActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         CreditFragment.OnCreditFragmentInteractionListener,
-        AddCreditFragment.OnAddCreditFragmentInteractionListener{
+        AddCreditFragment.OnAddCreditFragmentInteractionListener,
+        AddCreditSimpleFragment.OnAddCreditSimpleFragmentInteractionListener {
 
     private static final String CREDIT_FRAGMENT_TAG = "CreditFragmentTag";
     private static final String ADD_CREDIT_FRAGMENT_TAG = "AddCreditFragmentTag";
+    private static final String ADD_CREDIT_SIMPLE_FRAGMENT_TAG = "AddCreditSimpleFragmentTag";
+    private static final String CURRENT_FRAGMENT_KEY = "CurrentFragmentKey";
     CreditFragment creditFragment = new CreditFragment();
     AddCreditFragment addCreditFragment = new AddCreditFragment();
+    AddCreditSimpleFragment addCreditSimpleFragment = new AddCreditSimpleFragment();
+
 
     private FloatingActionButton fab;
     private NavigationView mNavigationView;
-    private TextView mHeaderEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +63,9 @@ public class CreditActivity extends AppCompatActivity implements
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
+        if (savedInstanceState == null) {
+            setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
+        }
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,10 +73,11 @@ public class CreditActivity extends AppCompatActivity implements
             public void onClick(View view) {
                 Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.creditFragment);
                 if (fragment instanceof CreditFragment) {
-                    setFragment(addCreditFragment, ADD_CREDIT_FRAGMENT_TAG);
-                }
-                if (fragment instanceof AddCreditFragment) {
+                    setFragment(addCreditSimpleFragment, ADD_CREDIT_SIMPLE_FRAGMENT_TAG);
+                } else if (fragment instanceof AddCreditFragment) {
                     ((AddCreditFragment) fragment).onFabPressed();
+                } else if (fragment instanceof AddCreditSimpleFragment) {
+                    ((AddCreditSimpleFragment) fragment).onFabPressed();
                 }
             }
         });
@@ -77,30 +85,68 @@ public class CreditActivity extends AppCompatActivity implements
         updateHeaderUI();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.creditFragment);
+        if (fragment instanceof CreditFragment) {
+            outState.putString(CURRENT_FRAGMENT_KEY, CREDIT_FRAGMENT_TAG);
+        }
+        if (fragment instanceof AddCreditFragment) {
+            outState.putString(CURRENT_FRAGMENT_KEY, ADD_CREDIT_FRAGMENT_TAG);
+        }
+    }
+
+    /**
+     * This method is called after {@link #onStart} when the activity is
+     * being re-initialized from a previously saved state, given here in
+     * <var>savedInstanceState</var>.  Most implementations will simply use {@link #onCreate}
+     * to restore their state, but it is sometimes convenient to do it here
+     * after all of the initialization has been done or to allow subclasses to
+     * decide whether to use your default implementation.  The default
+     * implementation of this method performs a restore of any view state that
+     * had previously been frozen by {@link #onSaveInstanceState}.
+     * <p>
+     * <p>This method is called between {@link #onStart} and
+     * {@link #onPostCreate}.
+     *
+     * @param savedInstanceState the data most recently supplied in {@link #onSaveInstanceState}.
+     * @see #onCreate
+     * @see #onPostCreate
+     * @see #onResume
+     * @see #onSaveInstanceState
+     */
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        String currentFragmentTag = savedInstanceState.getString(CURRENT_FRAGMENT_KEY);
+        if (currentFragmentTag != null && currentFragmentTag.equals(CREDIT_FRAGMENT_TAG)) {
+            setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
+        } else if (currentFragmentTag != null && currentFragmentTag.equals(ADD_CREDIT_FRAGMENT_TAG)) {
+            setFragment(addCreditFragment, ADD_CREDIT_FRAGMENT_TAG);
+        }
+    }
+
     private void updateHeaderUI() {
         View header = mNavigationView.getHeaderView(0);
-        mHeaderEmail = (TextView) header.findViewById(R.id.header_tvEmail);
+        TextView mHeaderEmail = (TextView) header.findViewById(R.id.header_tvEmail);
+        TextView mHeaderEmailStatus = (TextView) header.findViewById(R.id.header_tvEmail_status);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         mHeaderEmail.setText(currentUser.getEmail());
+        mHeaderEmailStatus.setText(currentUser.isEmailVerified()? "Verified" : "Not verified");
     }
 
 
 
     private void setFragment(Fragment fragment, String tag) {
         updateFab(fragment);
-        FragmentTransaction frTrans;
         Fragment currentFragment = getSupportFragmentManager()
                 .findFragmentById(R.id.creditFragment);
         if (currentFragment != null) {
-            frTrans = getSupportFragmentManager()
+            getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.creditFragment, fragment, tag);
-            if (currentFragment instanceof AddCreditFragment) {
-                frTrans.commit();
-            } else {
-                frTrans.addToBackStack(null)
-                        .commit();
-            }
+                    .replace(R.id.creditFragment, fragment, tag)
+                    .commit();
         } else {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -110,17 +156,25 @@ public class CreditActivity extends AppCompatActivity implements
     }
 
     private void updateFab(Fragment fragment) {
-        //todo: обработать null
-        if (fab == null) {
+        if (fab == null || fragment != null) {
             return;
-        }
-        if (fragment instanceof CreditFragment) {
-            //fab.setVisibility(View.VISIBLE);
+        } else if (fragment instanceof CreditFragment) {
+            setFabVisible(true);
             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add));
-        }
-        if (fragment instanceof AddCreditFragment) {
-            //fab.setVisibility(View.VISIBLE);
+        } else if (fragment instanceof AddCreditFragment) {
+            setFabVisible(true);
             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
+        } else if (fragment instanceof AddCreditSimpleFragment) {
+            fab.setVisibility(View.VISIBLE);
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
+        }
+    }
+
+    public void setFabVisible(boolean visible) {
+        if (visible) {
+            fab.setVisibility(View.VISIBLE);
+        } else {
+            fab.setVisibility(View.GONE);
         }
     }
 
@@ -131,7 +185,6 @@ public class CreditActivity extends AppCompatActivity implements
         if (id == R.id.menu_credits) {
             setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
         } else if (id == R.id.menu_payout) {
-            //setFragment(ordersFragment, ORDERS_FRAGMENT_TAG);
         } else if (id == R.id.menu_signout) {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this, LaunchActivity.class);
@@ -151,7 +204,21 @@ public class CreditActivity extends AppCompatActivity implements
 
     @Override
     public void onAddCreditFragmentClose(Credit credit) {
-        setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
-        creditFragment.addCredit(credit);
+        if (credit != null) {
+            setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
+            creditFragment.addCredit(credit);
+        } else {
+            Log.d("###", ">>" + getClass().getSimpleName() + ":onAddCreditFragmentClose credit == null");
+        }
+    }
+
+    @Override
+    public void onAddCreditSimpleFragmentClose(Credit credit) {
+        if (credit != null) {
+            setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
+            creditFragment.addCredit(credit);
+        } else {
+            Log.d("###", ">>" + getClass().getSimpleName() + ":onAddCreditSimpleFragmentClose credit == null");
+        }
     }
 }

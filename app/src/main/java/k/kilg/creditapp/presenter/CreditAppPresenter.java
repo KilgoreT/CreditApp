@@ -1,5 +1,7 @@
 package k.kilg.creditapp.presenter;
 
+import android.util.Log;
+
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
 import k.kilg.creditapp.entities.Credit;
@@ -23,14 +25,20 @@ public class CreditAppPresenter extends MvpBasePresenter<CreditAppViewInterface>
 
     @Override
     public void loadCredits() {
-        getView().showLoading(false);
-        getView().setData(model.getCredits());
-        getView().showContent();
-        //model.getCredits();
+        if (isViewAttached()) {
+            getView().showLoading(false);
+            getView().setData(model.getCredits());
+            getView().showContent();
+        }
     }
 
     @Override
     public void addCredit(Credit credit) {
         model.addCredit(credit);
+    }
+
+    @Override
+    public void removeCredit(Credit credit) {
+        model.removeCredit(credit);
     }
 }
