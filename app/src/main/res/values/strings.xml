@@ -29,6 +29,9 @@
     <string name="email_CS">Email</string>
     <string name="password_CS">Password</string>
 
+    <string name="add_credit_empty_fields">There are empty fields!</string>
+
+
     <string name="annuity">Annuity</string>
     <string name="differential">Differential</string>
     <string name="credit_name">Name</string>

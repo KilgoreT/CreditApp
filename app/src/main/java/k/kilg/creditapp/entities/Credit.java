@@ -2,10 +2,18 @@ package k.kilg.creditapp.entities;
 
 import android.util.Log;
 
+import com.google.firebase.database.Exclude;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+
+import k.kilg.creditapp.R;
 
 /**
  * Created by apomazkin on 04.04.2018.
@@ -19,28 +27,18 @@ public class Credit {
     private static final int MAX_LENGTH_NAME = 64;
     private static final int MIN_AMOUNT = 1;
     private static final int MAX_AMOUNT = 1_000_000_000;
-    private static final int MIN_RATE = 1;
-    private static final int MAX_RATE = 99;
 
     private String name; //наименование (обязательно, макс.длина 64 символа)
     private boolean annuity; //тип кредита (обязательно, допустимые значения: с аннуитетными платежами, с дифференциированноми платежами)
     private String date; //дату выдачи (обязательно, дата не должна быть больше текущей, и недолжна быть меньше 2000 года)
     private Integer monthCount = 0; //срок в месяцах
     private Integer amount = 0; //сумму в рублях (обязательно, минимум 1 рубль, максимум 1 000 000 000)
-    private Float rate = 0f; //процентную ставку (обязательно, минимум 1%, максимум 99%). Ставка может быть дробной (например 13.5%)
+    private String rate; //процентную ставку (обязательно, минимум 1%, максимум 99%). Ставка может быть дробной (например 13.5%)
 
     private String key;
 
 
     public Credit() {
-    }
-
-    public Credit(String name, boolean annuity, int monthCount, int amount, float rate) throws IllegalArgumentException{
-            this.setName(name);
-            this.setAnnuity(annuity);
-            this.setMonthCount(monthCount);
-            this.setAmount(amount);
-            this.setRate(rate);
     }
 
     public String getName() {
@@ -51,7 +49,7 @@ public class Credit {
         if (name.length() >= MIN_LENGTH_NAME && name.length() <= MAX_LENGTH_NAME) {
             this.name = name;
         } else {
-            throw new IllegalArgumentException("Wrong credit name(max length: 64)!");
+            throw new IllegalArgumentException("Name too long (max length: 64)!");
         }
     }
 
@@ -70,15 +68,6 @@ public class Credit {
     public void setDate(String date) {
         this.date = date;
     }
-   /* public void setDate(String date) throws IllegalArgumentException {
-        Log.d("###", ">>" + getClass().getSimpleName() + ": String date = " + date);
-        try {
-            this.date = new SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(date);
-            Log.d("###", ">>" + getClass().getSimpleName() + ": Date date = " + date);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Not correct date format");
-        }
-    }*/
 
     public int getMonthCount() {
         return monthCount;
@@ -96,20 +85,23 @@ public class Credit {
         if (amount >= MIN_AMOUNT && amount <= MAX_AMOUNT) {
             this.amount = amount;
         } else {
-            throw new IllegalArgumentException("Wrong credit amount(Range: 1 - 1 000 000 000)!");
+            throw new IllegalArgumentException("Amount range: 1 - 1 000 000 000!");
         }
     }
 
-    public float getRate() {
+
+    public String getRate() {
         return rate;
     }
 
-    public void setRate(float rate) throws IllegalArgumentException {
-        if (rate >= MIN_RATE && rate <= MAX_RATE) {
-            this.rate = rate;
+    public void setRate(String rate) throws IllegalArgumentException {
+        //todo: добработать проверку процента
+        /*if (rate.compareTo(MIN_RATE) > 0 && rate.compareTo(MAX_RATE) < 0) {
+            this.rate = String.valueOf(rate);
         } else {
             throw new IllegalArgumentException("Wrong credit rate(Range: 1 - 99%)!");
-        }
+        }*/
+        this.rate = rate;
     }
 
     public String getKey() {
@@ -119,4 +111,17 @@ public class Credit {
     public void setKey(String key) {
         this.key = key;
     }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("name", name);
+        result.put("annuity", annuity);
+        result.put("date", date);
+        result.put("monthCount", monthCount);
+        result.put("amount", amount);
+        result.put("rate", rate);
+        return result;
+    }
+
 }

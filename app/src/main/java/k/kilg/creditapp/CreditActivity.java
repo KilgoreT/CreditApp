@@ -19,7 +19,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import k.kilg.creditapp.entities.Credit;
-import k.kilg.creditapp.view.fragments.AddCreditFragment;
 import k.kilg.creditapp.view.fragments.AddCreditSimpleFragment;
 import k.kilg.creditapp.view.fragments.CreditFragment;
 
@@ -91,7 +90,7 @@ public class CreditActivity extends AppCompatActivity implements
         if (fragment instanceof CreditFragment) {
             outState.putString(CURRENT_FRAGMENT_KEY, CREDIT_FRAGMENT_TAG);
         }
-        if (fragment instanceof AddCreditFragment) {
+        if (fragment instanceof AddCreditSimpleFragment) {
             outState.putString(CURRENT_FRAGMENT_KEY, ADD_CREDIT_SIMPLE_FRAGMENT_TAG);
         }
     }

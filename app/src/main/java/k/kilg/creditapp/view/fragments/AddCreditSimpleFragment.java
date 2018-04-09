@@ -10,22 +10,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import java.math.BigDecimal;
 
 import k.kilg.creditapp.R;
 import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.view.dialogs.DatePickerFragment;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnAddCreditSimpleFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AddCreditSimpleFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class AddCreditSimpleFragment extends Fragment {
 
     private static final String DATE_PICKER_TAG = "DatePickerTag";
@@ -54,24 +50,6 @@ public class AddCreditSimpleFragment extends Fragment {
         // Required empty public constructor
     }
 
-   /* *//**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddCreditSimpleFragment.
-     *//*
-    // TODO: Rename and change types and number of parameters
-    public static AddCreditSimpleFragment newInstance(String param1, String param2) {
-        AddCreditSimpleFragment fragment = new AddCreditSimpleFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }*/
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,10 +71,10 @@ public class AddCreditSimpleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 DialogFragment datePickerDialog = new DatePickerFragment();
-                datePickerDialog.show(getFragmentManager(), DATE_PICKER_TAG);
+                datePickerDialog
+                        .show(getFragmentManager(), DATE_PICKER_TAG);
             }
         });
-        Log.d("###", ">>" + getClass().getSimpleName() + ":onCreateView start");
         if (getArguments() != null) {
             mEditMode = true;
             mCreditDatabaseKey = getArguments().getString(CREDIT_DATABASE_KEY);
@@ -105,8 +83,9 @@ public class AddCreditSimpleFragment extends Fragment {
             mEtCreditMonthCount.setText(getArguments().getString(CREDIT_MONTH_COUNT_KEY));
             mEtCreditRate.setText(getArguments().getString(CREDIT_RATE_KEY));
             mTvCreditDate.setText(getArguments().getString(CREDIT_DATE_KEY));
-            mRgCreditType.check(getArguments().getBoolean(CREDIT_TYPE_KEY)? R.id.addCredit_rgCreditAnnuity : R.id.addCredit_rgCreditDifferential);
-            Log.d("###", ">>" + getClass().getSimpleName() + ":onCreateView credit key is " + mCreditDatabaseKey);
+            mRgCreditType
+                    .check(getArguments()
+                            .getBoolean(CREDIT_TYPE_KEY)? R.id.addCredit_rgCreditAnnuity : R.id.addCredit_rgCreditDifferential);
         }
         return v;
     }
@@ -118,9 +97,14 @@ public class AddCreditSimpleFragment extends Fragment {
             if (credit != null) {
                 clearFields();
                 if (mEditMode) {
-                    mListener.onUpdateCreditSimpleFragmentClose(credit);
+                    if (mListener != null) {
+                        mEditMode = false;
+                        mListener.onUpdateCreditSimpleFragmentClose(credit);
+                    }
                 } else {
-                    mListener.onAddCreditSimpleFragmentClose(credit);
+                    if (mListener != null) {
+                        mListener.onAddCreditSimpleFragmentClose(credit);
+                    }
                 }
             }
         }
@@ -138,7 +122,7 @@ public class AddCreditSimpleFragment extends Fragment {
                 credit.setAmount(Integer.valueOf(mEtCreditAmount.getText().toString()));
                 credit.setAnnuity(mRgCreditType.getCheckedRadioButtonId() == R.id.addCredit_rgCreditAnnuity);
                 credit.setMonthCount(Integer.valueOf(mEtCreditMonthCount.getText().toString()));
-                credit.setRate(Float.valueOf(mEtCreditRate.getText().toString()));
+                credit.setRate(mEtCreditRate.getText().toString());
                 credit.setDate(mTvCreditDate.getText().toString());
                 if (mCreditDatabaseKey != null) {
                     credit.setKey(mCreditDatabaseKey);
@@ -150,8 +134,7 @@ public class AddCreditSimpleFragment extends Fragment {
             }
 
         } else {
-            //todo: edit message
-            showSnackbar("Fill filds!!!");
+            showSnackbar(getString(R.string.add_credit_empty_fields));
             return null;
         }
         return credit;
@@ -168,6 +151,7 @@ public class AddCreditSimpleFragment extends Fragment {
         mEtCreditAmount.setText("");
         mEtCreditRate.setText("");
         mEtCreditMonthCount.setText("");
+        //todo: подумать, как оформить дату
         mTvCreditDate.setText("EditDate");
     }
 
@@ -188,23 +172,6 @@ public class AddCreditSimpleFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-   /* public void setCredit(Credit credit) {
-        if (credit != null) {
-            //Log.d("###", ">>" + getClass().getSimpleName() + ":setCredit: credit name = " + mCredit.getName());
-            //fillUpFields(credit);
-        }
-    }*/
-
-    private void fillUpFields(Credit credit) {
-        if (credit != null) {
-            mEtCreditName.setText(credit.getName());
-            mEtCreditAmount.setText(credit.getAmount());
-            mEtCreditRate.setText(String.valueOf(credit.getRate()));
-            mEtCreditMonthCount.setText(credit.getMonthCount());
-            mTvCreditDate.setText(credit.getDate());
-        }
     }
 
     /**
