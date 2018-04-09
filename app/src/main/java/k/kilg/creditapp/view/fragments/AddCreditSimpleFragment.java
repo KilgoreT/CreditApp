@@ -11,14 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import k.kilg.creditapp.R;
 import k.kilg.creditapp.entities.Credit;
-import k.kilg.creditapp.model.AddCreditAppModelInterface;
-import k.kilg.creditapp.presenter.AddCreditAppPresenterInterface;
 import k.kilg.creditapp.view.dialogs.DatePickerFragment;
 
 /**
@@ -30,48 +27,41 @@ import k.kilg.creditapp.view.dialogs.DatePickerFragment;
  * create an instance of this fragment.
  */
 public class AddCreditSimpleFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-  /*  private static final int CREDIT_NAME_INDEX = 0;
-    private static final int CREDIT_TYPE_INDEX = 1;
-    private static final int CREDIT_AMOUNT_INDEX = 2;
-    private static final int CREDIT_RATE_INDEX = 3;
-    private static final int CREDIT_MONTH_COUNT_INDEX = 4;*/
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String DATE_PICKER_TAG = "DatePickerTag";
 
-    private AddCreditAppModelInterface mModel;
-    private AddCreditAppPresenterInterface mPresenter;
-    private LinearLayout mLLNameAndType;
-    private LinearLayout mLLAmountAndRate;
-    private LinearLayout mLLMonthCountAndDate;
+    private static final String CREDIT_NAME_KEY = "CreditNameKey";
+    private static final String CREDIT_AMOUNT_KEY = "CreditAmountKey";
+    private static final String CREDIT_MONTH_COUNT_KEY = "CreditMonthCountKey";
+    private static final String CREDIT_RATE_KEY = "CreditRateKey";
+    private static final String CREDIT_DATE_KEY = "CreditDateKey";
+    private static final String CREDIT_DATABASE_KEY = "CreditDatabaseKey";
+    private static final String CREDIT_TYPE_KEY = "CreditTypeKey";
+
     private EditText mEtCreditName;
     private EditText mEtCreditAmount;
     private RadioGroup mRgCreditType;
     private EditText mEtCreditRate;
     private EditText mEtCreditMonthCount;
     private TextView mTvCreditDate;
-    //private Credit mCredit;
 
 
+    private boolean mEditMode = false;
+    private String mCreditDatabaseKey;
     private OnAddCreditSimpleFragmentInteractionListener mListener;
 
     public AddCreditSimpleFragment() {
         // Required empty public constructor
     }
 
-    /**
+   /* *//**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
      * @return A new instance of fragment AddCreditSimpleFragment.
-     */
+     *//*
     // TODO: Rename and change types and number of parameters
     public static AddCreditSimpleFragment newInstance(String param1, String param2) {
         AddCreditSimpleFragment fragment = new AddCreditSimpleFragment();
@@ -80,15 +70,11 @@ public class AddCreditSimpleFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
+    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         setRetainInstance(true);
     }
 
@@ -107,26 +93,40 @@ public class AddCreditSimpleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 DialogFragment datePickerDialog = new DatePickerFragment();
-                datePickerDialog.show(getFragmentManager(), "DatePickerTag");
+                datePickerDialog.show(getFragmentManager(), DATE_PICKER_TAG);
             }
         });
+        Log.d("###", ">>" + getClass().getSimpleName() + ":onCreateView start");
+        if (getArguments() != null) {
+            mEditMode = true;
+            mCreditDatabaseKey = getArguments().getString(CREDIT_DATABASE_KEY);
+            mEtCreditName.setText(getArguments().getString(CREDIT_NAME_KEY));
+            mEtCreditAmount.setText(getArguments().getString(CREDIT_AMOUNT_KEY));
+            mEtCreditMonthCount.setText(getArguments().getString(CREDIT_MONTH_COUNT_KEY));
+            mEtCreditRate.setText(getArguments().getString(CREDIT_RATE_KEY));
+            mTvCreditDate.setText(getArguments().getString(CREDIT_DATE_KEY));
+            mRgCreditType.check(getArguments().getBoolean(CREDIT_TYPE_KEY)? R.id.addCredit_rgCreditAnnuity : R.id.addCredit_rgCreditDifferential);
+            Log.d("###", ">>" + getClass().getSimpleName() + ":onCreateView credit key is " + mCreditDatabaseKey);
+        }
         return v;
     }
 
 
     public void onFabPressed() {
-        Log.d("###", ">>" + getClass().getSimpleName() + "onFabPressed");
         if (mListener != null) {
             Credit credit = createCredit();
             if (credit != null) {
                 clearFields();
-                mListener.onAddCreditSimpleFragmentClose(credit);
+                if (mEditMode) {
+                    mListener.onUpdateCreditSimpleFragmentClose(credit);
+                } else {
+                    mListener.onAddCreditSimpleFragmentClose(credit);
+                }
             }
         }
     }
 
     private Credit createCredit() {
-        Log.d("###", ">>" + getClass().getSimpleName() + ":createClass");
         Credit credit = new Credit();
         if (!TextUtils.isEmpty(mEtCreditName.getText())
                 && !TextUtils.isEmpty(mEtCreditAmount.getText().toString())
@@ -140,6 +140,9 @@ public class AddCreditSimpleFragment extends Fragment {
                 credit.setMonthCount(Integer.valueOf(mEtCreditMonthCount.getText().toString()));
                 credit.setRate(Float.valueOf(mEtCreditRate.getText().toString()));
                 credit.setDate(mTvCreditDate.getText().toString());
+                if (mCreditDatabaseKey != null) {
+                    credit.setKey(mCreditDatabaseKey);
+                }
 
             } catch (IllegalArgumentException e) {
                 showSnackbar(e.getMessage());
@@ -160,7 +163,7 @@ public class AddCreditSimpleFragment extends Fragment {
         }
     }
 
-    public void clearFields()  {
+    public void clearFields() {
         mEtCreditName.setText("");
         mEtCreditAmount.setText("");
         mEtCreditRate.setText("");
@@ -179,10 +182,29 @@ public class AddCreditSimpleFragment extends Fragment {
         }
     }
 
+
+
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+   /* public void setCredit(Credit credit) {
+        if (credit != null) {
+            //Log.d("###", ">>" + getClass().getSimpleName() + ":setCredit: credit name = " + mCredit.getName());
+            //fillUpFields(credit);
+        }
+    }*/
+
+    private void fillUpFields(Credit credit) {
+        if (credit != null) {
+            mEtCreditName.setText(credit.getName());
+            mEtCreditAmount.setText(credit.getAmount());
+            mEtCreditRate.setText(String.valueOf(credit.getRate()));
+            mEtCreditMonthCount.setText(credit.getMonthCount());
+            mTvCreditDate.setText(credit.getDate());
+        }
     }
 
     /**
@@ -197,5 +219,6 @@ public class AddCreditSimpleFragment extends Fragment {
      */
     public interface OnAddCreditSimpleFragmentInteractionListener {
         void onAddCreditSimpleFragmentClose(Credit credit);
+        void onUpdateCreditSimpleFragmentClose(Credit credit);
     }
 }

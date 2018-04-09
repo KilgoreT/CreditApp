@@ -15,4 +15,5 @@ public interface CreditAppPresenterInterface extends MvpPresenter<CreditAppViewI
     void loadCredits();
     void addCredit(Credit credit);
     void removeCredit(Credit credit);
+    void updateCredit(Credit credit);
 }

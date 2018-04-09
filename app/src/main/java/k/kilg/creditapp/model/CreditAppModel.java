@@ -91,6 +91,11 @@ public class CreditAppModel implements CreditAppModelInterface {
                 .removeValue();
     }
 
+    @Override
+    public void updateCredit(Credit credit) {
+        Log.d("###", ">>" + getClass().getSimpleName() + ":updateCredit: " + credit.getName() + ":" + credit.getKey());
+    }
+
     public void delCredit(Credit credit) {
         boolean deleted = credits.remove(credit);
         Log.d("###", ">>" + getClass().getSimpleName() + "is deleted in method:" + deleted);

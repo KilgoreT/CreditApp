@@ -14,4 +14,6 @@ import k.kilg.creditapp.entities.Credit;
  */
 public interface CreditAppViewInterface extends MvpLceView<List<Credit>>{
     void addCredit(Credit credit);
+    void updateCredit(Credit credit);
+    void removeCredit(Credit credit);
 }

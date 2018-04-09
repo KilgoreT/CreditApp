@@ -1,11 +1,8 @@
 package k.kilg.creditapp.view.adapters;
 
-import android.graphics.Color;
-import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +25,6 @@ import k.kilg.creditapp.view.fragments.CreditFragment;
  * 15:18
  */
 
-//todo: не вводятся проценты с точкой
 
 public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.CreditHolder> {
 
@@ -61,7 +57,7 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
             @Override
             public void onClick(View v) {
                 if (mModeEnabled) {
-                    holder.changeSelected(getCreditByTitle(holder.getCreditName()), position);
+                    holder.changeSelectedList(getCreditByTitle(holder.getCreditName()), position);
                 }
             }
         });
@@ -71,15 +67,15 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
             public boolean onLongClick(View v) {
                 mListener.showActionMode(callback);
                 if(mModeEnabled) {
-                    holder.changeSelected(getCreditByTitle(holder.getCreditName()), position);
+                    holder.changeSelectedList(getCreditByTitle(holder.getCreditName()), position);
                 }
                 return true;
             }
         });
         if (mModeEnabled && mSelectedList.contains(getCreditByTitle(holder.getCreditName()))) {
-            holder.setSelected(true);
+            holder.setSelectedBackground(true);
         } else {
-            holder.setSelected(false);
+            holder.setSelectedBackground(false);
         }
     }
 
@@ -95,7 +91,6 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
     @Override
     public int getItemCount() {
         if (mCredits != null) {
-            Log.d("###", ">>" + getClass().getSimpleName() + "getItemCount mCredit.size() = " + mCredits.size());
             return mCredits.size();
         }
         return 0;
@@ -140,7 +135,7 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
             mCreditDate.setText("Date:" + credit.getDate());
         }
 
-        public void changeSelected(Credit selectedCredit, int position) {
+        public void changeSelectedList(Credit selectedCredit, int position) {
             if (mSelectedList.contains(selectedCredit)) {
                 mSelectedList.remove(selectedCredit);
             } else {
@@ -149,7 +144,7 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
             notifyItemChanged(position);
         }
 
-        public void setSelected(boolean selected) {
+        public void setSelectedBackground(boolean selected) {
             if (selected) {
                 mCV.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.colorPrimaryDark));
             } else {
@@ -187,6 +182,12 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
                     mode.finish();
                     break;
                 case R.id.menu_edit:
+                    if (mSelectedList.size() == 0 || mSelectedList.size() > 1) {
+                        ((CreditFragment)mListener).showSnackbar("Choose one element to edit");
+                        break;
+                    } else {
+                        ((CreditFragment)mListener).startEditCredit(mSelectedList.get(0));
+                    }
                     mSelectedList.clear();
                     mode.finish();
                     break;

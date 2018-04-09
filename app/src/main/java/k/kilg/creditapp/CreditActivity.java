@@ -1,20 +1,16 @@
 package k.kilg.creditapp;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -30,15 +26,20 @@ import k.kilg.creditapp.view.fragments.CreditFragment;
 public class CreditActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         CreditFragment.OnCreditFragmentInteractionListener,
-        AddCreditFragment.OnAddCreditFragmentInteractionListener,
         AddCreditSimpleFragment.OnAddCreditSimpleFragmentInteractionListener {
 
     private static final String CREDIT_FRAGMENT_TAG = "CreditFragmentTag";
-    private static final String ADD_CREDIT_FRAGMENT_TAG = "AddCreditFragmentTag";
     private static final String ADD_CREDIT_SIMPLE_FRAGMENT_TAG = "AddCreditSimpleFragmentTag";
     private static final String CURRENT_FRAGMENT_KEY = "CurrentFragmentKey";
+    private static final String CREDIT_NAME_KEY = "CreditNameKey";
+    private static final String CREDIT_AMOUNT_KEY = "CreditAmountKey";
+    private static final String CREDIT_MONTH_COUNT_KEY = "CreditMonthCountKey";
+    private static final String CREDIT_RATE_KEY = "CreditRateKey";
+    private static final String CREDIT_DATE_KEY = "CreditDateKey";
+    private static final String CREDIT_DATABASE_KEY = "CreditDatabaseKey";
+    private static final String CREDIT_TYPE_KEY = "CreditTypeKey";
+
     CreditFragment creditFragment = new CreditFragment();
-    AddCreditFragment addCreditFragment = new AddCreditFragment();
     AddCreditSimpleFragment addCreditSimpleFragment = new AddCreditSimpleFragment();
 
 
@@ -74,8 +75,6 @@ public class CreditActivity extends AppCompatActivity implements
                 Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.creditFragment);
                 if (fragment instanceof CreditFragment) {
                     setFragment(addCreditSimpleFragment, ADD_CREDIT_SIMPLE_FRAGMENT_TAG);
-                } else if (fragment instanceof AddCreditFragment) {
-                    ((AddCreditFragment) fragment).onFabPressed();
                 } else if (fragment instanceof AddCreditSimpleFragment) {
                     ((AddCreditSimpleFragment) fragment).onFabPressed();
                 }
@@ -93,7 +92,7 @@ public class CreditActivity extends AppCompatActivity implements
             outState.putString(CURRENT_FRAGMENT_KEY, CREDIT_FRAGMENT_TAG);
         }
         if (fragment instanceof AddCreditFragment) {
-            outState.putString(CURRENT_FRAGMENT_KEY, ADD_CREDIT_FRAGMENT_TAG);
+            outState.putString(CURRENT_FRAGMENT_KEY, ADD_CREDIT_SIMPLE_FRAGMENT_TAG);
         }
     }
 
@@ -122,8 +121,8 @@ public class CreditActivity extends AppCompatActivity implements
         String currentFragmentTag = savedInstanceState.getString(CURRENT_FRAGMENT_KEY);
         if (currentFragmentTag != null && currentFragmentTag.equals(CREDIT_FRAGMENT_TAG)) {
             setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
-        } else if (currentFragmentTag != null && currentFragmentTag.equals(ADD_CREDIT_FRAGMENT_TAG)) {
-            setFragment(addCreditFragment, ADD_CREDIT_FRAGMENT_TAG);
+        } else if (currentFragmentTag != null && currentFragmentTag.equals(ADD_CREDIT_SIMPLE_FRAGMENT_TAG)) {
+            setFragment(addCreditSimpleFragment, ADD_CREDIT_SIMPLE_FRAGMENT_TAG);
         }
     }
 
@@ -162,9 +161,6 @@ public class CreditActivity extends AppCompatActivity implements
         } else if (fragment instanceof CreditFragment) {
             setFabVisible(true);
             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add));
-        } else if (fragment instanceof AddCreditFragment) {
-            setFabVisible(true);
-            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
         } else if (fragment instanceof AddCreditSimpleFragment) {
             setFabVisible(true);
             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
@@ -198,28 +194,44 @@ public class CreditActivity extends AppCompatActivity implements
         return true;
     }
 
-    @Override
-    public void onCreditFragmentInteraction(Uri uri) {
 
-    }
-
-    @Override
+    /*@Override
     public void onAddCreditFragmentClose(Credit credit) {
         if (credit != null) {
             setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
             creditFragment.addCredit(credit);
-        } else {
-            Log.d("###", ">>" + getClass().getSimpleName() + ":onAddCreditFragmentClose credit == null");
         }
-    }
+    }*/
 
     @Override
     public void onAddCreditSimpleFragmentClose(Credit credit) {
         if (credit != null) {
             setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
             creditFragment.addCredit(credit);
-        } else {
-            Log.d("###", ">>" + getClass().getSimpleName() + ":onAddCreditSimpleFragmentClose credit == null");
+        }
+    }
+
+    @Override
+    public void onUpdateCreditSimpleFragmentClose(Credit credit) {
+        if (credit != null && credit.getKey() != null) {
+            setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
+            creditFragment.updateCredit(credit);
+        }
+    }
+
+    @Override
+    public void startEditCredit(Credit credit) {
+        if (addCreditSimpleFragment !=  null && credit != null) {
+            Bundle bundle = new Bundle();
+            bundle.putString(CREDIT_NAME_KEY, credit.getName());
+            bundle.putString(CREDIT_AMOUNT_KEY, String.valueOf(credit.getAmount()));
+            bundle.putString(CREDIT_MONTH_COUNT_KEY, String.valueOf(credit.getMonthCount()));
+            bundle.putString(CREDIT_RATE_KEY, String.valueOf(credit.getRate()));
+            bundle.putString(CREDIT_DATE_KEY, credit.getDate());
+            bundle.putString(CREDIT_DATABASE_KEY, credit.getKey());
+            bundle.putBoolean(CREDIT_TYPE_KEY, credit.isAnnuity());
+            addCreditSimpleFragment.setArguments(bundle);
+            setFragment(addCreditSimpleFragment, ADD_CREDIT_SIMPLE_FRAGMENT_TAG);
         }
     }
 }

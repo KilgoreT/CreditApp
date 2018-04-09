@@ -41,4 +41,9 @@ public class CreditAppPresenter extends MvpBasePresenter<CreditAppViewInterface>
     public void removeCredit(Credit credit) {
         model.removeCredit(credit);
     }
+
+    @Override
+    public void updateCredit(Credit credit) {
+        model.updateCredit(credit);
+    }
 }

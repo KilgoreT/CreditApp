@@ -1,80 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    android:id="@+id/cardview"
+<android.support.v7.widget.CardView android:id="@+id/cardview"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    android:layout_marginTop="4dp"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         >
-        <TextView
-            android:id="@+id/tvCreditName"
+        <LinearLayout
+            android:id="@+id/creditItem_NameAndType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:gravity="left"
-            tools:text="На еду"
-            />
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/tvCreditName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:layout_weight="3"
+                tools:text="На еду"
+                />
 
-        <TextView
-            android:id="@+id/tvCreditAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvCreditName"
-            android:layout_alignStart="@id/tvCreditName"
-            android:layout_alignLeft="@id/tvCreditName"
-            android:gravity="left"
-            tools:text="Amount 5000000"
-            />
-        <TextView
-            android:id="@+id/tvCreditMonthCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvCreditName"
-            android:layout_alignEnd="@id/tvCreditName"
-            android:layout_alignRight="@id/tvCreditName"
-            android:layout_toEndOf="@id/tvCreditAmount"
-            android:layout_toRightOf="@id/tvCreditAmount"
-            android:gravity="center"
-            tools:text="24 month"
-            />
+            <TextView
+                android:id="@+id/tvCreditType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|top"
+                android:layout_weight="1"
+                tools:text="Differencial payout"
+                android:textColor="@color/colorAccent"
+                />
 
-        <TextView
-            android:id="@+id/tvCreditRate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCreditAmount"
-            android:layout_alignStart="@+id/tvCreditAmount"
-            android:layout_alignLeft="@+id/tvCreditAmount"
-            android:gravity="left"
-            tools:text="18%"
-            />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvCreditType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvCreditMonthCount"
-            android:layout_alignEnd="@id/tvCreditMonthCount"
-            android:layout_alignRight="@id/tvCreditMonthCount"
-            android:layout_toEndOf="@id/tvCreditRate"
-            android:layout_toRightOf="@id/tvCreditRate"
-            android:gravity="center"
-            tools:text="Differencial payout"
-            />
-        <TextView
-            android:id="@+id/tvCreditDate"
+
+        <LinearLayout
+            android:id="@+id/creditItem_AmountAndMonthCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCreditType"
-            android:gravity="center"
-            />
+            android:orientation="horizontal"
+            android:layout_below="@id/creditItem_NameAndType">
+            <TextView
+                android:id="@+id/tvCreditAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="22sp"
+                tools:text="5000000 $"
+                />
+            <TextView
+                android:id="@+id/tvCreditMonthCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="22sp"
+                tools:text="на срок: 24 мес."
+                />
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/creditItem_RateAndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/creditItem_AmountAndMonthCount"
+            >
+            <TextView
+                android:id="@+id/tvCreditRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textSize="22sp"
+                tools:text="под 18%"
+                />
 
+            <TextView
+                android:id="@+id/tvCreditDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="22sp"
+                tools:text="с 2018-12-04"
+                />
+        </LinearLayout>
     </RelativeLayout>
 
 

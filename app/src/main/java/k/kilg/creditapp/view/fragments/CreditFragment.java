@@ -1,17 +1,14 @@
 package k.kilg.creditapp.view.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +16,6 @@ import com.hannesdorfmann.mosby.mvp.viewstate.lce.LceViewState;
 import com.hannesdorfmann.mosby.mvp.viewstate.lce.MvpLceViewStateFragment;
 import com.hannesdorfmann.mosby.mvp.viewstate.lce.data.RetainingLceViewState;
 
-import java.util.HashMap;
 import java.util.List;
 
 import k.kilg.creditapp.CreditActivity;
@@ -107,6 +103,7 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
         return message == null ? "Unknown error" : message;
     }
 
+    @NonNull
     @Override
     public LceViewState<List<Credit>, CreditAppViewInterface> createViewState() {
         return new RetainingLceViewState<List<Credit>, CreditAppViewInterface>();
@@ -146,15 +143,15 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_credit, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_credit, container, false);
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
 
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(Credit credit) {
         if (mListener != null) {
-            mListener.onCreditFragmentInteraction(uri);
+            mListener.startEditCredit(credit);
         }
     }
 
@@ -179,9 +176,12 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
     public void addCredit(Credit credit) {
         if (credit != null) {
             getPresenter().addCredit(credit);
-        } else {
-            Log.d("###", ">>" + getClass().getSimpleName() + ":addCredit credit == null");
         }
+    }
+
+    @Override
+    public void updateCredit(Credit credit) {
+        getPresenter().updateCredit(credit);
     }
 
 
@@ -199,6 +199,17 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
         ((CreditActivity) getActivity()).setFabVisible(false);
     }
 
+    public void startEditCredit(Credit credit) {
+        if (credit != null) {
+            mListener.startEditCredit(credit);
+        }
+    }
+
+    public void showSnackbar(String message) {
+        if (getView() != null) {
+            Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
+        }
+    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -212,6 +223,6 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
      */
     public interface OnCreditFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onCreditFragmentInteraction(Uri uri);
+        void startEditCredit(Credit credit);
     }
 }
