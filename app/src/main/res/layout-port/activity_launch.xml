@@ -8,7 +8,6 @@
     tools:context=".LaunchActivity"
     style="@style/AcLaunch"
     >
-
     <TextView
         android:id="@+id/tvWellcome"
         android:layout_width="match_parent"
@@ -18,9 +17,7 @@
         android:layout_marginTop="160dp"
         android:gravity="center"
         style="@style/AcLaunch.TextView.Wellcome"
-        tools:text="Wellcome"
         />
-
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="match_parent"
@@ -28,12 +25,12 @@
         android:inputType="textEmailAddress"
         android:layout_below="@+id/tvWellcome"
         android:layout_marginTop="16dp"
-        android:hint="Email"
+        android:hint="@string/email_CS"
         android:gravity="center"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/edittext_rounded_primary_color"
-        style="@style/EditText.Email"
+        style="@style/EditText"
         />
     <EditText
         android:id="@+id/etPassword"
@@ -41,13 +38,13 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:layout_below="@+id/etEmail"
-        android:hint="Password"
+        android:hint="@string/password_CS"
         android:gravity="center"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/edittext_rounded_primary_color"
-        style="@style/EditText.Password"
+        style="@style/EditText"
         />
     <Button
         android:id="@+id/btnSignIn"
@@ -57,7 +54,6 @@
         android:layout_below="@+id/etPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        style="@style/Button.SignIn"
         />
     <TextView
         android:id="@+id/tvRegister"
@@ -76,7 +72,4 @@
         android:layout_below="@+id/tvRegister"
         android:layout_centerHorizontal="true"
         />
-        <!--style="@style/AcLaunch.Button"-->
-
-
 </RelativeLayout>

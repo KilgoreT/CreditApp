@@ -157,7 +157,7 @@ public class CreditActivity extends AppCompatActivity implements
     }
 
     private void updateFab(Fragment fragment) {
-        if (fab == null || fragment != null) {
+        if (fab == null || fragment == null) {
             return;
         } else if (fragment instanceof CreditFragment) {
             setFabVisible(true);
@@ -166,7 +166,7 @@ public class CreditActivity extends AppCompatActivity implements
             setFabVisible(true);
             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
         } else if (fragment instanceof AddCreditSimpleFragment) {
-            fab.setVisibility(View.VISIBLE);
+            setFabVisible(true);
             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
         }
     }

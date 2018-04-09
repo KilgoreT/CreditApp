@@ -26,6 +26,7 @@
 
     <string name="btnOk">OK</string>
 
+    <string name="email_CS">Email</string>
 
     <string name="annuity">Annuity</string>
     <string name="differential">Differential</string>
@@ -34,4 +35,5 @@
     <string name="credit_amount">Amount</string>
     <string name="month_count">Month count</string>
     <string name="edit_date">Edit date</string>
+    <string name="password_CS">Password</string>
 </resources>
