@@ -130,10 +130,11 @@ public class CreditActivity extends AppCompatActivity implements
     private void updateHeaderUI() {
         View header = mNavigationView.getHeaderView(0);
         TextView mHeaderEmail = (TextView) header.findViewById(R.id.header_tvEmail);
-        TextView mHeaderEmailStatus = (TextView) header.findViewById(R.id.header_tvEmail_status);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        mHeaderEmail.setText(currentUser.getEmail());
-        mHeaderEmailStatus.setText(currentUser.isEmailVerified()? "Verified" : "Not verified");
+        if (currentUser != null) {
+            String emailWithStatus = currentUser.getEmail() + "(" + (currentUser.isEmailVerified()? "verified)":"no verify)");
+            mHeaderEmail.setText(emailWithStatus);
+        }
     }
 
 

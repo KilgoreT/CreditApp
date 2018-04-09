@@ -30,27 +30,7 @@
     <style name="EditText" parent="AppTheme">
         <item name="android:gravity">center</item>
         <item name="android:textSize">26sp</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_color</item>
     </style>
-
-
-    <style name="EditText.Email"></style>
-    <style name="EditText.Password"></style>
-
-    <style name="Button"></style>
-    <style name="Button.SignIn" parent="Button"></style>
-
-
-
-
-
-   <!-- <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>-->
 
 </resources>

@@ -6,7 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
 
 public class LaunchActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -24,8 +27,6 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
 
     private EditText mEtEmail;
     private EditText mEtPassword;
-    private Button btnSignIn;
-    private Button btnRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +35,11 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
 
         mEtEmail = (EditText) findViewById(R.id.etEmail);
         mEtPassword = (EditText) findViewById(R.id.etPassword);
-        btnSignIn = (Button) findViewById(R.id.btnSignIn);
+        Button btnSignIn = (Button) findViewById(R.id.btnSignIn);
         btnSignIn.setOnClickListener(this);
-        btnRegister = (Button) findViewById(R.id.btnRegister);
+        Button btnRegister = (Button) findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(this);
 
-        //mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -66,7 +66,6 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
         if (!validateForm()) {
             return;
         }
-        //todo: допилить верификацию по мылу
         mAuth
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -75,20 +74,23 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
                         if (task.isSuccessful()) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(LaunchActivity.this);
                             builder
-                                    .setTitle("Verify account!")
-                                    .setIcon(R.drawable.ic_attach_money)
+                                    .setTitle(R.string.ac_launch_confirm_email_title)
+                                    .setMessage(R.string.ac_launch_confirm_email_body)
                                     .setCancelable(false)
-                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    .setPositiveButton(R.string.btnOk, new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-
+                                            FirebaseUser currentUser = mAuth.getCurrentUser();
+                                            if (currentUser != null) {
+                                                sendEmailVerification(currentUser);
+                                                updateUI(currentUser);
+                                            }
                                         }
-                                    });
-                            FirebaseUser currentUser = mAuth.getCurrentUser();
-                            updateUI(currentUser);
+                                    })
+                                    .create()
+                                    .show();
                         } else {
-                            //TODO: fix message
-                            Toast.makeText(getBaseContext(), "Register failed", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), R.string.ac_launch_alert_register_failed, Toast.LENGTH_LONG).show();
                             updateUI(null);
                         }
                     }
@@ -99,8 +101,6 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
         if (!validateForm()) {
             return;
         }
-        Log.d("###", "Mail: " + mEtEmail.getText().toString());
-        Log.d("###", "Pass: " + mEtPassword.getText().toString());
         mAuth
                 .signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -110,12 +110,8 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
                             FirebaseUser currentUser = mAuth.getCurrentUser();
                             updateUI(currentUser);
                         } else {
-                            //TODO: fix message
-                            Toast.makeText(getBaseContext(), "Auth failed", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), R.string.ac_launch_alert_auth_failed, Toast.LENGTH_LONG).show();
                             updateUI(null);
-                        }
-                        if (!task.isSuccessful()) {
-                            //TODO: create and add status field in layoit
                         }
                     }
                 });
@@ -126,52 +122,51 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
         updateUI(null);
     }
 
-    //todo: fix email verification
-   /* private void sendEmailVerification(FirebaseUser currentUser) {
-        btnEmailVerification.setEnabled(false);
-        if (currentUser == null) {
-            btnEmailVerification.setEnabled(true);
-            return;
-        }
+    private void sendEmailVerification(FirebaseUser currentUser) {
         currentUser
                 .sendEmailVerification()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        btnEmailVerification.setEnabled(true);
                         if (task.isSuccessful()) {
-                            //TODO: fix message
-                            Toast.makeText(getBaseContext(), "Verification sent!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), R.string.ac_launch_alert_email_sent_successful, Toast.LENGTH_LONG).show();
                         } else {
-                            //TODO: fix message
-                            Toast.makeText(getBaseContext(), "Fail send verification", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), R.string.ac_launch_alert_email_sent_fail, Toast.LENGTH_LONG).show();
                         }
                     }
                 });
-    }*/
+    }
 
-   //todo: do validate form
     private boolean validateForm() {
-        return true;
+        boolean valid = true;
+
+        String email = mEtEmail.getText().toString();
+        if (TextUtils.isEmpty(email)) {
+            mEtEmail.setError(getResources().getString(R.string.ac_launch_alert_email_required));
+            valid = false;
+        } else {
+            mEtEmail.setError(null);
+            valid = Patterns.EMAIL_ADDRESS.matcher(mEtEmail.getText().toString()).matches();
+            if (!valid) {
+                mEtEmail.setError(getResources().getString(R.string.ac_launch_alert_email_not_valid));
+            }
+        }
+
+        String password = mEtPassword.getText().toString();
+        if (TextUtils.isEmpty(password)) {
+            mEtPassword.setError(getResources().getString(R.string.ac_launch_alert_password_required));
+            valid = false;
+        } else {
+            mEtPassword.setError(null);
+        }
+
+        return valid;
     }
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            if (!user.isEmailVerified()) {
-                Log.d("###", ">>> user not verified: " + user.getEmail());
-               // sendEmailVerification(user);
-            } else {
-                Log.d("###", ">>> User verified: " + user.getEmail());
-            }
             Intent intent = new Intent(this, CreditActivity.class);
             startActivity(intent);
-            //signOut();
-        } else {
-            mEtEmail.setVisibility(View.VISIBLE);
-            mEtPassword.setVisibility(View.VISIBLE);
-            btnSignIn.setVisibility(View.VISIBLE);
-            btnRegister.setVisibility(View.VISIBLE);
-
         }
     }
 }
