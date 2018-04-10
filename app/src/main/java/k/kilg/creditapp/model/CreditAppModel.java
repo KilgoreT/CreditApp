@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import k.kilg.creditapp.entities.Credit;
+import k.kilg.creditapp.presenter.CreditAppPresenter;
 import k.kilg.creditapp.view.fragments.CreditFragment;
 
 /**
@@ -115,7 +116,7 @@ public class CreditAppModel implements CreditAppModelInterface {
                         Credit credit = dataSnapshot.getValue(Credit.class);
                         credit.setKey(dataSnapshot.getKey());
                         credits.remove(credit);
-                        fragment.getPresenter().loadCredits();
+                        ((CreditAppPresenter) fragment.getPresenter()).setCreditFromDB(credits);
                     }
 
                     @Override
