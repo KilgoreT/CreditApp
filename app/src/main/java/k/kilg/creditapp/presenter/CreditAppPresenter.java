@@ -4,8 +4,11 @@ import android.util.Log;
 
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
+import java.util.List;
+
 import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.model.CreditAppModelInterface;
+import k.kilg.creditapp.tools.DatabaseTool;
 import k.kilg.creditapp.view.CreditAppViewInterface;
 
 /**
@@ -21,15 +24,23 @@ public class CreditAppPresenter extends MvpBasePresenter<CreditAppViewInterface>
 
     public CreditAppPresenter(CreditAppModelInterface model) {
         this.model = model;
+        DatabaseTool.startLoadingData(this);
     }
 
     @Override
     public void loadCredits() {
+
         if (isViewAttached()) {
             getView().showLoading(false);
-            getView().setData(model.getCredits());
-            getView().showContent();
+            //getView().setData(model.getCredits());
+            //getView().showContent();
         }
+    }
+
+    public void setCreditFromDB(List<Credit> data) {
+        model.setData(data);
+        getView().setData(model.getCredits());
+        getView().showContent();
     }
 
     @Override

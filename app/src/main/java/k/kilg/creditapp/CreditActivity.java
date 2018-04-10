@@ -1,6 +1,7 @@
 package k.kilg.creditapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -21,15 +22,19 @@ import com.google.firebase.auth.FirebaseUser;
 import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.view.fragments.AddCreditSimpleFragment;
 import k.kilg.creditapp.view.fragments.CreditFragment;
+import k.kilg.creditapp.view.fragments.PayoutFragment;
 
 public class CreditActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         CreditFragment.OnCreditFragmentInteractionListener,
-        AddCreditSimpleFragment.OnAddCreditSimpleFragmentInteractionListener {
+        AddCreditSimpleFragment.OnAddCreditSimpleFragmentInteractionListener,
+        PayoutFragment.OnPayoutFragmentInteractionListener {
 
     private static final String CREDIT_FRAGMENT_TAG = "CreditFragmentTag";
     private static final String ADD_CREDIT_SIMPLE_FRAGMENT_TAG = "AddCreditSimpleFragmentTag";
     private static final String CURRENT_FRAGMENT_KEY = "CurrentFragmentKey";
+    private static final String PAYOUT_FRAGMENT_TAG = "PayoutFragmentTag";
+
     private static final String CREDIT_NAME_KEY = "CreditNameKey";
     private static final String CREDIT_AMOUNT_KEY = "CreditAmountKey";
     private static final String CREDIT_MONTH_COUNT_KEY = "CreditMonthCountKey";
@@ -40,6 +45,7 @@ public class CreditActivity extends AppCompatActivity implements
 
     CreditFragment creditFragment = new CreditFragment();
     AddCreditSimpleFragment addCreditSimpleFragment = new AddCreditSimpleFragment();
+    PayoutFragment payoutFragment = new PayoutFragment();
 
 
     private FloatingActionButton fab;
@@ -180,7 +186,10 @@ public class CreditActivity extends AppCompatActivity implements
         int id = item.getItemId();
         if (id == R.id.menu_credits) {
             setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
+            setFabVisible(true);
         } else if (id == R.id.menu_payout) {
+            setFragment(payoutFragment, PAYOUT_FRAGMENT_TAG);
+            setFabVisible(false);
         } else if (id == R.id.menu_signout) {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this, LaunchActivity.class);
@@ -193,14 +202,6 @@ public class CreditActivity extends AppCompatActivity implements
         return true;
     }
 
-
-    /*@Override
-    public void onAddCreditFragmentClose(Credit credit) {
-        if (credit != null) {
-            setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
-            creditFragment.addCredit(credit);
-        }
-    }*/
 
     @Override
     public void onAddCreditSimpleFragmentClose(Credit credit) {
@@ -232,5 +233,10 @@ public class CreditActivity extends AppCompatActivity implements
             addCreditSimpleFragment.setArguments(bundle);
             setFragment(addCreditSimpleFragment, ADD_CREDIT_SIMPLE_FRAGMENT_TAG);
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        //payoutFragment
     }
 }

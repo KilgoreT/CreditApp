@@ -73,16 +73,21 @@ public class CreditAppModel implements CreditAppModelInterface {
                 .updateChildren(credit.toMap());
     }
 
+    @Override
+    public void setData(List<Credit> data) {
+        credits = data;
+    }
+
     private void initDbListener() {
         dbRef
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Log.d("###", "onChildAdded:" + dataSnapshot.getKey());
-                        Credit credit = dataSnapshot.getValue(Credit.class);
-                        credit.setKey(dataSnapshot.getKey());
-                        credits.add(credit);
-                        fragment.getPresenter().loadCredits();
+                        //Credit credit = dataSnapshot.getValue(Credit.class);
+                        //credit.setKey(dataSnapshot.getKey());
+                        //credits.add(credit);
+                        //fragment.getPresenter().loadCredits();
                     }
 
                     @Override

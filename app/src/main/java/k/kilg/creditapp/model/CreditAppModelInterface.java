@@ -15,4 +15,6 @@ public interface CreditAppModelInterface {
     void addCredit(Credit credit);
     void removeCredit(Credit credit);
     void updateCredit(Credit credit);
+
+    void setData(List<Credit> data);
 }
