@@ -28,27 +28,27 @@ import k.kilg.creditapp.view.fragments.CreditFragment;
 public class CreditAppModel implements CreditAppModelInterface {
 
     private static final String USERS = "users";
-    private List<Credit> credits;
+    private List<Credit> mCreditList;
     private FirebaseUser currentUser;
     private DatabaseReference dbRef;
     private CreditFragment fragment;
 
     public CreditAppModel(CreditFragment fragment) {
         this.fragment = fragment;
-        credits = new ArrayList<>();
+        mCreditList = new ArrayList<>();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         dbRef = FirebaseDatabase
                 .getInstance()
                 .getReference()
                 .child(USERS)
                 .child(currentUser.getUid());
-        initDbListener();
-    }
+
+}
 
 
     @Override
-    public List<Credit> getCredits() {
-       return credits;
+    public List<Credit> getCreditsList() {
+       return mCreditList;
     }
 
     @Override
@@ -75,20 +75,17 @@ public class CreditAppModel implements CreditAppModelInterface {
     }
 
     @Override
-    public void setData(List<Credit> data) {
-        credits = data;
-    }
-
-    private void initDbListener() {
+    public void initDbListener() {
         dbRef
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Log.d("###", "onChildAdded:" + dataSnapshot.getKey());
-                        //Credit credit = dataSnapshot.getValue(Credit.class);
-                        //credit.setKey(dataSnapshot.getKey());
-                        //credits.add(credit);
-                        //fragment.getPresenter().loadCredits();
+                        Credit credit = dataSnapshot.getValue(Credit.class);
+                        credit.setKey(dataSnapshot.getKey());
+                        Log.d("###", "Model:Listener find credit " + credit.getName());
+                        mCreditList.add(credit);
+                        fragment.getPresenter().loadCredits();
                     }
 
                     @Override
@@ -98,14 +95,14 @@ public class CreditAppModel implements CreditAppModelInterface {
                         Integer index = null;
                         Credit credit = dataSnapshot.getValue(Credit.class);
                         credit.setKey(dataSnapshot.getKey());
-                        for (Credit c : credits) {
+                        for (Credit c : mCreditList) {
                             if (c.getKey().equals(dataSnapshot.getKey())) {
-                                index = credits.indexOf(c);
+                                index = mCreditList.indexOf(c);
                             }
                         }
                         if (index != null) {
-                            credits.remove(index);
-                            credits.add(index, credit);
+                            mCreditList.remove(index);
+                            mCreditList.add(index, credit);
                         }
                         fragment.getPresenter().loadCredits();
                     }
@@ -115,8 +112,13 @@ public class CreditAppModel implements CreditAppModelInterface {
                         Log.d("###", "onChildRemoved:");
                         Credit credit = dataSnapshot.getValue(Credit.class);
                         credit.setKey(dataSnapshot.getKey());
-                        credits.remove(credit);
-                        ((CreditAppPresenter) fragment.getPresenter()).setCreditFromDB(credits);
+                        Log.d("###", "Model:Listener remove credit " + credit.getName());
+                        Log.d("###", "Model:Listener remove list size = " + mCreditList.size());
+                        //todo: не удаляется  объект из листа
+                        mCreditList.remove(credit);
+                        Log.d("###", "Model:Listener remove list size = " + mCreditList.size());
+                        fragment.getPresenter().loadCredits();
+                        //((CreditAppPresenter) fragment.getPresenter()).setCreditFromDB(mCreditList);
                     }
 
                     @Override

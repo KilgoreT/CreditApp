@@ -24,24 +24,24 @@ public class CreditAppPresenter extends MvpBasePresenter<CreditAppViewInterface>
 
     public CreditAppPresenter(CreditAppModelInterface model) {
         this.model = model;
-        DatabaseTool.startLoadingData(this);
+    }
+
+    public void sendQueryForData() {
+        if (isViewAttached()) {
+            getView().showLoading(false);
+            model.initDbListener();
+        }
     }
 
     @Override
     public void loadCredits() {
 
         if (isViewAttached()) {
-            getView().showLoading(false);
-            //getView().setData(model.getCredits());
-            //getView().showContent();
+            getView().setData(model.getCreditsList());
+            getView().showContent();
         }
     }
 
-    public void setCreditFromDB(List<Credit> data) {
-        model.setData(data);
-        getView().setData(model.getCredits());
-        getView().showContent();
-    }
 
     @Override
     public void addCredit(Credit credit) {

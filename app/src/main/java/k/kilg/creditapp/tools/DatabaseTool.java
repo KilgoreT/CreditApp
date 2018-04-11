@@ -43,7 +43,7 @@ public class DatabaseTool {
                             credit.setKey(snapshot.getKey());
                             Log.d("###", "Tools: credit = " + credit.getName());
                             credits.add(credit);
-                            ((CreditAppPresenter)presenter).setCreditFromDB(credits);
+                            //((CreditAppPresenter)presenter).setCreditFromDB(credits);
                         }
                     }
 

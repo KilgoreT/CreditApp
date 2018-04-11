@@ -12,6 +12,7 @@ import k.kilg.creditapp.view.CreditAppViewInterface;
  * 14:40
  */
 public interface CreditAppPresenterInterface extends MvpPresenter<CreditAppViewInterface> {
+    public void sendQueryForData();
     void loadCredits();
     void addCredit(Credit credit);
     void removeCredit(Credit credit);

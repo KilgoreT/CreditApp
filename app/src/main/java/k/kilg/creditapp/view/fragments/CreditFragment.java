@@ -79,7 +79,7 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
 
     @Override
     public void loadData(boolean pullToRefresh) {
-        getPresenter().loadCredits();
+        getPresenter().sendQueryForData();
     }
 
     @Override

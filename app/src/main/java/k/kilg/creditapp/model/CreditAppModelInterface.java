@@ -11,10 +11,11 @@ import k.kilg.creditapp.entities.Credit;
  * 14:46
  */
 public interface CreditAppModelInterface {
-    List<Credit> getCredits();
+
+    void initDbListener();
     void addCredit(Credit credit);
     void removeCredit(Credit credit);
     void updateCredit(Credit credit);
+    List<Credit> getCreditsList();
 
-    void setData(List<Credit> data);
 }
