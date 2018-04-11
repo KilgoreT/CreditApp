@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import k.kilg.creditapp.R;
@@ -23,7 +24,7 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<PayoutRVAdapter.Payout
 
     @Override
     public PayoutRVAdapter.PayoutHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_payout_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_payout_item_constrane, parent, false);
         PayoutHolder holder = new PayoutHolder(v);
         return holder;
     }
@@ -62,9 +63,10 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<PayoutRVAdapter.Payout
         }
 
         public void bind(Payout payout) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             mCreditName.setText(payout.getCreditName());
-            mPayoutAmount.setText(payout.getAmount());
-            mPayoutDate.setText(payout.getDate());
+            mPayoutAmount.setText("Payout: " + payout.getAmount());
+            mPayoutDate.setText(sdf.format(payout.getDate()));
         }
     }
 

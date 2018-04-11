@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,6 +132,14 @@ public class PayoutFragment extends MvpLceViewStateFragment<RecyclerView, List<P
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void listLog(List<Payout> payoutList) {
+        for (Payout payout : payoutList) {
+            Log.d("###", getClass().getSimpleName() + ":credit name is " + payout.getCreditName());
+            Log.d("###", getClass().getSimpleName() + ":credit name is " + payout.getAmount());
+        }
     }
 
     /**

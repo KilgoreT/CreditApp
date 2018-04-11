@@ -28,6 +28,12 @@ import k.kilg.creditapp.view.CreditAppViewInterface;
 import k.kilg.creditapp.view.adapters.CreditRVAdapter;
 
 
+//todo: По каждому кредиту должны выводиться:
+//
+//- дата и сумма очередного платежа. По дате очередного платежа: если в месяце нет такого дня, в который выдан кредит, то выводить последний день месяца (например кредит выдан 31.01.2017, значит в апреле дата будет 30.04)
+//- наименование (которое пользователь задает при добавлении/модификации кредита)
+//- остаток основного долга
+
 public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<Credit>, CreditAppViewInterface, CreditAppPresenterInterface> implements
         CreditAppViewInterface,
         CreditRVAdapter.CreditRVAdapterListener{

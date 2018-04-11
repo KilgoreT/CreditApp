@@ -2,6 +2,8 @@ package k.kilg.creditapp.model;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.entities.Payout;
 
 /**
@@ -11,6 +13,7 @@ import k.kilg.creditapp.entities.Payout;
  * 11:56
  */
 public interface PayoutModelInterface {
-    List<Payout> getPayouts();
+    Observable<List<Payout>> getPayouts();
+    public void loadCredits();
 
 }

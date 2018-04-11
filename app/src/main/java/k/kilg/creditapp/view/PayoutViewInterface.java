@@ -4,6 +4,7 @@ import com.hannesdorfmann.mosby.mvp.lce.MvpLceView;
 
 import java.util.List;
 
+import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.entities.Payout;
 
 /**
@@ -13,4 +14,5 @@ import k.kilg.creditapp.entities.Payout;
  * 11:51
  */
 public interface PayoutViewInterface extends MvpLceView<List<Payout>> {
+    void listLog(List<Payout> payoutList);
 }
