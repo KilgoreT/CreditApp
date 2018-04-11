@@ -129,10 +129,10 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
         public void bind(Credit credit) {
             mCreditName.setText(credit.getName());
             mCreditType.setText(credit.isAnnuity() ? "Annuity" : "Differential");
-            mCreditMonthCount.setText("" + credit.getMonthCount() + " months");
-            mCreditAmount.setText("Amount: " + credit.getAmount());
-            mCreditRate.setText("Rate: " + credit.getRate());
-            mCreditDate.setText("Date:" + credit.getDate());
+            mCreditMonthCount.setText(String.valueOf(credit.getMonthCount()));
+            mCreditAmount.setText(String.valueOf(credit.getAmount()));
+            mCreditRate.setText(credit.getRate());
+            mCreditDate.setText(credit.getDate());
         }
 
         public void changeSelectedList(Credit selectedCredit, int position) {
