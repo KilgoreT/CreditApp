@@ -17,7 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:minHeight="112dp"
         android:visibility="visible">
 
         <TextView
@@ -116,13 +115,20 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.10" />
 
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.38" />
+
         <TextView
             android:id="@+id/tvPercentSign"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:text="%"
+            android:text="@string/item_credit_percent_sign"
             android:textColor="?attr/colorPrimary"
             android:textSize="40sp"
             android:textStyle="bold"
@@ -135,12 +141,15 @@
             android:id="@+id/tvCreditAmount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:gravity="end"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/guideline9"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="@+id/guideline10"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline8"
             tools:text="1 000 000 000" />
 
@@ -164,7 +173,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
-            android:text="months"
+            android:text="@string/item_credit_months"
             android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
@@ -190,6 +199,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="На кредит чтобы купить картинку, карзинку, картонку и собачонку!!!" />
+
+        <TextView
+            android:id="@+id/tvCurrencyName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/item_credit_rubles"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/guideline6"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/guideline8" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

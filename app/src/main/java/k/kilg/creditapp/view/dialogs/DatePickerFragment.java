@@ -23,6 +23,9 @@ import k.kilg.creditapp.view.fragments.AddCreditSimpleFragment;
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
 
+    private static final int MIN_CALENDAR_YEAR = 2000;
+    private static final int MIN_CALENDAR_MONTH = 0;
+    private static final int MIN_CALENDAR_DATE = 1;
 
     public DatePickerFragment() {
     }
@@ -40,19 +43,12 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         DatePickerDialog dpd = new DatePickerDialog(getActivity(), this, year, month, day);
         DatePicker dp = dpd.getDatePicker();
         dp.setMaxDate(System.currentTimeMillis());
-        c.set(2000, 0, 1);
+        c.set(MIN_CALENDAR_YEAR, MIN_CALENDAR_MONTH, MIN_CALENDAR_DATE);
         dp.setMinDate(c.getTimeInMillis());
 
         return dpd;
     }
 
-    /**
-     * @param view       the picker associated with the dialog
-     * @param year       the selected year
-     * @param month      the selected month (0-11 for compatibility with
-     *                   {@link Calendar#MONTH})
-     * @param dayOfMonth th selected day of the month (1-31, depending on
-     */
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar c = Calendar.getInstance();

@@ -28,23 +28,12 @@ import k.kilg.creditapp.view.CreditAppViewInterface;
 import k.kilg.creditapp.view.adapters.CreditRVAdapter;
 
 
-//todo: По каждому кредиту должны выводиться:
-//
-//- дата и сумма очередного платежа. По дате очередного платежа: если в месяце нет такого дня, в который выдан кредит, то выводить последний день месяца (например кредит выдан 31.01.2017, значит в апреле дата будет 30.04)
-//- наименование (которое пользователь задает при добавлении/модификации кредита)
-//- остаток основного долга
-
 public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<Credit>, CreditAppViewInterface, CreditAppPresenterInterface> implements
         CreditAppViewInterface,
         CreditRVAdapter.CreditRVAdapterListener{
 
 
-    private CreditAppModelInterface mModel;
-    private CreditAppPresenterInterface mPresenter;
-
-    private RecyclerView mRv;
     private CreditRVAdapter mAdapter;
-
     private OnCreditFragmentInteractionListener mListener;
 
     public CreditFragment() {
@@ -57,15 +46,14 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
     @NonNull
     @Override
     public CreditAppPresenterInterface createPresenter() {
-        mModel = new CreditAppModel(this);
-        mPresenter = new CreditAppPresenter(mModel);
-        return mPresenter;
+        CreditAppModelInterface mModel = new CreditAppModel(this);
+        return new CreditAppPresenter(mModel);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRv = (RecyclerView) view.findViewById(R.id.contentView);
+        RecyclerView mRv = (RecyclerView) view.findViewById(R.id.contentView);
         mAdapter = new CreditRVAdapter();
         mAdapter.setListener(this);
         mRv.setAdapter(mAdapter);
@@ -91,7 +79,7 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
     @Override
     protected String getErrorMessage(Throwable e, boolean pullToRefresh) {
         String message = e.getMessage();
-        return message == null ? "Unknown error" : message;
+        return message == null ? getString(R.string.unknown_error_CS) : message;
     }
 
     @NonNull
@@ -147,7 +135,6 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
 
     @Override
     public void removeCredit(Credit credit) {
-        //mAdapter.removeCredit(credit);
         getPresenter().removeCredit(credit);
 
     }
@@ -171,16 +158,7 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnCreditFragmentInteractionListener {
         void startEditCredit(Credit credit);
     }

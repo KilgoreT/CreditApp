@@ -14,5 +14,4 @@ import k.kilg.creditapp.entities.Payout;
  * 11:51
  */
 public interface PayoutViewInterface extends MvpLceView<List<Payout>> {
-    void listLog(List<Payout> payoutList);
 }

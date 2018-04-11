@@ -101,25 +101,6 @@ public class CreditActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * This method is called after {@link #onStart} when the activity is
-     * being re-initialized from a previously saved state, given here in
-     * <var>savedInstanceState</var>.  Most implementations will simply use {@link #onCreate}
-     * to restore their state, but it is sometimes convenient to do it here
-     * after all of the initialization has been done or to allow subclasses to
-     * decide whether to use your default implementation.  The default
-     * implementation of this method performs a restore of any view state that
-     * had previously been frozen by {@link #onSaveInstanceState}.
-     * <p>
-     * <p>This method is called between {@link #onStart} and
-     * {@link #onPostCreate}.
-     *
-     * @param savedInstanceState the data most recently supplied in {@link #onSaveInstanceState}.
-     * @see #onCreate
-     * @see #onPostCreate
-     * @see #onResume
-     * @see #onSaveInstanceState
-     */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -136,7 +117,9 @@ public class CreditActivity extends AppCompatActivity implements
         TextView mHeaderEmail = (TextView) header.findViewById(R.id.header_tvEmail);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            String emailWithStatus = currentUser.getEmail() + "(" + (currentUser.isEmailVerified()? "verified)":"no verify)");
+            String emailWithStatus = currentUser.getEmail() + "(" + (currentUser.isEmailVerified()
+                    ? getString(R.string.ac_credit_header_verifyed)
+                    :getString(R.string.ac_credit_header_noverify));
             mHeaderEmail.setText(emailWithStatus);
         }
     }

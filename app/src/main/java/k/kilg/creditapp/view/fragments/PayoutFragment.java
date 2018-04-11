@@ -28,21 +28,14 @@ import k.kilg.creditapp.presenter.PayoutPresenterInterface;
 import k.kilg.creditapp.view.PayoutViewInterface;
 import k.kilg.creditapp.view.adapters.PayoutRVAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnPayoutFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PayoutFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class PayoutFragment extends MvpLceViewStateFragment<RecyclerView, List<Payout>, PayoutViewInterface, PayoutPresenterInterface> implements
         PayoutViewInterface  {
 
+    //todo: листенер не нужен?
     private OnPayoutFragmentInteractionListener mListener;
 
     private PayoutRVAdapter mAdapter;
-    private RecyclerView mRV;
 
     public PayoutFragment() {
         // Required empty public constructor
@@ -55,7 +48,7 @@ public class PayoutFragment extends MvpLceViewStateFragment<RecyclerView, List<P
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mRV = (RecyclerView) view.findViewById(R.id.contentView);
+        RecyclerView mRV = (RecyclerView) view.findViewById(R.id.contentView);
         mAdapter = new PayoutRVAdapter();
         mRV.setAdapter(mAdapter);
         mRV.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -81,7 +74,7 @@ public class PayoutFragment extends MvpLceViewStateFragment<RecyclerView, List<P
     @Override
     protected String getErrorMessage(Throwable e, boolean pullToRefresh) {
         String message = e.getMessage();
-        return message == null ? "Unknown error" : message;
+        return message == null ? getString(R.string.unknown_error_CS) : message;
     }
 
     @NonNull
@@ -109,13 +102,7 @@ public class PayoutFragment extends MvpLceViewStateFragment<RecyclerView, List<P
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_payout, container, false);
     }
-    // TODO: Rename method, update argument and hook method into UI event
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -134,24 +121,8 @@ public class PayoutFragment extends MvpLceViewStateFragment<RecyclerView, List<P
         mListener = null;
     }
 
-    @Override
-    public void listLog(List<Payout> payoutList) {
-        for (Payout payout : payoutList) {
-            Log.d("###", getClass().getSimpleName() + ":credit name is " + payout.getCreditName());
-            Log.d("###", getClass().getSimpleName() + ":credit name is " + payout.getAmount());
-        }
-    }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnPayoutFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

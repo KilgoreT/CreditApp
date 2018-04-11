@@ -1,5 +1,7 @@
 package k.kilg.creditapp;
 
+//checked
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;

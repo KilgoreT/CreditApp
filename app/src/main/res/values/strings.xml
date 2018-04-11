@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">CreditApp</string>
+
+
     <string name="ac_launch_wellcome_tv">Sign In</string>
     <string name="ac_launch_register_tv">or</string>
     <string name="ac_launch_signin_btn">signin</string>
@@ -13,8 +15,9 @@
     <string name="ac_launch_alert_email_required">Email required.</string>
     <string name="ac_launch_alert_email_not_valid">Email address not valid.</string>
     <string name="ac_launch_alert_password_required">Password required.</string>
-    <!--<string name="ac_launch_authentication">authentication</string>-->
-    <!--<string name="ac_launch_verification">verification</string>-->
+    <string name="ac_launch_email_CS">Email</string>
+    <string name="ac_launch_password_CS">Password</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -26,20 +29,25 @@
 
     <string name="btnOk">OK</string>
 
-    <string name="email_CS">Email</string>
-    <string name="password_CS">Password</string>
 
     <string name="add_credit_empty_fields">There are empty fields!</string>
 
 
-    <string name="annuity">Annuity</string>
-    <string name="differential">Differential</string>
-    <string name="credit_name">Name</string>
-    <string name="credit_rate">Rate</string>
-    <string name="credit_amount">Amount</string>
-    <string name="month_count">Month count</string>
-    <string name="edit_date">Edit date</string>
+    <string name="item_credit_percent_sign">%</string>
+    <string name="item_credit_months">months</string>
+    <string name="item_credit_rubles">rubles</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_add_credit_name">Name</string>
+    <string name="fragment_add_type_annuity">Annuity</string>
+    <string name="fragment_add_type_differential">Differential</string>
+    <string name="fragment_add_credit_amount">Amount</string>
+    <string name="fragment_add_credit_rate">Rate</string>
+    <string name="fragment_add_month_count">Month count</string>
+    <string name="fragment_add_edit_date">Edit date</string>
+    <string name="credit_adapter_annuity_CS">Annuity</string>
+    <string name="credit_adapter_differential_CS">Differential</string>
+    <string name="ac_credit_header_verifyed">verified)</string>
+    <string name="ac_credit_header_noverify">no verify)</string>
+    <string name="unknown_error_CS">Unknown error</string>
+
 </resources>

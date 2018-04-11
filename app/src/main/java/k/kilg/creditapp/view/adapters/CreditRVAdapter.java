@@ -45,10 +45,10 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
     @Override
     public CreditRVAdapter.CreditHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_credit_item, parent, false);
-        CreditHolder holder = new CreditHolder(v);
-        return holder;
+        return new CreditHolder(v);
     }
 
+    //todo: разобраться с position
     @Override
     public void onBindViewHolder(final CreditRVAdapter.CreditHolder holder, final int position) {
 
@@ -96,11 +96,6 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
         return 0;
     }
 
-    public void removeCredit(Credit credit) {
-        mCredits.remove(credit);
-        notifyDataSetChanged();
-    }
-
     public class CreditHolder extends RecyclerView.ViewHolder {
 
         private CardView mCV;
@@ -126,9 +121,11 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
             return mCreditName.getText().toString();
         }
 
-        public void bind(Credit credit) {
+        void bind(Credit credit) {
             mCreditName.setText(credit.getName());
-            mCreditType.setText(credit.isAnnuity() ? "Annuity" : "Differential");
+            mCreditType.setText(credit.isAnnuity()
+                    ? itemView.getContext().getString(R.string.credit_adapter_annuity_CS)
+                    : itemView.getContext().getString(R.string.credit_adapter_differential_CS));
             mCreditMonthCount.setText(String.valueOf(credit.getMonthCount()));
             mCreditAmount.setText(String.valueOf(credit.getAmount()));
             mCreditRate.setText(credit.getRate());
@@ -144,7 +141,8 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
             notifyItemChanged(position);
         }
 
-        public void setSelectedBackground(boolean selected) {
+        void setSelectedBackground(boolean selected) {
+            //todo: откоректировать цвета выделения
             if (selected) {
                 mCV.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.colorPrimaryDark));
             } else {
@@ -157,7 +155,7 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
         mListener = listener;
     }
 
-    ActionMode.Callback callback = new ActionMode.Callback() {
+    private ActionMode.Callback callback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.action_mode_menu, menu);
