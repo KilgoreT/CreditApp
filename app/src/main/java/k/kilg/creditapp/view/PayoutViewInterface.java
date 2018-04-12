@@ -13,5 +13,5 @@ import k.kilg.creditapp.entities.Payout;
  * 10.04.2018
  * 11:51
  */
-public interface PayoutViewInterface extends MvpLceView<List<Payout>> {
+public interface PayoutViewInterface extends MvpLceView<List<Object>> {
 }

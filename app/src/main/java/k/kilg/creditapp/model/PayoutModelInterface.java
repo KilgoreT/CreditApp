@@ -13,7 +13,7 @@ import k.kilg.creditapp.entities.Payout;
  * 11:56
  */
 public interface PayoutModelInterface {
-    Observable<List<Payout>> getPayouts();
+    Observable<List<Object>> getPayouts();
     public void loadCredits();
 
 }

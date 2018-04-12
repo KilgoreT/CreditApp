@@ -81,10 +81,8 @@ public class CreditAppModel implements CreditAppModelInterface {
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Log.d("###", "onChildAdded:" + dataSnapshot.getKey());
                         Credit credit = dataSnapshot.getValue(Credit.class);
                         credit.setKey(dataSnapshot.getKey());
-                        Log.d("###", "Model:Listener find credit " + credit.getName());
                         mCreditList.add(credit);
                         fragment.getPresenter().loadCredits();
                     }

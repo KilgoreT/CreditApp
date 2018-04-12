@@ -114,7 +114,7 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
             mCreditMonthCount = (TextView) itemView.findViewById(R.id.tvCreditMonthCount);
             mCreditAmount = (TextView) itemView.findViewById(R.id.tvCreditAmount);
             mCreditRate = (TextView) itemView.findViewById(R.id.tvCreditRate);
-            mCreditDate = (TextView) itemView.findViewById(R.id.tvCreditDate);
+            mCreditDate = (TextView) itemView.findViewById(R.id.tvPayoutDate);
         }
 
         public String getCreditName() {

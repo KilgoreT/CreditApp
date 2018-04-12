@@ -10,6 +10,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -41,10 +42,6 @@ public class PayoutModel implements PayoutModelInterface {
 
     }
 
-    Observable<Boolean> isLoadedData() {
-        Log.d("###", getClass().getSimpleName() + ":isLoadedData executing");
-        return Observable.just(loadedData);
-    }
 
     public void loadCredits() {
         Log.d("###", "Tools: starting...");
@@ -60,32 +57,29 @@ public class PayoutModel implements PayoutModelInterface {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        //List<Credit> credits = new ArrayList<>();
                         for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                             Credit credit = snapshot.getValue(Credit.class);
                             credit.setKey(snapshot.getKey());
-                            Log.d("###", "Tools: credit = " + credit.getName());
+                            Log.d("###", getClass().getCanonicalName() + ":onDataChange: credit = " + credit.getName());
                             mCredits.add(credit);
-                            //((CreditAppPresenter)presenter).setCreditFromDB(credits);
-                            Log.d("###", "Tools: credit.size = " + mCredits.size());
+                            Log.d("###", getClass().getCanonicalName() + ":onDataChange: credit.size = " + mCredits.size());
                         }
                         loadedData = true;
+                        Log.d("###", getClass().getCanonicalName() + ":onDataChange: loadedData = " + loadedData);
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.d("###", "Tools: canseled");
+                        Log.d("###", getClass().getCanonicalName() + ":onCancelled: " + databaseError.getMessage());
                     }
                 });
     }
 
-    public Observable<List<Payout>> getPayouts() {
+    public Observable<List<Object>> getPayouts() {
         Observable<Boolean> tratata = Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> emitter) throws Exception {
                 while (!loadedData) {
-                    //Thread.sleep(100);
-                    //isLoadedData()
                     emitter.onNext(loadedData);
                 }
                 emitter.onComplete();
@@ -105,9 +99,9 @@ public class PayoutModel implements PayoutModelInterface {
                     }
                 })
                 .subscribeOn(Schedulers.io())
-                .flatMap(new Function<List<Credit>, ObservableSource<List<Payout>>>() {
+                .flatMap(new Function<List<Credit>, ObservableSource<List<Object>>>() {
                     @Override
-                    public ObservableSource<List<Payout>> apply(List<Credit> credits) throws Exception {
+                    public ObservableSource<List<Object>> apply(List<Credit> credits) throws Exception {
                         List<Payout> payoutList = new ArrayList<>();
                         for (Credit credit: credits) {
                             if (credit.isAnnuity()) {
@@ -131,8 +125,26 @@ public class PayoutModel implements PayoutModelInterface {
                             }
                         });
                         //Collections.sort(payoutList);
-                        return Observable.fromArray(payoutList);
+
+                        return Observable.fromArray((List<Object>) new ArrayList<Object>(prepareList(payoutList)) {
+                        });
                     }
                 });
+    }
+    public List<Object> prepareList (List<Payout> payoutList) {
+        List<Object> preparedList = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        int month = -1;
+        for (Payout payout: payoutList) {
+            Date date = payout.getDate();
+            calendar.setTime(date);
+            if (month != calendar.get(Calendar.MONTH)) {
+                month = calendar.get(Calendar.MONTH);
+                preparedList.add(CreditTools.getMonthName(month));
+            }
+            preparedList.add(payout);
+
+        }
+        return preparedList;
     }
 }

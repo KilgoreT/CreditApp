@@ -29,7 +29,7 @@ import k.kilg.creditapp.view.PayoutViewInterface;
 import k.kilg.creditapp.view.adapters.PayoutRVAdapter;
 
 
-public class PayoutFragment extends MvpLceViewStateFragment<RecyclerView, List<Payout>, PayoutViewInterface, PayoutPresenterInterface> implements
+public class PayoutFragment extends MvpLceViewStateFragment<RecyclerView, List<Object>, PayoutViewInterface, PayoutPresenterInterface> implements
         PayoutViewInterface  {
 
     //todo: листенер не нужен?
@@ -62,7 +62,7 @@ public class PayoutFragment extends MvpLceViewStateFragment<RecyclerView, List<P
     }
 
     @Override
-    public List<Payout> getData() {
+    public List<Object> getData() {
         return mAdapter == null ? null : mAdapter.getData();
     }
 
@@ -79,12 +79,12 @@ public class PayoutFragment extends MvpLceViewStateFragment<RecyclerView, List<P
 
     @NonNull
     @Override
-    public LceViewState<List<Payout>, PayoutViewInterface> createViewState() {
+    public LceViewState<List<Object>, PayoutViewInterface> createViewState() {
         return new RetainingLceViewState<>();
     }
 
     @Override
-    public  void setData(List<Payout> data) {
+    public  void setData(List<Object> data) {
         mAdapter.setData(data);
     }
 
