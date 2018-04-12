@@ -36,7 +36,7 @@ public class Payout{
         return mAmount;
     }
 
-    public void setAmount(String amount) {
+    public void setMonthPayout(String amount) {
         this.mAmount = amount;
     }
 

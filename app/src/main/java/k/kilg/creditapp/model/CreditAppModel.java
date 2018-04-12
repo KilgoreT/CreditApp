@@ -75,6 +75,7 @@ public class CreditAppModel implements CreditAppModelInterface {
                 .updateChildren(credit.toMap());
     }
 
+    //todo: если нет кредитов, то эти колбэки не вызываются и на экране showloading.
     @Override
     public void initDbListener() {
         dbRef
@@ -128,6 +129,7 @@ public class CreditAppModel implements CreditAppModelInterface {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.d("###", "onCancel");
+                        fragment.getPresenter().loadCredits();
                     }
                 });
     }

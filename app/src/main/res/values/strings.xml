@@ -49,5 +49,6 @@
     <string name="ac_credit_header_verifyed">verified)</string>
     <string name="ac_credit_header_noverify">no verify)</string>
     <string name="unknown_error_CS">Unknown error</string>
+    <string name="month_january">Январь</string>
 
 </resources>
