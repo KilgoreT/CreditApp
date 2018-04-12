@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -205,6 +206,8 @@ public class CreditActivity extends AppCompatActivity implements
     @Override
     public void startEditCredit(Credit credit) {
         if (addCreditSimpleFragment !=  null && credit != null) {
+            Log.d("###", getClass().getSimpleName() + "credit.name=" + credit.getName());
+            Log.d("###", getClass().getSimpleName() + "credit.amount=" + credit.getAmount());
             Bundle bundle = new Bundle();
             bundle.putString(CREDIT_NAME_KEY, credit.getName());
             bundle.putString(CREDIT_AMOUNT_KEY, String.valueOf(credit.getAmount()));

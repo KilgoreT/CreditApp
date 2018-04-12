@@ -26,9 +26,6 @@ import static android.provider.Settings.Global.getString;
  */
 public class CreditTools {
 
-    //todo: В графике платежей должны перечисляться все месяцы, начиная со СЛЕДУЮЩЕГО после
-    //выдачи кредита.
-
     private static final BigDecimal MONTHS_IN_YEAR = new BigDecimal(12);
     private static final BigDecimal HUNDRED = new BigDecimal(100);
     private static final int SCALE_FOR_CURRENCY = 2;

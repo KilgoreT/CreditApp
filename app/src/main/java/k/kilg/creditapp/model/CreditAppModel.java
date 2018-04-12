@@ -10,10 +10,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Logger;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+import java.util.TreeSet;
 
 import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.presenter.CreditAppPresenter;
@@ -57,6 +61,27 @@ public class CreditAppModel implements CreditAppModelInterface {
                 .push()
                 .setValue(credit);
     }
+    
+    public void getInitialData() {
+        dbRef
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                            Credit credit = snapshot.getValue(Credit.class);
+                            credit.setKey(snapshot.getKey());
+                            mCreditList.add(credit);
+                        }
+                            fragment.getPresenter().loadCredits();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+
+                });
+    }
 
     @Override
     public void removeCredit(Credit credit) {
@@ -75,7 +100,6 @@ public class CreditAppModel implements CreditAppModelInterface {
                 .updateChildren(credit.toMap());
     }
 
-    //todo: если нет кредитов, то эти колбэки не вызываются и на экране showloading.
     @Override
     public void initDbListener() {
         dbRef
@@ -84,41 +108,39 @@ public class CreditAppModel implements CreditAppModelInterface {
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Credit credit = dataSnapshot.getValue(Credit.class);
                         credit.setKey(dataSnapshot.getKey());
-                        mCreditList.add(credit);
-                        fragment.getPresenter().loadCredits();
+                        if (!mCreditList.contains(credit)) {
+                            mCreditList.add(credit);
+                            fragment.getPresenter().loadCredits();
+                        }
                     }
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                        Log.d("###", "onChildChanged:");
-                        //todo обработать все варианты
-                        Integer index = null;
                         Credit credit = dataSnapshot.getValue(Credit.class);
                         credit.setKey(dataSnapshot.getKey());
+                        Integer index = null;
                         for (Credit c : mCreditList) {
                             if (c.getKey().equals(dataSnapshot.getKey())) {
                                 index = mCreditList.indexOf(c);
                             }
                         }
                         if (index != null) {
-                            mCreditList.remove(index);
-                            mCreditList.add(index, credit);
+                            mCreditList.get(index).setName(credit.getName());
+                            mCreditList.get(index).setAmount(credit.getAmount());
+                            mCreditList.get(index).setAnnuity(credit.isAnnuity());
+                            mCreditList.get(index).setDate(credit.getDate());
+                            mCreditList.get(index).setMonthCount(credit.getMonthCount());
+                            mCreditList.get(index).setRate(credit.getRate());
+                            fragment.getPresenter().loadCredits();
                         }
-                        fragment.getPresenter().loadCredits();
                     }
 
                     @Override
                     public void onChildRemoved(DataSnapshot dataSnapshot) {
-                        Log.d("###", "onChildRemoved:");
                         Credit credit = dataSnapshot.getValue(Credit.class);
                         credit.setKey(dataSnapshot.getKey());
-                        Log.d("###", "Model:Listener remove credit " + credit.getName());
-                        Log.d("###", "Model:Listener remove list size = " + mCreditList.size());
-                        //todo: не удаляется  объект из листа
                         mCreditList.remove(credit);
-                        Log.d("###", "Model:Listener remove list size = " + mCreditList.size());
                         fragment.getPresenter().loadCredits();
-                        //((CreditAppPresenter) fragment.getPresenter()).setCreditFromDB(mCreditList);
                     }
 
                     @Override

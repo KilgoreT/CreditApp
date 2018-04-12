@@ -112,6 +112,22 @@ public class Credit {
         this.key = key;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Credit credit = (Credit) o;
+
+        return key.equals(credit.key);
+    }
+
+    @Override
+    public int hashCode() {
+        return key.hashCode();
+    }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();

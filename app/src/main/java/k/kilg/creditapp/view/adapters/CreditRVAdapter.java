@@ -1,8 +1,10 @@
 package k.kilg.creditapp.view.adapters;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import k.kilg.creditapp.CreditActivity;
 import k.kilg.creditapp.R;
@@ -35,6 +38,7 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
 
     public void setData(List<Credit> data) {
         mCredits = data;
+        Log.d("###", "adapter set data. count is " + mCredits.size());
     }
 
     public List<Credit> getData() {
@@ -99,6 +103,7 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
     public class CreditHolder extends RecyclerView.ViewHolder {
 
         private CardView mCV;
+        private ConstraintLayout mCL;
         private TextView mCreditName;
         private TextView mCreditType;
         private TextView mCreditMonthCount;
@@ -109,6 +114,7 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
         public CreditHolder(View itemView) {
             super(itemView);
             mCV = (CardView) itemView.findViewById(R.id.cardview);
+            mCL = (ConstraintLayout) itemView.findViewById(R.id.CL);
             mCreditName = (TextView) itemView.findViewById(R.id.tvCreditName);
             mCreditType = (TextView) itemView.findViewById(R.id.tvCreditType);
             mCreditMonthCount = (TextView) itemView.findViewById(R.id.tvCreditMonthCount);
@@ -142,11 +148,10 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
         }
 
         void setSelectedBackground(boolean selected) {
-            //todo: откоректировать цвета выделения
             if (selected) {
-                mCV.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.colorPrimaryDark));
+                mCL.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.et_background));
             } else {
-                mCV.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.et_background));
+                mCL.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.white));
             }
         }
     }
@@ -184,6 +189,10 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
                         ((CreditFragment)mListener).showSnackbar("Choose one element to edit");
                         break;
                     } else {
+                        Log.d("###", "onActionItemClicked: mSelectedList.size() = " + mSelectedList.size());
+                        if (mSelectedList.size() > 1) {
+                            Log.d("###", "onActionItemClicked: mSelectedList.size() is long ");
+                        }
                         ((CreditFragment)mListener).startEditCredit(mSelectedList.get(0));
                     }
                     mSelectedList.clear();

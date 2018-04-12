@@ -27,11 +27,14 @@ public class CreditAppPresenter extends MvpBasePresenter<CreditAppViewInterface>
     }
 
     public void sendQueryForData() {
+        Log.d("###", "sendQueryForData starting");
         if (isViewAttached()) {
             getView().showLoading(false);
-            model.initDbListener();
+            Log.d("###", "sendQueryForData starting initial data");
+            model.getInitialData();
         }
     }
+
 
     @Override
     public void loadCredits() {
@@ -39,12 +42,14 @@ public class CreditAppPresenter extends MvpBasePresenter<CreditAppViewInterface>
         if (isViewAttached()) {
             getView().setData(model.getCreditsList());
             getView().showContent();
+            model.initDbListener();
         }
     }
 
 
     @Override
     public void addCredit(Credit credit) {
+        Log.d("###", "Presenter addCredit");
         model.addCredit(credit);
     }
 

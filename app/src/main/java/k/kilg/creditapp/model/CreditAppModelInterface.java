@@ -1,6 +1,7 @@
 package k.kilg.creditapp.model;
 
 import java.util.List;
+import java.util.Set;
 
 import k.kilg.creditapp.entities.Credit;
 
@@ -12,6 +13,7 @@ import k.kilg.creditapp.entities.Credit;
  */
 public interface CreditAppModelInterface {
 
+    void getInitialData();
     void initDbListener();
     void addCredit(Credit credit);
     void removeCredit(Credit credit);

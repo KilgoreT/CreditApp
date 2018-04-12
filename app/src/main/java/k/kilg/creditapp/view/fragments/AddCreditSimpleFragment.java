@@ -76,9 +76,13 @@ public class AddCreditSimpleFragment extends Fragment {
             }
         });
         if (getArguments() != null) {
+            Log.d("###", getClass().getSimpleName() + ":bundle not null");
             mEditMode = true;
+            Log.d("###", getClass().getSimpleName() + ":CREDIT_DATABASE_KEY:"+getArguments().getString(CREDIT_DATABASE_KEY));
             mCreditDatabaseKey = getArguments().getString(CREDIT_DATABASE_KEY);
+            Log.d("###", getClass().getSimpleName() + ":CREDIT_NAME_KEY:"+getArguments().getString(CREDIT_NAME_KEY));
             mEtCreditName.setText(getArguments().getString(CREDIT_NAME_KEY));
+            Log.d("###", getClass().getSimpleName() + ":mEtCreditName.getText:"+ mEtCreditName.getText().toString());
             mEtCreditAmount.setText(getArguments().getString(CREDIT_AMOUNT_KEY));
             mEtCreditMonthCount.setText(getArguments().getString(CREDIT_MONTH_COUNT_KEY));
             mEtCreditRate.setText(getArguments().getString(CREDIT_RATE_KEY));
@@ -86,6 +90,8 @@ public class AddCreditSimpleFragment extends Fragment {
             mRgCreditType
                     .check(getArguments()
                             .getBoolean(CREDIT_TYPE_KEY)? R.id.addCredit_rgCreditAnnuity : R.id.addCredit_rgCreditDifferential);
+        } else {
+            Log.d("###", getClass().getSimpleName() + ":bundle is null");
         }
         return v;
     }
@@ -95,7 +101,7 @@ public class AddCreditSimpleFragment extends Fragment {
         if (mListener != null) {
             Credit credit = createCredit();
             if (credit != null) {
-                clearFields();
+                //clearFields();
                 if (mEditMode) {
                     if (mListener != null) {
                         mEditMode = false;
@@ -103,6 +109,7 @@ public class AddCreditSimpleFragment extends Fragment {
                     }
                 } else {
                     if (mListener != null) {
+                        mEditMode = false;
                         mListener.onAddCreditSimpleFragmentClose(credit);
                     }
                 }
@@ -171,6 +178,7 @@ public class AddCreditSimpleFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        clearFields();
         mListener = null;
     }
 
