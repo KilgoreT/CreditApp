@@ -85,7 +85,6 @@ public class CreditAppModel implements CreditAppModelInterface {
 
     @Override
     public void removeCredit(Credit credit) {
-        //todo: При удалении кредита необходимо запрашивать подтверждение
         Log.d("###", ">>" + getClass().getSimpleName() + ":removeCredit: " + credit.getName() + ":" + credit.getKey());
         dbRef
                 .child(credit.getKey())

@@ -1,6 +1,9 @@
 package k.kilg.creditapp.view.adapters;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 import k.kilg.creditapp.CreditActivity;
+import k.kilg.creditapp.LaunchActivity;
 import k.kilg.creditapp.R;
 import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.view.fragments.CreditFragment;
@@ -174,15 +178,46 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
         }
 
         @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        public boolean onActionItemClicked(final ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_remove:
-                    for (Credit credit : mSelectedList) {
-                        mListener.removeCredit(credit);
+                    if (mSelectedList.size() == 0) {
+                        ((CreditFragment)mListener).showSnackbar("No element to remove");
+                        break;
                     }
-                    mSelectedList.clear();
-                    notifyDataSetChanged();
-                    mode.finish();
+                    Context context = ((CreditFragment)mListener).getContext();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    String alertMessage = context.getResources().getString(R.string.alert_confirm_deletion_message);
+                    if (mSelectedList.size() == 1) {
+                        alertMessage = alertMessage + " " + mSelectedList.size()  + " " + context.getResources().getString(R.string.alert_confirm_deletion_credit);
+                    } else if (mSelectedList.size() > 1) {
+                        alertMessage = alertMessage + " " + mSelectedList.size()  + " " + context.getResources().getString(R.string.alert_confirm_deletion_credits);
+                    }
+                    builder
+                            .setTitle(R.string.alert_confirm_deletion_title)
+                            .setCancelable(true)
+                            .setMessage(alertMessage)
+                            .setPositiveButton(R.string.btnYes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    for (Credit credit : mSelectedList) {
+                                        mListener.removeCredit(credit);
+                                    }
+                                    mSelectedList.clear();
+                                    notifyDataSetChanged();
+                                    mode.finish();
+                                }
+                            })
+                            .setNegativeButton(R.string.btnNo, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mSelectedList.clear();
+                                    notifyDataSetChanged();
+                                    mode.finish();
+                                }
+                            })
+                            .create()
+                            .show();
                     break;
                 case R.id.menu_edit:
                     if (mSelectedList.size() == 0 || mSelectedList.size() > 1) {

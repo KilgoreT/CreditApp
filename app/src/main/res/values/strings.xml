@@ -28,7 +28,14 @@
     <string name="menu_signout">SignOut</string>
 
     <string name="btnOk">OK</string>
+    <string name="btnYes">YES</string>
+    <string name="btnNo">NO</string>
 
+
+    <string name="alert_confirm_deletion_title">Please, confirm deletion</string>
+    <string name="alert_confirm_deletion_message">Are you realy want to remove </string>
+    <string name="alert_confirm_deletion_credit"> credit?</string>
+    <string name="alert_confirm_deletion_credits"> credits?</string>
 
     <string name="add_credit_empty_fields">There are empty fields!</string>
 
@@ -49,6 +56,7 @@
     <string name="ac_credit_header_verifyed">verified)</string>
     <string name="ac_credit_header_noverify">no verify)</string>
     <string name="unknown_error_CS">Unknown error</string>
+
     <string name="month_january">Январь</string>
 
 </resources>
