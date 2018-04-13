@@ -106,12 +106,14 @@ public class AddCreditSimpleFragment extends Fragment {
             if (credit != null) {
                 //clearFields();
                 if (mEditMode) {
-                    if (mListener != null) {
+                    if (mListener != null)
+                        clearFields();{
                         mEditMode = false;
                         mListener.onUpdateCreditSimpleFragmentClose(credit);
                     }
                 } else {
                     if (mListener != null) {
+                        clearFields();
                         mEditMode = false;
                         mListener.onAddCreditSimpleFragmentClose(credit);
                     }
@@ -162,8 +164,7 @@ public class AddCreditSimpleFragment extends Fragment {
         mEtCreditAmount.setText("");
         mEtCreditRate.setText("");
         mEtCreditMonthCount.setText("");
-        //todo: подумать, как оформить дату
-        mTvCreditDate.setText("EditDate");
+        mTvCreditDate.setText("");
     }
 
     @Override

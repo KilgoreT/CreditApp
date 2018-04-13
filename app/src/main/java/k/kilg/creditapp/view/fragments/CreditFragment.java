@@ -133,11 +133,9 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
         getPresenter().updateCredit(credit);
     }
 
-
     @Override
     public void removeCredit(Credit credit) {
         getPresenter().removeCredit(credit);
-
     }
 
 
