@@ -17,10 +17,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import k.kilg.creditapp.CreditActivity;
-import k.kilg.creditapp.LaunchActivity;
 import k.kilg.creditapp.R;
 import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.view.fragments.CreditFragment;
@@ -114,7 +112,7 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
         private TextView mCreditRate;
         private TextView mCreditDate;
 
-        public CreditHolder(View itemView) {
+        CreditHolder(View itemView) {
             super(itemView);
             mCV = (CardView) itemView.findViewById(R.id.cardview);
             mCL = (ConstraintLayout) itemView.findViewById(R.id.CL);
@@ -152,7 +150,7 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
 
         void setSelectedBackground(boolean selected) {
             if (selected) {
-                mCL.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.et_background));
+                mCL.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.background_dark));
             } else {
                 mCL.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.white));
             }

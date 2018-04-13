@@ -27,6 +27,9 @@
     <string name="menu_payout">Payout</string>
     <string name="menu_signout">SignOut</string>
 
+    <string name="menu_action_mode_edit_credit">Edit credit</string>
+    <string name="menu_action_mode_remove_credit">Remove credit</string>
+
     <string name="ac_credit_header_verifyed">verified)</string>
     <string name="ac_credit_header_noverify">no verify)</string>
 
@@ -36,7 +39,7 @@
 
 
     <string name="alert_confirm_deletion_title">Please, confirm deletion</string>
-    <string name="alert_confirm_deletion_message">Are you realy want to remove </string>
+    <string name="alert_confirm_deletion_message">Are you really want to remove </string>
     <string name="alert_confirm_deletion_credit"> credit?</string>
     <string name="alert_confirm_deletion_credits"> credits?</string>
 
