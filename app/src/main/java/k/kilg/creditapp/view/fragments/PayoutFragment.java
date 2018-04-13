@@ -32,9 +32,6 @@ import k.kilg.creditapp.view.adapters.PayoutRVAdapter;
 public class PayoutFragment extends MvpLceViewStateFragment<RecyclerView, List<Object>, PayoutViewInterface, PayoutPresenterInterface> implements
         PayoutViewInterface  {
 
-    //todo: листенер не нужен?
-    private OnPayoutFragmentInteractionListener mListener;
-
     private PayoutRVAdapter mAdapter;
 
     public PayoutFragment() {
@@ -101,30 +98,5 @@ public class PayoutFragment extends MvpLceViewStateFragment<RecyclerView, List<O
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_payout, container, false);
-    }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnPayoutFragmentInteractionListener) {
-            mListener = (OnPayoutFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnPayoutFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-
-
-    public interface OnPayoutFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

@@ -56,16 +56,15 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
         return new CreditHolder(v);
     }
 
-    //todo: разобраться с position
     @Override
-    public void onBindViewHolder(final CreditRVAdapter.CreditHolder holder, final int position) {
+    public void onBindViewHolder(final CreditRVAdapter.CreditHolder holder, int position) {
 
         holder.bind(mCredits.get(position));
         holder.mCV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mModeEnabled) {
-                    holder.changeSelectedList(getCreditByTitle(holder.getCreditName()), position);
+                    holder.changeSelectedList(getCreditByTitle(holder.getCreditName()), holder.getAdapterPosition());
                 }
             }
         });
@@ -75,7 +74,7 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
             public boolean onLongClick(View v) {
                 mListener.showActionMode(callback);
                 if(mModeEnabled) {
-                    holder.changeSelectedList(getCreditByTitle(holder.getCreditName()), position);
+                    holder.changeSelectedList(getCreditByTitle(holder.getCreditName()), holder.getAdapterPosition());
                 }
                 return true;
             }

@@ -104,18 +104,17 @@ public class AddCreditSimpleFragment extends Fragment {
         if (mListener != null) {
             Credit credit = createCredit();
             if (credit != null) {
-                //clearFields();
                 if (mEditMode) {
                     if (mListener != null)
-                        clearFields();{
                         mEditMode = false;
                         mListener.onUpdateCreditSimpleFragmentClose(credit);
+                        clearFields();{
                     }
                 } else {
                     if (mListener != null) {
-                        clearFields();
                         mEditMode = false;
                         mListener.onAddCreditSimpleFragmentClose(credit);
+                        clearFields();
                     }
                 }
             }
@@ -160,6 +159,7 @@ public class AddCreditSimpleFragment extends Fragment {
     }
 
     public void clearFields() {
+        Log.d("###", ">>crear fields");
         mEtCreditName.setText("");
         mEtCreditAmount.setText("");
         mEtCreditRate.setText("");
@@ -177,6 +177,7 @@ public class AddCreditSimpleFragment extends Fragment {
                     + " must implement OnAddCreditSimpleFragmentInteractionListener");
         }
     }
+
 
 
 

@@ -28,8 +28,7 @@ import k.kilg.creditapp.view.fragments.PayoutFragment;
 public class CreditActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         CreditFragment.OnCreditFragmentInteractionListener,
-        AddCreditSimpleFragment.OnAddCreditSimpleFragmentInteractionListener,
-        PayoutFragment.OnPayoutFragmentInteractionListener {
+        AddCreditSimpleFragment.OnAddCreditSimpleFragmentInteractionListener {
 
     private static final String CREDIT_FRAGMENT_TAG = "CreditFragmentTag";
     private static final String ADD_CREDIT_SIMPLE_FRAGMENT_TAG = "AddCreditSimpleFragmentTag";
@@ -132,10 +131,10 @@ public class CreditActivity extends AppCompatActivity implements
         Fragment currentFragment = getSupportFragmentManager()
                 .findFragmentById(R.id.creditFragment);
         if (currentFragment != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.creditFragment, fragment, tag)
-                    .commit();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.creditFragment, fragment, tag)
+                        .commit();
         } else {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -221,8 +220,4 @@ public class CreditActivity extends AppCompatActivity implements
         }
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-        //payoutFragment
-    }
 }

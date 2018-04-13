@@ -9,12 +9,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -25,6 +27,7 @@ import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.entities.Payout;
+import k.kilg.creditapp.entities.Resume;
 import k.kilg.creditapp.tools.CreditTools;
 
 /**
@@ -34,7 +37,7 @@ import k.kilg.creditapp.tools.CreditTools;
  * 11:57
  */
 public class PayoutModel implements PayoutModelInterface {
-    private List<Payout> mPayouts = new ArrayList<>();
+    //private List<Payout> mPayouts = new ArrayList<>();
     private List<Credit> mCredits = new ArrayList<>();
     boolean loadedData = false;
 
@@ -98,7 +101,7 @@ public class PayoutModel implements PayoutModelInterface {
                         return Observable.fromArray(mCredits);
                     }
                 })
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.computation())
                 .flatMap(new Function<List<Credit>, ObservableSource<List<Object>>>() {
                     @Override
                     public ObservableSource<List<Object>> apply(List<Credit> credits) throws Exception {
@@ -124,10 +127,9 @@ public class PayoutModel implements PayoutModelInterface {
                                 return firstName.compareTo(secondName);
                             }
                         });
-                        //Collections.sort(payoutList);
 
-                        return Observable.fromArray((List<Object>) new ArrayList<Object>(prepareList(payoutList)) {
-                        });
+                        return Observable
+                                .fromArray((List<Object>) new ArrayList<Object>(prepareList(payoutList)));
                     }
                 });
     }
@@ -140,11 +142,18 @@ public class PayoutModel implements PayoutModelInterface {
             calendar.setTime(date);
             if (month != calendar.get(Calendar.MONTH)) {
                 month = calendar.get(Calendar.MONTH);
-                preparedList.add(CreditTools.getMonthName(month));
+                String monthString = CreditTools.getMonthName(month);
+                String yearString = String.valueOf(calendar.get(Calendar.YEAR));
+                preparedList.add(monthString + " " + yearString);
             }
             preparedList.add(payout);
-
         }
+        Resume resume = new Resume();
+        BigDecimal allPaymentAmount = CreditTools.getAllPaymentAmount(payoutList);
+        BigDecimal allOverpayment = allPaymentAmount.subtract(CreditTools.getAllCreditAmount(mCredits));
+        resume.setAllPaymentAmount(String.valueOf(allPaymentAmount));
+        resume.setAllOverpayment(String.valueOf(allOverpayment));
+        preparedList.add(resume);
         return preparedList;
     }
 }

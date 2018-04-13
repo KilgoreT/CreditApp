@@ -1,6 +1,7 @@
 package k.kilg.creditapp.view.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import k.kilg.creditapp.R;
 import k.kilg.creditapp.entities.Payout;
+import k.kilg.creditapp.entities.Resume;
 
 /**
  * Created by apomazkin on 10.04.2018.
@@ -21,6 +23,7 @@ import k.kilg.creditapp.entities.Payout;
 public class PayoutRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int PAYOUT = 0;
     private static final int MONTH = 1;
+    private static final int RESUME = 2;
     private List<Object> mData;
     private List<Payout> mPayout;
     private PayoutRVAdapterListener mListener;
@@ -35,17 +38,18 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 viewHolder = new MonthHolder(vMonth);
                 break;
             case PAYOUT:
-                View vPayout = inflater.inflate(R.layout.rv_payout_item, parent, false);
+                View vPayout = inflater.inflate(R.layout.rv_payout_item_constrane, parent, false);
                 viewHolder = new PayoutHolder(vPayout);
+                break;
+            case RESUME:
+                View vResume = inflater.inflate(R.layout.rv_resume_item, parent, false);
+                viewHolder = new ResumeHolder(vResume);
                 break;
              default:
                  View v = inflater.inflate(R.layout.rv_default_item, parent, false);
                  viewHolder = new DefaultHolder(v);
                  break;
-
         }
-        //View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_payout_item, parent, false);
-        //PayoutHolder holder = new PayoutHolder(v);
         return viewHolder;
     }
 
@@ -60,8 +64,11 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 MonthHolder monthHolder = (MonthHolder) holder;
                 monthHolder.bind((String) mData.get(position));
                 break;
+            case RESUME:
+                ResumeHolder resumeHolder = (ResumeHolder) holder;
+                resumeHolder.bind((Resume) mData.get(position));
+                break;
         }
-        //holder.bind(mPayout.get(position));
     }
 
     @Override
@@ -70,6 +77,8 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return PAYOUT;
         } else if (mData.get(position) instanceof String) {
             return MONTH;
+        } else if (mData.get(position) instanceof Resume) {
+            return RESUME;
         }
         return -1;
     }
@@ -122,6 +131,22 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         public void bind(String month) {
             mTvMonth.setText(month);
+        }
+    }
+
+    public class ResumeHolder extends RecyclerView.ViewHolder {
+        private TextView mTvAllPaymentAmount;
+        private TextView mTvAllOverpayment;
+
+        public ResumeHolder(View itemView) {
+            super(itemView);
+            mTvAllPaymentAmount = (TextView) itemView.findViewById(R.id.tvAllPaymentAmount);
+            mTvAllOverpayment = (TextView) itemView.findViewById(R.id.tvAllOverpayment);
+        }
+        public void bind(Resume resume) {
+            Log.d("###", "resume in holder: " + resume.getAllOverpayment());
+            mTvAllPaymentAmount.setText(resume.getAllPaymentAmount());
+            mTvAllOverpayment.setText(resume.getAllOverpayment());
         }
     }
 

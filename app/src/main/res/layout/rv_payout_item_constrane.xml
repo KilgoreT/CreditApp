@@ -10,59 +10,129 @@
     app:cardBackgroundColor="@android:color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
+        android:orientation="horizontal"
         >
-
-        <TextView
-            android:id="@+id/payoutCreditName"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Кредит на маленькую недорогую вещицу 000 000000 00 000000000 00 00000"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/payoutDate"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="vertical"
+            android:layout_weight="3"
+            >
+            <TextView
+                android:id="@+id/tvPayoutCreditName"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_weight="4"
+                tools:text="Кредит на маленькую недорогую вещицу 000 000000 00 000000000 00 00000"
+                />
+            <TextView
+                android:id="@+id/tvTitlePayoutDate"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="bottom"
+                android:text="payout date"
+                android:textColor="@android:color/black"
+                android:textSize="8sp"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:id="@+id/tvPayoutDate"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="top"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                tools:text="2008.04.04"
+                android:layout_weight="3"
+                />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/payoutAmount"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:gravity="left"
-            android:text="12000"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/payoutCreditName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/payoutCreditName" />
+            android:orientation="vertical"
+            android:layout_weight="2"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:layout_weight="2"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                >
+                <TextView
+                    android:id="@+id/tvTitleBalance"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="balance"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp"
+                    android:layout_weight="1"
+                    />
+                <TextView
+                    android:id="@+id/tvPayoutBalance"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp"
+                    tools:text="1 000 000 000"
+                    android:layout_weight="2"
+                    />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tvTitlePayoutAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="bottom"
+                android:text="payout amount"
+                android:textColor="@android:color/black"
+                android:textSize="8sp"
+                android:visibility="visible"
+                android:layout_weight="1"
+                 />
+            <TextView
+                android:id="@+id/tvPayoutAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="top"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:layout_weight="3"
+                tools:text="23555.23" />
 
-        <TextView
-            android:id="@+id/payoutDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:text="2018.03.22"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

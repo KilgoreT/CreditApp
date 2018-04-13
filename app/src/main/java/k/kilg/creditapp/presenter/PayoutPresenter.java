@@ -37,7 +37,6 @@ public class PayoutPresenter extends MvpBasePresenter<PayoutViewInterface> imple
     public void loadData() {
         if (isViewAttached()) {
             getView().showLoading(false);
-            //getView().setData(mModel.getPayouts());
             mModel.loadCredits();
             mModel
                     .getPayouts()
@@ -54,7 +53,7 @@ public class PayoutPresenter extends MvpBasePresenter<PayoutViewInterface> imple
         }
     }
 
-    public List<Object> prepareList (List<Payout> payoutList) {
+/*    public List<Object> prepareList (List<Payout> payoutList) {
         List<Object> preparedList = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         int month = -1;
@@ -70,6 +69,6 @@ public class PayoutPresenter extends MvpBasePresenter<PayoutViewInterface> imple
         }
 
         return preparedList;
-    }
+    }*/
 
 }

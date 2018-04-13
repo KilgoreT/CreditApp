@@ -93,6 +93,7 @@ public class CreditAppModel implements CreditAppModelInterface {
 
     @Override
     public void updateCredit(Credit credit) {
+        //todo: при повторном апдейте элемента фрагмен всплывает без заполненных полей. возможно нужно убивать фрагмент каждый раз
         Log.d("###", ">>" + getClass().getSimpleName() + ":updateCredit: " + credit.getName() + ":" + credit.getKey());
         dbRef
                 .child(credit.getKey())
