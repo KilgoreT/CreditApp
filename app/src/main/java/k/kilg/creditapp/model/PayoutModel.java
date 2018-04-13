@@ -39,7 +39,7 @@ import k.kilg.creditapp.tools.CreditTools;
 public class PayoutModel implements PayoutModelInterface {
     //private List<Payout> mPayouts = new ArrayList<>();
     private List<Credit> mCredits = new ArrayList<>();
-    boolean loadedData = false;
+    private boolean loadedData = false;
 
     public PayoutModel() {
 
@@ -47,7 +47,6 @@ public class PayoutModel implements PayoutModelInterface {
 
 
     public void loadCredits() {
-        Log.d("###", "Tools: starting...");
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
             return;
@@ -63,23 +62,19 @@ public class PayoutModel implements PayoutModelInterface {
                         for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                             Credit credit = snapshot.getValue(Credit.class);
                             credit.setKey(snapshot.getKey());
-                            Log.d("###", getClass().getCanonicalName() + ":onDataChange: credit = " + credit.getName());
                             mCredits.add(credit);
-                            Log.d("###", getClass().getCanonicalName() + ":onDataChange: credit.size = " + mCredits.size());
                         }
                         loadedData = true;
-                        Log.d("###", getClass().getCanonicalName() + ":onDataChange: loadedData = " + loadedData);
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.d("###", getClass().getCanonicalName() + ":onCancelled: " + databaseError.getMessage());
                     }
                 });
     }
 
     public Observable<List<Object>> getPayouts() {
-        Observable<Boolean> tratata = Observable.create(new ObservableOnSubscribe<Boolean>() {
+        Observable<Boolean> loadingDataStatus = Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> emitter) throws Exception {
                 while (!loadedData) {
@@ -88,7 +83,7 @@ public class PayoutModel implements PayoutModelInterface {
                 emitter.onComplete();
             }
         });
-        return tratata
+        return loadingDataStatus
                 .skipWhile(new Predicate<Boolean>() {
                     @Override
                     public boolean test(Boolean aBoolean) throws Exception {
@@ -127,13 +122,12 @@ public class PayoutModel implements PayoutModelInterface {
                                 return firstName.compareTo(secondName);
                             }
                         });
-
                         return Observable
                                 .fromArray((List<Object>) new ArrayList<Object>(prepareList(payoutList)));
                     }
                 });
     }
-    public List<Object> prepareList (List<Payout> payoutList) {
+    private List<Object> prepareList(List<Payout> payoutList) {
         List<Object> preparedList = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         int month = -1;

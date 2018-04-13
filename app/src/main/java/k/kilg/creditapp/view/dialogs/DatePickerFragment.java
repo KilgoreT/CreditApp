@@ -1,24 +1,21 @@
 package k.kilg.creditapp.view.dialogs;
 
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import k.kilg.creditapp.R;
-import k.kilg.creditapp.view.fragments.AddCreditSimpleFragment;
+import k.kilg.creditapp.view.fragments.AddCreditFragment;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
@@ -58,7 +55,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         String dateFormated = sdf.format(c.getTime());
 
         Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.creditFragment);
-        if (fragment instanceof AddCreditSimpleFragment) {
+        if (fragment instanceof AddCreditFragment) {
             TextView textView = fragment.getView().findViewById(R.id.addCredit_tvDate);
             textView.setText(dateFormated);
         }

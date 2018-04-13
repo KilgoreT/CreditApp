@@ -53,22 +53,4 @@ public class PayoutPresenter extends MvpBasePresenter<PayoutViewInterface> imple
         }
     }
 
-/*    public List<Object> prepareList (List<Payout> payoutList) {
-        List<Object> preparedList = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        int month = -1;
-        for (Payout payout: payoutList) {
-            Date date = payout.getDate();
-            calendar.setTime(date);
-            if (month != calendar.get(Calendar.MONTH)) {
-                month = calendar.get(Calendar.MONTH);
-                preparedList.add(CreditTools.getMonthName(month));
-            }
-            preparedList.add(payout);
-
-        }
-
-        return preparedList;
-    }*/
-
 }

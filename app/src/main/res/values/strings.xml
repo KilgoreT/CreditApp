@@ -68,6 +68,8 @@
 
     <string name="credit_adapter_annuity_CS">Annuity</string>
     <string name="credit_adapter_differential_CS">Differential</string>
+    <string name="credit_adapter_no_element_to_remove">No element to remove</string>
+    <string name="credit_adapter_choose_one_element">Choose one element to edit</string>
 
     <string name="unknown_error_CS">Unknown error</string>
 

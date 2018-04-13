@@ -2,6 +2,7 @@ package k.kilg.creditapp.view.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -11,19 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
-import java.math.BigDecimal;
 
 import k.kilg.creditapp.R;
 import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.view.dialogs.DatePickerFragment;
 
 
-public class AddCreditSimpleFragment extends Fragment {
+public class AddCreditFragment extends Fragment {
 
     private static final String DATE_PICKER_TAG = "DatePickerTag";
 
@@ -41,20 +39,20 @@ public class AddCreditSimpleFragment extends Fragment {
     private EditText mEtCreditRate;
     private EditText mEtCreditMonthCount;
     private TextView mTvCreditDate;
-    private Button  mBtnSetDate;
 
 
     private boolean mEditMode = false;
     private String mCreditDatabaseKey;
-    private OnAddCreditSimpleFragmentInteractionListener mListener;
+    private OnAddCreditFragmentInteractionListener mListener;
 
-    public AddCreditSimpleFragment() {
+    public AddCreditFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // todo: при повороте экрана вводимые данные не восстанавливаются
         setRetainInstance(true);
     }
 
@@ -69,7 +67,7 @@ public class AddCreditSimpleFragment extends Fragment {
         mEtCreditRate = (EditText) v.findViewById(R.id.addCredit_etRate);
         mEtCreditMonthCount = (EditText) v.findViewById(R.id.addCredit_etMonthCount);
         mTvCreditDate = (TextView) v.findViewById(R.id.addCredit_tvDate);
-        mBtnSetDate = (Button) v.findViewById(R.id.addCredit_btnSetDate);
+        Button mBtnSetDate = (Button) v.findViewById(R.id.addCredit_btnSetDate);
         mBtnSetDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,13 +77,9 @@ public class AddCreditSimpleFragment extends Fragment {
             }
         });
         if (getArguments() != null) {
-            Log.d("###", getClass().getSimpleName() + ":bundle not null");
             mEditMode = true;
-            Log.d("###", getClass().getSimpleName() + ":CREDIT_DATABASE_KEY:"+getArguments().getString(CREDIT_DATABASE_KEY));
             mCreditDatabaseKey = getArguments().getString(CREDIT_DATABASE_KEY);
-            Log.d("###", getClass().getSimpleName() + ":CREDIT_NAME_KEY:"+getArguments().getString(CREDIT_NAME_KEY));
             mEtCreditName.setText(getArguments().getString(CREDIT_NAME_KEY));
-            Log.d("###", getClass().getSimpleName() + ":mEtCreditName.getText:"+ mEtCreditName.getText().toString());
             mEtCreditAmount.setText(getArguments().getString(CREDIT_AMOUNT_KEY));
             mEtCreditMonthCount.setText(getArguments().getString(CREDIT_MONTH_COUNT_KEY));
             mEtCreditRate.setText(getArguments().getString(CREDIT_RATE_KEY));
@@ -93,11 +87,10 @@ public class AddCreditSimpleFragment extends Fragment {
             mRgCreditType
                     .check(getArguments()
                             .getBoolean(CREDIT_TYPE_KEY)? R.id.addCredit_rgCreditAnnuity : R.id.addCredit_rgCreditDifferential);
-        } else {
-            Log.d("###", getClass().getSimpleName() + ":bundle is null");
         }
         return v;
     }
+
 
 
     public void onFabPressed() {
@@ -107,13 +100,13 @@ public class AddCreditSimpleFragment extends Fragment {
                 if (mEditMode) {
                     if (mListener != null)
                         mEditMode = false;
-                        mListener.onUpdateCreditSimpleFragmentClose(credit);
+                        mListener.onUpdateCreditFragmentClose(credit);
                         clearFields();{
                     }
                 } else {
                     if (mListener != null) {
                         mEditMode = false;
-                        mListener.onAddCreditSimpleFragmentClose(credit);
+                        mListener.onAddCreditFragmentClose(credit);
                         clearFields();
                     }
                 }
@@ -159,7 +152,6 @@ public class AddCreditSimpleFragment extends Fragment {
     }
 
     public void clearFields() {
-        Log.d("###", ">>crear fields");
         mEtCreditName.setText("");
         mEtCreditAmount.setText("");
         mEtCreditRate.setText("");
@@ -170,11 +162,11 @@ public class AddCreditSimpleFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnAddCreditSimpleFragmentInteractionListener) {
-            mListener = (OnAddCreditSimpleFragmentInteractionListener) context;
+        if (context instanceof OnAddCreditFragmentInteractionListener) {
+            mListener = (OnAddCreditFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnAddCreditSimpleFragmentInteractionListener");
+                    + " must implement OnAddCreditFragmentInteractionListener");
         }
     }
 
@@ -184,12 +176,12 @@ public class AddCreditSimpleFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        clearFields();
+        //clearFields();
         mListener = null;
     }
 
-    public interface OnAddCreditSimpleFragmentInteractionListener {
-        void onAddCreditSimpleFragmentClose(Credit credit);
-        void onUpdateCreditSimpleFragmentClose(Credit credit);
+    public interface OnAddCreditFragmentInteractionListener {
+        void onAddCreditFragmentClose(Credit credit);
+        void onUpdateCreditFragmentClose(Credit credit);
     }
 }

@@ -72,7 +72,8 @@ public class CreditAppModel implements CreditAppModelInterface {
                             credit.setKey(snapshot.getKey());
                             mCreditList.add(credit);
                         }
-                            fragment.getPresenter().loadCredits();
+                        initDbListener();
+                        fragment.getPresenter().loadCredits();
                     }
 
                     @Override

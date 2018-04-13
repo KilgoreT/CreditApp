@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.AddCreditSimpleFragment"
+    tools:context=".view.fragments.AddCreditFragment"
     >
 
     <RelativeLayout
@@ -51,6 +51,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/fragment_add_type_annuity"
                     android:layout_weight="1"
+                    android:checked="true"
                     />
                 <RadioButton
                     android:id="@+id/addCredit_rgCreditDifferential"
@@ -58,7 +59,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/fragment_add_type_differential"
                     android:layout_weight="1"
-                    android:checked="true"
                     />
 
             </RadioGroup>

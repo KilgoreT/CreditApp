@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import k.kilg.creditapp.R;
 import k.kilg.creditapp.entities.Payout;
@@ -25,8 +26,6 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int MONTH = 1;
     private static final int RESUME = 2;
     private List<Object> mData;
-    private List<Payout> mPayout;
-    private PayoutRVAdapterListener mListener;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -105,7 +104,7 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView mPayoutDate;
         private TextView mPayoutBalance;
 
-        public PayoutHolder(View itemView) {
+        PayoutHolder(View itemView) {
             super(itemView);
             mCreditName = (TextView) itemView.findViewById(R.id.tvPayoutCreditName);
             mPayoutDate = (TextView) itemView.findViewById(R.id.tvPayoutDate);
@@ -113,8 +112,8 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             mPayoutBalance = (TextView) itemView.findViewById(R.id.tvPayoutBalance);
         }
 
-        public void bind(Payout payout) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        void bind(Payout payout) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
             mCreditName.setText(payout.getCreditName());
             mPayoutAmount.setText(String.valueOf(payout.getAmount()));
             mPayoutDate.setText(sdf.format(payout.getDate()));
@@ -125,11 +124,11 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public class MonthHolder extends RecyclerView.ViewHolder {
         private TextView mTvMonth;
 
-        public MonthHolder(View itemView) {
+        MonthHolder(View itemView) {
             super(itemView);
             mTvMonth = (TextView) itemView.findViewById(R.id.tvItemMonth);
         }
-        public void bind(String month) {
+        void bind(String month) {
             mTvMonth.setText(month);
         }
     }
@@ -138,13 +137,12 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView mTvAllPaymentAmount;
         private TextView mTvAllOverpayment;
 
-        public ResumeHolder(View itemView) {
+        ResumeHolder(View itemView) {
             super(itemView);
             mTvAllPaymentAmount = (TextView) itemView.findViewById(R.id.tvAllPaymentAmount);
             mTvAllOverpayment = (TextView) itemView.findViewById(R.id.tvAllOverpayment);
         }
-        public void bind(Resume resume) {
-            Log.d("###", "resume in holder: " + resume.getAllOverpayment());
+        void bind(Resume resume) {
             mTvAllPaymentAmount.setText(resume.getAllPaymentAmount());
             mTvAllOverpayment.setText(resume.getAllOverpayment());
         }
@@ -152,13 +150,9 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class DefaultHolder extends RecyclerView.ViewHolder {
         private TextView mTvDefault;
-        public DefaultHolder(View itemView) {
+        DefaultHolder(View itemView) {
             super(itemView);
             mTvDefault = (TextView) itemView.findViewById(R.id.tvDefault);
         }
-    }
-
-
-    private interface PayoutRVAdapterListener {
     }
 }

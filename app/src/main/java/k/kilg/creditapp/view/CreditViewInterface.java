@@ -13,7 +13,7 @@ import k.kilg.creditapp.entities.Credit;
  * 04.04.2018
  * 14:11
  */
-public interface CreditAppViewInterface extends MvpLceView<List<Credit>>{
+public interface CreditViewInterface extends MvpLceView<List<Credit>>{
     void addCredit(Credit credit);
     void updateCredit(Credit credit);
     void removeCredit(Credit credit);

@@ -40,7 +40,6 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
 
     public void setData(List<Credit> data) {
         mCredits = data;
-        Log.d("###", "adapter set data. count is " + mCredits.size());
     }
 
     public List<Credit> getData() {
@@ -63,6 +62,8 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
             public void onClick(View v) {
                 if (mModeEnabled) {
                     holder.changeSelectedList(getCreditByTitle(holder.getCreditName()), holder.getAdapterPosition());
+                } else {
+                    ((CreditFragment)mListener).startEditCredit(getCreditByTitle(holder.getCreditName()));
                 }
             }
         });
@@ -176,13 +177,14 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
 
         @Override
         public boolean onActionItemClicked(final ActionMode mode, MenuItem item) {
+            Context context = ((CreditFragment)mListener).getContext();
             switch (item.getItemId()) {
                 case R.id.menu_remove:
                     if (mSelectedList.size() == 0) {
-                        ((CreditFragment)mListener).showSnackbar("No element to remove");
+                        ((CreditFragment)mListener)
+                                .showSnackbar(context.getString(R.string.credit_adapter_no_element_to_remove));
                         break;
                     }
-                    Context context = ((CreditFragment)mListener).getContext();
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     String alertMessage = context.getResources().getString(R.string.alert_confirm_deletion_message);
                     if (mSelectedList.size() == 1) {
@@ -218,13 +220,9 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
                     break;
                 case R.id.menu_edit:
                     if (mSelectedList.size() == 0 || mSelectedList.size() > 1) {
-                        ((CreditFragment)mListener).showSnackbar("Choose one element to edit");
+                        ((CreditFragment)mListener).showSnackbar(context.getString(R.string.credit_adapter_choose_one_element));
                         break;
                     } else {
-                        Log.d("###", "onActionItemClicked: mSelectedList.size() = " + mSelectedList.size());
-                        if (mSelectedList.size() > 1) {
-                            Log.d("###", "onActionItemClicked: mSelectedList.size() is long ");
-                        }
                         ((CreditFragment)mListener).startEditCredit(mSelectedList.get(0));
                     }
                     mSelectedList.clear();

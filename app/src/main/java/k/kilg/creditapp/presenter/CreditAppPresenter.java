@@ -4,12 +4,9 @@ import android.util.Log;
 
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
-import java.util.List;
-
 import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.model.CreditAppModelInterface;
-import k.kilg.creditapp.tools.DatabaseTool;
-import k.kilg.creditapp.view.CreditAppViewInterface;
+import k.kilg.creditapp.view.CreditViewInterface;
 
 /**
  * Created by apomazkin on 04.04.2018.
@@ -17,7 +14,7 @@ import k.kilg.creditapp.view.CreditAppViewInterface;
  * 04.04.2018
  * 14:49
  */
-public class CreditAppPresenter extends MvpBasePresenter<CreditAppViewInterface> implements CreditAppPresenterInterface{
+public class CreditAppPresenter extends MvpBasePresenter<CreditViewInterface> implements CreditAppPresenterInterface{
 
     private CreditAppModelInterface model;
 
@@ -42,7 +39,7 @@ public class CreditAppPresenter extends MvpBasePresenter<CreditAppViewInterface>
         if (isViewAttached()) {
             getView().setData(model.getCreditsList());
             getView().showContent();
-            model.initDbListener();
+            //model.initDbListener();
         }
     }
 

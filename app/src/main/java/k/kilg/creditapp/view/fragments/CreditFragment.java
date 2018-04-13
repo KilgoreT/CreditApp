@@ -16,7 +16,6 @@ import com.hannesdorfmann.mosby.mvp.viewstate.lce.MvpLceViewStateFragment;
 import com.hannesdorfmann.mosby.mvp.viewstate.lce.data.RetainingLceViewState;
 
 import java.util.List;
-import java.util.Set;
 
 import k.kilg.creditapp.CreditActivity;
 import k.kilg.creditapp.R;
@@ -25,12 +24,12 @@ import k.kilg.creditapp.model.CreditAppModel;
 import k.kilg.creditapp.model.CreditAppModelInterface;
 import k.kilg.creditapp.presenter.CreditAppPresenter;
 import k.kilg.creditapp.presenter.CreditAppPresenterInterface;
-import k.kilg.creditapp.view.CreditAppViewInterface;
+import k.kilg.creditapp.view.CreditViewInterface;
 import k.kilg.creditapp.view.adapters.CreditRVAdapter;
 
 
-public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<Credit>, CreditAppViewInterface, CreditAppPresenterInterface> implements
-        CreditAppViewInterface,
+public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<Credit>, CreditViewInterface, CreditAppPresenterInterface> implements
+        CreditViewInterface,
         CreditRVAdapter.CreditRVAdapterListener{
 
 
@@ -85,7 +84,7 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
 
     @NonNull
     @Override
-    public LceViewState<List<Credit>, CreditAppViewInterface> createViewState() {
+    public LceViewState<List<Credit>, CreditViewInterface> createViewState() {
         return new RetainingLceViewState<>();
     }
 
@@ -111,7 +110,7 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
             mListener = (OnCreditFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnAddCreditSimpleFragmentInteractionListener");
+                    + " must implement OnAddCreditFragmentInteractionListener");
         }
     }
 
@@ -142,7 +141,7 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
     @Override
     public void showActionMode(ActionMode.Callback callback) {
         ((CreditActivity)getActivity()).startSupportActionMode(callback);
-        ((CreditActivity) getActivity()).setFabVisible(false);
+        ((CreditActivity)getActivity()).setFabVisible(false);
     }
 
     public void startEditCredit(Credit credit) {
