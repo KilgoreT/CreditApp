@@ -27,6 +27,9 @@
     <string name="menu_payout">Payout</string>
     <string name="menu_signout">SignOut</string>
 
+    <string name="ac_credit_header_verifyed">verified)</string>
+    <string name="ac_credit_header_noverify">no verify)</string>
+
     <string name="btnOk">OK</string>
     <string name="btnYes">YES</string>
     <string name="btnNo">NO</string>
@@ -44,6 +47,13 @@
     <string name="item_credit_months">months</string>
     <string name="item_credit_rubles">rubles</string>
 
+    <string name="item_resume_all_payments">All payments:</string>
+    <string name="item_resume_overpayments">Overpayments:</string>
+
+    <string name="item_payout_payout_date">payout date</string>
+    <string name="item_payout_balance">balance:</string>
+    <string name="item_payout_payout_amount">payout amount</string>
+
     <string name="fragment_add_credit_name">Name</string>
     <string name="fragment_add_type_annuity">Annuity</string>
     <string name="fragment_add_type_differential">Differential</string>
@@ -51,10 +61,11 @@
     <string name="fragment_add_credit_rate">Rate</string>
     <string name="fragment_add_month_count">Month count</string>
     <string name="fragment_add_edit_date">Edit date</string>
+    <string name="fragment_add_credit_set_date">Set Date</string>
+
     <string name="credit_adapter_annuity_CS">Annuity</string>
     <string name="credit_adapter_differential_CS">Differential</string>
-    <string name="ac_credit_header_verifyed">verified)</string>
-    <string name="ac_credit_header_noverify">no verify)</string>
+
     <string name="unknown_error_CS">Unknown error</string>
 
     <string name="month_january">Январь</string>

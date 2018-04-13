@@ -21,14 +21,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="All payments:"
+            android:text="@string/item_resume_all_payments"
+            android:textSize="18sp"
             android:textColor="@color/colorPrimaryDark"
             />
         <TextView
             android:id="@+id/tvAllPaymentAmount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
+            android:textSize="18sp"
             android:textColor="@color/colorPrimaryDark"
             tools:text="200 000"
             />
@@ -45,14 +47,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="18sp"
             android:textColor="@color/colorPrimaryDark"
-            android:text="Overpayments:"
+            android:text="@string/item_resume_overpayments"
             />
         <TextView
             android:id="@+id/tvAllOverpayment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
+            android:textSize="18sp"
             android:textColor="@color/colorPrimaryDark"
             tools:text="20 000"
             />

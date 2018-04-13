@@ -120,7 +120,7 @@
                 android:id="@+id/addCredit_btnSetDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Set Date"
+                android:text="@string/fragment_add_credit_set_date"
                 android:layout_weight="1"
                 />
 

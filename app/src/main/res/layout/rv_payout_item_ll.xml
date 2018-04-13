@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        >
+        android:baselineAligned="false">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"
                 android:gravity="bottom"
-                android:text="payout date"
+                android:text="@string/item_payout_payout_date"
                 android:textColor="@android:color/black"
                 android:textSize="8sp"
                 android:layout_weight="1"
@@ -84,18 +84,18 @@
                 <TextView
                     android:id="@+id/tvTitleBalance"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="balance"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_payout_balance"
                     android:textColor="@android:color/black"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     android:layout_weight="1"
                     />
                 <TextView
                     android:id="@+id/tvPayoutBalance"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     tools:text="1 000 000 000"
                     android:layout_weight="2"
                     />
@@ -110,7 +110,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:gravity="bottom"
-                android:text="payout amount"
+                android:text="@string/item_payout_payout_amount"
                 android:textColor="@android:color/black"
                 android:textSize="8sp"
                 android:visibility="visible"
@@ -121,7 +121,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_gravity="top"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"

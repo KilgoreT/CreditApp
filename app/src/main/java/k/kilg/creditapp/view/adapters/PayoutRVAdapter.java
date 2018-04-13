@@ -38,7 +38,7 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 viewHolder = new MonthHolder(vMonth);
                 break;
             case PAYOUT:
-                View vPayout = inflater.inflate(R.layout.rv_payout_item_constrane, parent, false);
+                View vPayout = inflater.inflate(R.layout.rv_payout_item_ll, parent, false);
                 viewHolder = new PayoutHolder(vPayout);
                 break;
             case RESUME:
