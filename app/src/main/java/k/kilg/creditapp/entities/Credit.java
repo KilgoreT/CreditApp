@@ -27,6 +27,8 @@ public class Credit {
     private static final int MAX_LENGTH_NAME = 64;
     private static final int MIN_AMOUNT = 1;
     private static final int MAX_AMOUNT = 1_000_000_000;
+    private static final BigDecimal MIN_RATE = new BigDecimal(1);
+    private static final BigDecimal MAX_RATE = new BigDecimal(99);
 
     private String name; //наименование (обязательно, макс.длина 64 символа)
     private boolean annuity; //тип кредита (обязательно, допустимые значения: с аннуитетными платежами, с дифференциированноми платежами)
@@ -95,13 +97,12 @@ public class Credit {
     }
 
     public void setRate(String rate) throws IllegalArgumentException {
-        //todo: добработать проверку процента
-        /*if (rate.compareTo(MIN_RATE) > 0 && rate.compareTo(MAX_RATE) < 0) {
-            this.rate = String.valueOf(rate);
+        BigDecimal r = new BigDecimal(rate);
+        if (r.compareTo(MIN_RATE) > 0 && r.compareTo(MAX_RATE) < 0) {
+            this.rate = rate;
         } else {
             throw new IllegalArgumentException("Wrong credit rate(Range: 1 - 99%)!");
-        }*/
-        this.rate = rate;
+        }
     }
 
     public String getKey() {

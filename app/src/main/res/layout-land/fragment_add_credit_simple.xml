@@ -99,34 +99,44 @@
                 />
         </LinearLayout>
 
+        <EditText
+            android:id="@+id/addCredit_etMonthCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/fragment_add_month_count"
+            android:background="@drawable/edittext_rounded_background_color"
+            style="@style/EditText"
+            android:inputType="number"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_below="@+id/addCredit_etRate_llAmountAndRate"
+            />
+
         <LinearLayout
             android:id="@+id/addCredit_llMonthCountAndDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@+id/addCredit_etRate_llAmountAndRate"
+            android:layout_below="@+id/addCredit_etMonthCount"
             android:layout_marginTop="4dp"
             >
-            <EditText
-                android:id="@+id/addCredit_etMonthCount"
+            <Button
+                android:id="@+id/addCredit_btnSetDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/fragment_add_month_count"
-                android:background="@drawable/edittext_rounded_background_color"
-                style="@style/EditText"
-                android:inputType="number"
-                android:layout_weight="2"
-                android:layout_marginEnd="2dp"
-                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:text="Set Date"
                 />
+
             <TextView
                 android:id="@+id/addCredit_tvDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/fragment_add_edit_date"
+                android:layout_weight="2"
                 android:gravity="center"
                 style="@style/TextView"
+                tools:text="2018-03-04"
                 />
         </LinearLayout>
 

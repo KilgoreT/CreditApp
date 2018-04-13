@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -40,6 +41,7 @@ public class AddCreditSimpleFragment extends Fragment {
     private EditText mEtCreditRate;
     private EditText mEtCreditMonthCount;
     private TextView mTvCreditDate;
+    private Button  mBtnSetDate;
 
 
     private boolean mEditMode = false;
@@ -67,7 +69,8 @@ public class AddCreditSimpleFragment extends Fragment {
         mEtCreditRate = (EditText) v.findViewById(R.id.addCredit_etRate);
         mEtCreditMonthCount = (EditText) v.findViewById(R.id.addCredit_etMonthCount);
         mTvCreditDate = (TextView) v.findViewById(R.id.addCredit_tvDate);
-        mTvCreditDate.setOnClickListener(new View.OnClickListener() {
+        mBtnSetDate = (Button) v.findViewById(R.id.addCredit_btnSetDate);
+        mBtnSetDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment datePickerDialog = new DatePickerFragment();
@@ -123,6 +126,7 @@ public class AddCreditSimpleFragment extends Fragment {
                 && !TextUtils.isEmpty(mEtCreditAmount.getText().toString())
                 && !TextUtils.isEmpty(mEtCreditMonthCount.getText().toString())
                 && !TextUtils.isEmpty(mEtCreditRate.getText().toString())
+                && !TextUtils.isEmpty(mTvCreditDate.getText().toString())
                 ) {
             try {
                 credit.setName(mEtCreditName.getText().toString());
