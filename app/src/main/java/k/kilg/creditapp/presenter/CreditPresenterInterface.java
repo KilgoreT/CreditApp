@@ -11,7 +11,7 @@ import k.kilg.creditapp.view.CreditViewInterface;
  * 04.04.2018
  * 14:40
  */
-public interface CreditAppPresenterInterface extends MvpPresenter<CreditViewInterface> {
+public interface CreditPresenterInterface extends MvpPresenter<CreditViewInterface> {
     void sendQueryForData();
     void loadCredits();
     void addCredit(Credit credit);

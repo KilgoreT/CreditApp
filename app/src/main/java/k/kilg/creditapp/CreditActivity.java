@@ -117,7 +117,7 @@ public class CreditActivity extends AppCompatActivity implements
         if (currentUser != null) {
             String emailWithStatus = currentUser.getEmail() + "(" + (currentUser.isEmailVerified()
                     ? getString(R.string.ac_credit_header_verifyed)
-                    :getString(R.string.ac_credit_header_noverify));
+                    :getString(R.string.ac_credit_header_noverify)) + ")";
             mHeaderEmail.setText(emailWithStatus);
         }
     }
@@ -215,5 +215,4 @@ public class CreditActivity extends AppCompatActivity implements
             setFragment(addCreditFragment, ADD_CREDIT_SIMPLE_FRAGMENT_TAG);
         }
     }
-
 }

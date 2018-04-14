@@ -11,10 +11,10 @@ import k.kilg.creditapp.entities.Credit;
  * 04.04.2018
  * 14:46
  */
-public interface CreditAppModelInterface {
+public interface CreditModelInterface {
 
     void getInitialData();
-    void initDbListener();
+    void startDbListener();
     void addCredit(Credit credit);
     void removeCredit(Credit credit);
     void updateCredit(Credit credit);

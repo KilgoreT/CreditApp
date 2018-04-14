@@ -1,11 +1,9 @@
 package k.kilg.creditapp.presenter;
 
-import android.util.Log;
-
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
 import k.kilg.creditapp.entities.Credit;
-import k.kilg.creditapp.model.CreditAppModelInterface;
+import k.kilg.creditapp.model.CreditModelInterface;
 import k.kilg.creditapp.view.CreditViewInterface;
 
 /**
@@ -14,20 +12,18 @@ import k.kilg.creditapp.view.CreditViewInterface;
  * 04.04.2018
  * 14:49
  */
-public class CreditAppPresenter extends MvpBasePresenter<CreditViewInterface> implements CreditAppPresenterInterface{
+public class CreditPresenter extends MvpBasePresenter<CreditViewInterface> implements CreditPresenterInterface {
 
-    private CreditAppModelInterface model;
+    private CreditModelInterface model;
 
 
-    public CreditAppPresenter(CreditAppModelInterface model) {
+    public CreditPresenter(CreditModelInterface model) {
         this.model = model;
     }
 
     public void sendQueryForData() {
-        Log.d("###", "sendQueryForData starting");
         if (isViewAttached()) {
             getView().showLoading(false);
-            Log.d("###", "sendQueryForData starting initial data");
             model.getInitialData();
         }
     }
@@ -39,14 +35,12 @@ public class CreditAppPresenter extends MvpBasePresenter<CreditViewInterface> im
         if (isViewAttached()) {
             getView().setData(model.getCreditsList());
             getView().showContent();
-            //model.initDbListener();
         }
     }
 
 
     @Override
     public void addCredit(Credit credit) {
-        Log.d("###", "Presenter addCredit");
         model.addCredit(credit);
     }
 

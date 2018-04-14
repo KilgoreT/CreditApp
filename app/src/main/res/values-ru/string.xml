@@ -1,0 +1,88 @@
+<resources>
+    <string name="app_name">CreditApp</string>
+
+
+    <string name="ac_launch_wellcome_tv">Credit App</string>
+    <string name="ac_launch_register_tv">или</string>
+    <string name="ac_launch_signin_btn">войти</string>
+    <string name="ac_launch_register_btn">Зарегистрироваться</string>
+    <string name="ac_launch_confirm_email_title">Пожалуйста, подтвердите email адрес</string>
+    <string name="ac_launch_confirm_email_body">Вам выслано письмо.\nПроследуйте по ссылке чтобы подтвердить ваш email адрес.</string>
+    <string name="ac_launch_alert_register_failed">Ошибка регистрации</string>
+    <string name="ac_launch_alert_auth_failed">Ошибка входа</string>
+    <string name="ac_launch_alert_email_sent_successful">Письмо успешно отправлено</string>
+    <string name="ac_launch_alert_email_sent_fail">Ошибка при отправке письма</string>
+    <string name="ac_launch_alert_email_required">Введите емейл.</string>
+    <string name="ac_launch_alert_email_not_valid">Некорректный емейл адрес.</string>
+    <string name="ac_launch_alert_password_required">Введите пароль.</string>
+    <string name="ac_launch_email_CS">Емейл</string>
+    <string name="ac_launch_password_CS">Пароль</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <string name="menu_credits">Кредиты</string>
+    <string name="menu_payout">Выплаты</string>
+    <string name="menu_signout">Выход</string>
+
+    <string name="menu_action_mode_edit_credit">Редактировать кредит</string>
+    <string name="menu_action_mode_remove_credit">Удалить кредит</string>
+
+    <string name="ac_credit_header_verifyed">подтвержден</string>
+    <string name="ac_credit_header_noverify">не подтвержден</string>
+
+    <string name="btnOk">OK</string>
+    <string name="btnYes">ДА</string>
+    <string name="btnNo">НЕТ</string>
+
+
+    <string name="alert_confirm_deletion_title">Пожалуйста, подтвердите удаление</string>
+    <string name="alert_confirm_deletion_message">Вы действительно хотите удалить </string>
+    <string name="alert_confirm_deletion_credit"> кредит?</string>
+    <string name="alert_confirm_deletion_credits"> кредита?</string>
+
+    <string name="add_credit_empty_fields">Заполните все поля!</string>
+
+
+    <string name="item_credit_percent_sign">%</string>
+    <string name="item_credit_months">мес.</string>
+    <string name="item_credit_rubles">рублей</string>
+
+    <string name="item_resume_all_payments">Сумма выплат:</string>
+    <string name="item_resume_overpayments">Переплата:</string>
+
+    <string name="item_payout_payout_date">дата выплаты</string>
+    <string name="item_payout_balance">остаток:</string>
+    <string name="item_payout_payout_amount">сумма выплаты</string>
+
+    <string name="fragment_add_credit_name">Название</string>
+    <string name="fragment_add_type_annuity">Аннуитетный</string>
+    <string name="fragment_add_type_differential">Дифференциальный</string>
+    <string name="fragment_add_credit_amount">Сумма</string>
+    <string name="fragment_add_credit_rate">Процент</string>
+    <string name="fragment_add_month_count">Количество месяцев</string>
+    <string name="fragment_add_credit_set_date">Укажите дату</string>
+
+    <string name="credit_adapter_annuity_CS">Аннуитетный</string>
+    <string name="credit_adapter_differential_CS">Дифференциальный</string>
+    <string name="credit_adapter_no_element_to_remove">Не выделено ни одного элемента для удаления</string>
+    <string name="credit_adapter_choose_one_element">Выберите один элемент для редактирования</string>
+
+    <string name="unknown_error_CS">Неопознанная ошибка</string>
+
+    <string name="month_january">Январь</string>
+    <string name="month_february">Февраль</string>
+    <string name="month_march">Март</string>
+    <string name="month_april">Апрель</string>
+    <string name="month_may">Май</string>
+    <string name="month_june">Июнь</string>
+    <string name="month_july">Июль</string>
+    <string name="month_august">Август</string>
+    <string name="month_september">Сентябрь</string>
+    <string name="month_october">Октябрь</string>
+    <string name="month_november">Ноябрь</string>
+    <string name="month_december">Декабрь</string>
+
+</resources>

@@ -1,6 +1,5 @@
 package k.kilg.creditapp.model;
 
-import android.app.Fragment;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -10,17 +9,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Logger;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
 
 import k.kilg.creditapp.entities.Credit;
-import k.kilg.creditapp.presenter.CreditAppPresenter;
 import k.kilg.creditapp.view.fragments.CreditFragment;
 
 /**
@@ -29,22 +23,21 @@ import k.kilg.creditapp.view.fragments.CreditFragment;
  * 04.04.2018
  * 14:51
  */
-public class CreditAppModel implements CreditAppModelInterface {
+public class CreditModel implements CreditModelInterface {
 
-    private static final String USERS = "users";
+    private static final String USERS_CHILD = "users";
     private List<Credit> mCreditList;
-    private FirebaseUser currentUser;
     private DatabaseReference dbRef;
     private CreditFragment fragment;
 
-    public CreditAppModel(CreditFragment fragment) {
+    public CreditModel(CreditFragment fragment) {
         this.fragment = fragment;
         mCreditList = new ArrayList<>();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         dbRef = FirebaseDatabase
                 .getInstance()
                 .getReference()
-                .child(USERS)
+                .child(USERS_CHILD)
                 .child(currentUser.getUid());
 
 }
@@ -72,7 +65,7 @@ public class CreditAppModel implements CreditAppModelInterface {
                             credit.setKey(snapshot.getKey());
                             mCreditList.add(credit);
                         }
-                        initDbListener();
+                        startDbListener();
                         fragment.getPresenter().loadCredits();
                     }
 
@@ -86,7 +79,6 @@ public class CreditAppModel implements CreditAppModelInterface {
 
     @Override
     public void removeCredit(Credit credit) {
-        Log.d("###", ">>" + getClass().getSimpleName() + ":removeCredit: " + credit.getName() + ":" + credit.getKey());
         dbRef
                 .child(credit.getKey())
                 .removeValue();
@@ -94,15 +86,13 @@ public class CreditAppModel implements CreditAppModelInterface {
 
     @Override
     public void updateCredit(Credit credit) {
-        //todo: при повторном апдейте элемента фрагмен всплывает без заполненных полей. возможно нужно убивать фрагмент каждый раз
-        Log.d("###", ">>" + getClass().getSimpleName() + ":updateCredit: " + credit.getName() + ":" + credit.getKey());
         dbRef
                 .child(credit.getKey())
                 .updateChildren(credit.toMap());
     }
 
     @Override
-    public void initDbListener() {
+    public void startDbListener() {
         dbRef
                 .addChildEventListener(new ChildEventListener() {
                     @Override
@@ -146,12 +136,11 @@ public class CreditAppModel implements CreditAppModelInterface {
 
                     @Override
                     public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                        Log.d("###", "onChildMoved:");
+                        fragment.getPresenter().loadCredits();
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.d("###", "onCancel");
                         fragment.getPresenter().loadCredits();
                     }
                 });

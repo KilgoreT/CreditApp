@@ -20,11 +20,11 @@
             android:id="@+id/addCredit_llNameAndType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             >
             <EditText
                 android:id="@+id/addCredit_etName"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/fragment_add_credit_name"
                 android:background="@drawable/edittext_rounded_background_color"
@@ -37,7 +37,7 @@
                 />
             <RadioGroup
                 android:id="@+id/addCredit_rgCreditType"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="4dp"

@@ -4,8 +4,10 @@ import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -16,7 +18,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -28,6 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.entities.Payout;
 import k.kilg.creditapp.entities.Resume;
+import k.kilg.creditapp.presenter.PayoutPresenterInterface;
 import k.kilg.creditapp.tools.CreditTools;
 
 /**
@@ -37,32 +39,41 @@ import k.kilg.creditapp.tools.CreditTools;
  * 11:57
  */
 public class PayoutModel implements PayoutModelInterface {
-    //private List<Payout> mPayouts = new ArrayList<>();
-    private List<Credit> mCredits = new ArrayList<>();
-    private boolean loadedData = false;
+
+    private static final String USERS_CHILD = "users";
+    private List<Credit> mCreditList = new ArrayList<>();
+    private boolean loadedData;
+    private DatabaseReference dbRef;
 
     public PayoutModel() {
+        loadedData = false;
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        dbRef = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child(USERS_CHILD)
+                .child(currentUser.getUid());
 
     }
 
+    public List<Credit> getCreditList() {
+        return mCreditList;
+    }
 
     public void loadCredits() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
             return;
         }
-        FirebaseDatabase
-                .getInstance()
-                .getReference()
-                .child("users")
-                .child(currentUser.getUid())
+        dbRef
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        mCreditList.clear();
                         for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                             Credit credit = snapshot.getValue(Credit.class);
                             credit.setKey(snapshot.getKey());
-                            mCredits.add(credit);
+                            mCreditList.add(credit);
                         }
                         loadedData = true;
                     }
@@ -73,10 +84,12 @@ public class PayoutModel implements PayoutModelInterface {
                 });
     }
 
-    public Observable<List<Object>> getPayouts() {
-        Observable<Boolean> loadingDataStatus = Observable.create(new ObservableOnSubscribe<Boolean>() {
+    public Observable<List<Credit>> getPayouts() {
+        Observable<Boolean> loadingDataStatus = Observable
+                .create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> emitter) throws Exception {
+                loadCredits();
                 while (!loadedData) {
                     emitter.onNext(loadedData);
                 }
@@ -84,6 +97,7 @@ public class PayoutModel implements PayoutModelInterface {
             }
         });
         return loadingDataStatus
+                .subscribeOn(Schedulers.io())
                 .skipWhile(new Predicate<Boolean>() {
                     @Override
                     public boolean test(Boolean aBoolean) throws Exception {
@@ -93,61 +107,8 @@ public class PayoutModel implements PayoutModelInterface {
                 .flatMap(new Function<Boolean, ObservableSource<List<Credit>>>() {
                     @Override
                     public ObservableSource<List<Credit>> apply(Boolean aBoolean) throws Exception {
-                        return Observable.fromArray(mCredits);
-                    }
-                })
-                .subscribeOn(Schedulers.computation())
-                .flatMap(new Function<List<Credit>, ObservableSource<List<Object>>>() {
-                    @Override
-                    public ObservableSource<List<Object>> apply(List<Credit> credits) throws Exception {
-                        List<Payout> payoutList = new ArrayList<>();
-                        for (Credit credit: credits) {
-                            if (credit.isAnnuity()) {
-                                payoutList.addAll(CreditTools.getAnnuityMonthPayouts(credit));
-                            } else {
-                                payoutList.addAll(CreditTools.getDifferentialMonthPayouts(credit));
-                            }
-                        }
-                        Collections.sort(payoutList, new Comparator<Payout>() {
-                            @Override
-                            public int compare(Payout o1, Payout o2) {
-                                Date firstDate = o1.getDate();
-                                Date secondDate = o2.getDate();
-                                int sComp = firstDate.compareTo(secondDate);
-                                if (sComp != 0) {
-                                    return sComp;
-                                }
-                                String firstName = o1.getCreditName();
-                                String secondName = o2.getCreditName();
-                                return firstName.compareTo(secondName);
-                            }
-                        });
-                        return Observable
-                                .fromArray((List<Object>) new ArrayList<Object>(prepareList(payoutList)));
+                        return Observable.fromArray(mCreditList);
                     }
                 });
-    }
-    private List<Object> prepareList(List<Payout> payoutList) {
-        List<Object> preparedList = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        int month = -1;
-        for (Payout payout: payoutList) {
-            Date date = payout.getDate();
-            calendar.setTime(date);
-            if (month != calendar.get(Calendar.MONTH)) {
-                month = calendar.get(Calendar.MONTH);
-                String monthString = CreditTools.getMonthName(month);
-                String yearString = String.valueOf(calendar.get(Calendar.YEAR));
-                preparedList.add(monthString + " " + yearString);
-            }
-            preparedList.add(payout);
-        }
-        Resume resume = new Resume();
-        BigDecimal allPaymentAmount = CreditTools.getAllPaymentAmount(payoutList);
-        BigDecimal allOverpayment = allPaymentAmount.subtract(CreditTools.getAllCreditAmount(mCredits));
-        resume.setAllPaymentAmount(String.valueOf(allPaymentAmount));
-        resume.setAllOverpayment(String.valueOf(allOverpayment));
-        preparedList.add(resume);
-        return preparedList;
     }
 }

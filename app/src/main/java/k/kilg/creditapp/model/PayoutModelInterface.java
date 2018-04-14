@@ -4,7 +4,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import k.kilg.creditapp.entities.Credit;
-import k.kilg.creditapp.entities.Payout;
+import k.kilg.creditapp.presenter.PayoutPresenterInterface;
 
 /**
  * Created by apomazkin on 10.04.2018.
@@ -13,7 +13,7 @@ import k.kilg.creditapp.entities.Payout;
  * 11:56
  */
 public interface PayoutModelInterface {
-    Observable<List<Object>> getPayouts();
-    public void loadCredits();
-
+    List<Credit> getCreditList();
+    Observable<List<Credit>> getPayouts();
+    void loadCredits();
 }

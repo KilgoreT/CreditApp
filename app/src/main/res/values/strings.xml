@@ -2,7 +2,7 @@
     <string name="app_name">CreditApp</string>
 
 
-    <string name="ac_launch_wellcome_tv">Sign In</string>
+    <string name="ac_launch_wellcome_tv">Credit App</string>
     <string name="ac_launch_register_tv">or</string>
     <string name="ac_launch_signin_btn">signin</string>
     <string name="ac_launch_register_btn">register</string>
@@ -30,8 +30,8 @@
     <string name="menu_action_mode_edit_credit">Edit credit</string>
     <string name="menu_action_mode_remove_credit">Remove credit</string>
 
-    <string name="ac_credit_header_verifyed">verified)</string>
-    <string name="ac_credit_header_noverify">no verify)</string>
+    <string name="ac_credit_header_verifyed">verified</string>
+    <string name="ac_credit_header_noverify">no verify</string>
 
     <string name="btnOk">OK</string>
     <string name="btnYes">YES</string>
@@ -73,6 +73,17 @@
 
     <string name="unknown_error_CS">Unknown error</string>
 
-    <string name="month_january">Январь</string>
+    <string name="month_january">January</string>
+    <string name="month_february">February</string>
+    <string name="month_march">March</string>
+    <string name="month_april">April</string>
+    <string name="month_may">May</string>
+    <string name="month_june">June</string>
+    <string name="month_july">July</string>
+    <string name="month_august">August</string>
+    <string name="month_september">September</string>
+    <string name="month_october">October</string>
+    <string name="month_november">November</string>
+    <string name="month_december">December</string>
 
 </resources>

@@ -47,6 +47,12 @@ public class CreditTools {
     }
 
 
+    private static BigDecimal getAnnuityMonthPayoutAmount(Credit credit) {
+        return getAnnuityCoeffitient(credit)
+                .multiply(new BigDecimal(credit.getAmount()))
+                .setScale(SCALE_FOR_CURRENCY, RoundingMode.HALF_UP);
+    }
+
     private static BigDecimal getAnnuityCreditBalance(Credit credit, Integer paidMonths) {
         return getFullCreditPayment(credit).subtract(getAnnuityMonthPayoutAmount(credit).multiply(new BigDecimal(paidMonths)));
     }
@@ -69,12 +75,6 @@ public class CreditTools {
         return (getCreditPercent(credit)
                 .divide(MONTHS_IN_YEAR, MathContext.DECIMAL128))
                 .divide(HUNDRED, MathContext.DECIMAL128);
-    }
-
-    private static BigDecimal getAnnuityMonthPayoutAmount(Credit credit) {
-        return getAnnuityCoeffitient(credit)
-                .multiply(new BigDecimal(credit.getAmount()))
-                .setScale(SCALE_FOR_CURRENCY, RoundingMode.HALF_UP);
     }
 
 
@@ -124,6 +124,7 @@ public class CreditTools {
     }
 
 
+    //**********General calculation**********//
 
     private static BigDecimal getFullCreditPayment(Credit credit) {
         if (credit.isAnnuity()) {
@@ -178,47 +179,5 @@ public class CreditTools {
             e.printStackTrace();
         }
         return calendar;
-    }
-
-    public static String getMonthName(int month) {
-        switch (month + 1) {
-            case 1:
-                return "Январь ";
-
-            case 2:
-                return "Февраль ";
-
-            case 3:
-                return "Март ";
-
-            case 4:
-                return "Апрель ";
-
-            case 5:
-                return "Май ";
-
-            case 6:
-                return "Июнь ";
-
-            case 7:
-                return "Июль ";
-
-            case 8:
-                return "Август ";
-
-            case 9:
-                return "Сентябрь ";
-
-            case 10:
-                return "Октябрь ";
-
-            case 11:
-                return "Ноябрь ";
-
-            case 12:
-                return "Декабрь ";
-        }
-
-        return "";
     }
 }

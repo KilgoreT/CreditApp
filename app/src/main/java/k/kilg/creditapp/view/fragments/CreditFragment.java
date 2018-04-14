@@ -20,15 +20,15 @@ import java.util.List;
 import k.kilg.creditapp.CreditActivity;
 import k.kilg.creditapp.R;
 import k.kilg.creditapp.entities.Credit;
-import k.kilg.creditapp.model.CreditAppModel;
-import k.kilg.creditapp.model.CreditAppModelInterface;
-import k.kilg.creditapp.presenter.CreditAppPresenter;
-import k.kilg.creditapp.presenter.CreditAppPresenterInterface;
+import k.kilg.creditapp.model.CreditModel;
+import k.kilg.creditapp.model.CreditModelInterface;
+import k.kilg.creditapp.presenter.CreditPresenter;
+import k.kilg.creditapp.presenter.CreditPresenterInterface;
 import k.kilg.creditapp.view.CreditViewInterface;
 import k.kilg.creditapp.view.adapters.CreditRVAdapter;
 
 
-public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<Credit>, CreditViewInterface, CreditAppPresenterInterface> implements
+public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<Credit>, CreditViewInterface, CreditPresenterInterface> implements
         CreditViewInterface,
         CreditRVAdapter.CreditRVAdapterListener{
 
@@ -45,9 +45,9 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
 
     @NonNull
     @Override
-    public CreditAppPresenterInterface createPresenter() {
-        CreditAppModelInterface mModel = new CreditAppModel(this);
-        return new CreditAppPresenter(mModel);
+    public CreditPresenterInterface createPresenter() {
+        CreditModelInterface mModel = new CreditModel(this);
+        return new CreditPresenter(mModel);
     }
 
     @Override
