@@ -71,6 +71,7 @@
     <string name="credit_adapter_choose_one_element">Выберите один элемент для редактирования</string>
 
     <string name="unknown_error_CS">Неопознанная ошибка</string>
+    <string name="credit_paid">Выплачен</string>
 
     <string name="month_january">Январь</string>
     <string name="month_february">Февраль</string>

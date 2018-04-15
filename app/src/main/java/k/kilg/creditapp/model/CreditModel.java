@@ -1,5 +1,6 @@
 package k.kilg.creditapp.model;
 
+import android.text.format.DateUtils;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -11,10 +12,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
+import k.kilg.creditapp.R;
 import k.kilg.creditapp.entities.Credit;
+import k.kilg.creditapp.tools.CreditTools;
 import k.kilg.creditapp.view.fragments.CreditFragment;
 
 /**
@@ -63,7 +76,8 @@ public class CreditModel implements CreditModelInterface {
                         for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                             Credit credit = snapshot.getValue(Credit.class);
                             credit.setKey(snapshot.getKey());
-                            mCreditList.add(credit);
+                            mCreditList.add(calculateNextPayment(credit));
+                            sortCredits();
                         }
                         startDbListener();
                         fragment.getPresenter().loadCredits();
@@ -100,7 +114,8 @@ public class CreditModel implements CreditModelInterface {
                         Credit credit = dataSnapshot.getValue(Credit.class);
                         credit.setKey(dataSnapshot.getKey());
                         if (!mCreditList.contains(credit)) {
-                            mCreditList.add(credit);
+                            mCreditList.add(calculateNextPayment(credit));
+                            sortCredits();
                             fragment.getPresenter().loadCredits();
                         }
                     }
@@ -109,19 +124,16 @@ public class CreditModel implements CreditModelInterface {
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                         Credit credit = dataSnapshot.getValue(Credit.class);
                         credit.setKey(dataSnapshot.getKey());
-                        Integer index = null;
+                        int index = -1;
                         for (Credit c : mCreditList) {
                             if (c.getKey().equals(dataSnapshot.getKey())) {
                                 index = mCreditList.indexOf(c);
                             }
                         }
-                        if (index != null) {
-                            mCreditList.get(index).setName(credit.getName());
-                            mCreditList.get(index).setAmount(credit.getAmount());
-                            mCreditList.get(index).setAnnuity(credit.isAnnuity());
-                            mCreditList.get(index).setDate(credit.getDate());
-                            mCreditList.get(index).setMonthCount(credit.getMonthCount());
-                            mCreditList.get(index).setRate(credit.getRate());
+                        if (index != -1) {
+                            mCreditList.remove(index);
+                            mCreditList.add(calculateNextPayment(credit));
+                            sortCredits();
                             fragment.getPresenter().loadCredits();
                         }
                     }
@@ -144,5 +156,51 @@ public class CreditModel implements CreditModelInterface {
                         fragment.getPresenter().loadCredits();
                     }
                 });
+    }
+
+    private Credit calculateNextPayment(Credit credit) {
+
+
+        BigDecimal ballance;
+        BigDecimal nextMonthPayout;
+        String nextPayoutDate;
+
+        int paymentPeriod = CreditTools.getPaymentPeriod(credit);
+        if (paymentPeriod == -1) {
+            credit.setBallance(BigDecimal.ZERO);
+            credit.setNextMonthPayout(BigDecimal.ZERO);
+            credit.setNextPayoutDate(fragment.getActivity().getResources().getString(R.string.credit_paid));
+            return credit;
+        }
+
+        nextPayoutDate = CreditTools.getNextPayoutDate(credit);
+        if (credit.isAnnuity()) {
+            nextMonthPayout = CreditTools.getAnnuityMonthPayoutAmount(credit);
+            ballance = CreditTools.getAnnuityCreditBalance(credit, paymentPeriod);
+        } else {
+            nextMonthPayout = CreditTools.getDifferentialFullMonthPayout(credit, paymentPeriod);
+            ballance = CreditTools.getDifferentialCreditBalance(credit, paymentPeriod);
+        }
+        credit.setBallance(ballance);
+        credit.setNextMonthPayout(nextMonthPayout);
+        credit.setNextPayoutDate(nextPayoutDate);
+        return credit;
+    }
+
+    private void sortCredits() {
+        Collections.sort(mCreditList, new Comparator<Credit>() {
+            @Override
+            public int compare(Credit o1, Credit o2) {
+                String firstDate = o1.getNextPayoutDate();
+                String secondDate = o2.getNextPayoutDate();
+                int sComp = firstDate.compareTo(secondDate);
+                if (sComp != 0) {
+                    return sComp;
+                }
+                String firstName = o1.getName();
+                String secondName = o2.getName();
+                return firstName.compareTo(secondName);
+            }
+        });
     }
 }

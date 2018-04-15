@@ -1,7 +1,8 @@
 package k.kilg.creditapp.view.adapters;
 
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 viewHolder = new MonthHolder(vMonth);
                 break;
             case PAYOUT:
-                View vPayout = inflater.inflate(R.layout.rv_payout_item_ll, parent, false);
+                View vPayout = inflater.inflate(R.layout.rv_credit_item_nextpayout, parent, false);
                 viewHolder = new PayoutHolder(vPayout);
                 break;
             case RESUME:
@@ -99,25 +100,26 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public class PayoutHolder extends RecyclerView.ViewHolder{
+
         private TextView mCreditName;
-        private TextView mPayoutAmount;
-        private TextView mPayoutDate;
-        private TextView mPayoutBalance;
+        private TextView mNextPayoutDate;
+        private TextView mNextMonthPayout;
+        private TextView mBallance;
 
         PayoutHolder(View itemView) {
             super(itemView);
-            mCreditName = (TextView) itemView.findViewById(R.id.tvPayoutCreditName);
-            mPayoutDate = (TextView) itemView.findViewById(R.id.tvPayoutDate);
-            mPayoutAmount = (TextView) itemView.findViewById(R.id.tvPayoutAmount);
-            mPayoutBalance = (TextView) itemView.findViewById(R.id.tvPayoutBalance);
+            mCreditName = (TextView) itemView.findViewById(R.id.tvCreditName);
+            mNextPayoutDate = (TextView) itemView.findViewById(R.id.tvNextPayoutDate);
+            mNextMonthPayout = (TextView) itemView.findViewById(R.id.tvNextMonthPayout);
+            mBallance = (TextView) itemView.findViewById(R.id.tvBallance);
         }
 
         void bind(Payout payout) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
             mCreditName.setText(payout.getCreditName());
-            mPayoutAmount.setText(String.valueOf(payout.getAmount()));
-            mPayoutDate.setText(sdf.format(payout.getDate()));
-            mPayoutBalance.setText(payout.getBalance());
+            mNextPayoutDate.setText(sdf.format(payout.getDate()));
+            mNextMonthPayout.setText(String.valueOf(payout.getAmount()));
+            mBallance.setText(payout.getBalance());
         }
     }
 

@@ -1,19 +1,11 @@
 package k.kilg.creditapp.entities;
 
-import android.util.Log;
-
 import com.google.firebase.database.Exclude;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-
-import k.kilg.creditapp.R;
 
 /**
  * Created by apomazkin on 04.04.2018.
@@ -37,8 +29,10 @@ public class Credit {
     private Integer amount = 0; //сумму в рублях (обязательно, минимум 1 рубль, максимум 1 000 000 000)
     private String rate; //процентную ставку (обязательно, минимум 1%, максимум 99%). Ставка может быть дробной (например 13.5%)
 
+    private String nextMonthPayout;
+    private String nextPayoutDate;
+    private String ballance;
     private String key;
-
 
     public Credit() {
     }
@@ -103,6 +97,30 @@ public class Credit {
         } else {
             throw new IllegalArgumentException("Wrong credit rate(Range: 1 - 99%)!");
         }
+    }
+
+    public String getNextMonthPayout() {
+        return nextMonthPayout;
+    }
+
+    public void setNextMonthPayout(BigDecimal nextMonthPayout) {
+        this.nextMonthPayout = String.valueOf(nextMonthPayout);
+    }
+
+    public String getNextPayoutDate() {
+        return nextPayoutDate;
+    }
+
+    public void setNextPayoutDate(String nextPayoutDate) {
+        this.nextPayoutDate = nextPayoutDate;
+    }
+
+    public String getBallance() {
+        return ballance;
+    }
+
+    public void setBallance(BigDecimal ballance) {
+        this.ballance = String.valueOf(ballance);
     }
 
     public String getKey() {

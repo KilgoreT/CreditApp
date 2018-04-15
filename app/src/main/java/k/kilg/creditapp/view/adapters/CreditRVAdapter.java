@@ -7,7 +7,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,7 +48,7 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
 
     @Override
     public CreditRVAdapter.CreditHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_credit_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_credit_item_nextpayout, parent, false);
         return new CreditHolder(v);
     }
 
@@ -105,24 +104,20 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
     public class CreditHolder extends RecyclerView.ViewHolder {
 
         private CardView mCV;
-        private ConstraintLayout mCL;
         private TextView mCreditName;
-        private TextView mCreditType;
-        private TextView mCreditMonthCount;
-        private TextView mCreditAmount;
-        private TextView mCreditRate;
-        private TextView mCreditDate;
+        private TextView mNextPayoutDate;
+        private TextView mNextMonthPayout;
+        private TextView mBallance;
+        private ConstraintLayout mCL;
 
         CreditHolder(View itemView) {
             super(itemView);
             mCV = (CardView) itemView.findViewById(R.id.cardview);
             mCL = (ConstraintLayout) itemView.findViewById(R.id.CL);
             mCreditName = (TextView) itemView.findViewById(R.id.tvCreditName);
-            mCreditType = (TextView) itemView.findViewById(R.id.tvCreditType);
-            mCreditMonthCount = (TextView) itemView.findViewById(R.id.tvCreditMonthCount);
-            mCreditAmount = (TextView) itemView.findViewById(R.id.tvCreditAmount);
-            mCreditRate = (TextView) itemView.findViewById(R.id.tvCreditRate);
-            mCreditDate = (TextView) itemView.findViewById(R.id.tvPayoutDate);
+            mNextPayoutDate = (TextView) itemView.findViewById(R.id.tvNextPayoutDate);
+            mNextMonthPayout = (TextView) itemView.findViewById(R.id.tvNextMonthPayout);
+            mBallance = (TextView) itemView.findViewById(R.id.tvBallance);
         }
 
         public String getCreditName() {
@@ -131,13 +126,9 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
 
         void bind(Credit credit) {
             mCreditName.setText(credit.getName());
-            mCreditType.setText(credit.isAnnuity()
-                    ? itemView.getContext().getString(R.string.credit_adapter_annuity_CS)
-                    : itemView.getContext().getString(R.string.credit_adapter_differential_CS));
-            mCreditMonthCount.setText(String.valueOf(credit.getMonthCount()));
-            mCreditAmount.setText(String.valueOf(credit.getAmount()));
-            mCreditRate.setText(credit.getRate());
-            mCreditDate.setText(credit.getDate());
+            mNextPayoutDate.setText(credit.getNextPayoutDate());
+            mNextMonthPayout.setText(credit.getNextMonthPayout());
+            mBallance.setText(credit.getBallance());
         }
 
         public void changeSelectedList(Credit selectedCredit, int position) {

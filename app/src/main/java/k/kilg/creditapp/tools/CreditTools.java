@@ -26,6 +26,7 @@ public class CreditTools {
     private static final BigDecimal MONTHS_IN_YEAR = new BigDecimal(12);
     private static final BigDecimal HUNDRED = new BigDecimal(100);
     private static final int SCALE_FOR_CURRENCY = 2;
+    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
 
 
@@ -47,13 +48,13 @@ public class CreditTools {
     }
 
 
-    private static BigDecimal getAnnuityMonthPayoutAmount(Credit credit) {
+    public static BigDecimal getAnnuityMonthPayoutAmount(Credit credit) {
         return getAnnuityCoeffitient(credit)
                 .multiply(new BigDecimal(credit.getAmount()))
                 .setScale(SCALE_FOR_CURRENCY, RoundingMode.HALF_UP);
     }
 
-    private static BigDecimal getAnnuityCreditBalance(Credit credit, Integer paidMonths) {
+    public static BigDecimal getAnnuityCreditBalance(Credit credit, Integer paidMonths) {
         return getFullCreditPayment(credit).subtract(getAnnuityMonthPayoutAmount(credit).multiply(new BigDecimal(paidMonths)));
     }
 
@@ -99,7 +100,7 @@ public class CreditTools {
         return payoutList;
     }
 
-    private static BigDecimal getDifferentialFullMonthPayout(Credit credit, Integer paidMonths) {
+    public static BigDecimal getDifferentialFullMonthPayout(Credit credit, Integer paidMonths) {
         return getDifferentialStaticMonthPayout(credit).add(getDifferentialPercentMonthPayout(credit, paidMonths));
     }
 
@@ -115,7 +116,7 @@ public class CreditTools {
                 .divide(new BigDecimal(calendar.getActualMaximum(Calendar.DAY_OF_YEAR)), SCALE_FOR_CURRENCY, RoundingMode.HALF_UP);
     }
 
-    private static BigDecimal getDifferentialCreditBalance(Credit credit, Integer paidMonths) {
+    public static BigDecimal getDifferentialCreditBalance(Credit credit, Integer paidMonths) {
         return getCreditAmount(credit).subtract(getDifferentialStaticMonthPayout(credit).multiply(new BigDecimal(paidMonths)));
     }
 
@@ -170,8 +171,7 @@ public class CreditTools {
 
     //**********Calendar for credit date**********//
 
-    private static Calendar getCalendar(Credit credit) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    public static Calendar getCalendar(Credit credit) {
         Calendar calendar = Calendar.getInstance(Locale.US);
         try {
             calendar.setTime(sdf.parse(credit.getDate()));
@@ -180,4 +180,23 @@ public class CreditTools {
         }
         return calendar;
     }
+
+    public static int getPaymentPeriod(Credit credit) {
+        Calendar creditDate = CreditTools.getCalendar(credit);
+        Calendar currentDate = Calendar.getInstance();
+        currentDate.setTimeInMillis(System.currentTimeMillis());
+
+        int years = currentDate.get(Calendar.YEAR) - creditDate.get(Calendar.YEAR);
+        int paymentPeriod = currentDate.get(Calendar.MONTH) + (12 * years) - creditDate.get(Calendar.MONTH);
+        creditDate.add(Calendar.MONTH, paymentPeriod);
+        if (creditDate.before(currentDate)) paymentPeriod++;
+        return paymentPeriod > credit.getMonthCount()? -1 : paymentPeriod;
+    }
+
+    public static String getNextPayoutDate(Credit credit) {
+        Calendar calendar = getCalendar(credit);
+        calendar.add(Calendar.MONTH, getPaymentPeriod(credit));
+        return sdf.format(calendar.getTime());
+    }
+
 }

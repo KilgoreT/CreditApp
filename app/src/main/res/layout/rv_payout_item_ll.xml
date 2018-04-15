@@ -37,7 +37,7 @@
                 tools:text="Кредит на маленькую недорогую вещицу 000 000000 00 000000000 00 00000"
                 />
             <TextView
-                android:id="@+id/tvTitlePayoutDate"
+                android:id="@+id/tvTitleNextPayoutDate"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
@@ -50,7 +50,7 @@
                 android:layout_weight="1"
                 />
             <TextView
-                android:id="@+id/tvPayoutDate"
+                android:id="@+id/tvNextPayoutDate"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
@@ -117,7 +117,7 @@
                 android:layout_weight="1"
                  />
             <TextView
-                android:id="@+id/tvPayoutAmount"
+                android:id="@+id/tvNextMonthPayout"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_gravity="top"
