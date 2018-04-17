@@ -53,6 +53,15 @@ public class DiagramFragment extends Fragment {
         mTableLayout.addView(tableRow, 0);*/
         return v;
     }
+/*    public void addRow(String cell0, String cell1) {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        TableRow tr = (TableRow) inflater.inflate(R.layout.table_row, null);
+        TextView tv = (TextView) tr.getChildAt(0);
+        tv.setText(cell0);
+        tv = (TextView) tr.getChildAt(1);
+        tv.setText(cell1);
+        tableLayout.addView(tr);
+    }*/
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed() {
