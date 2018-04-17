@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableLayout
+            android:id="@+id/tablelayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center_horizontal|center_vertical"
+                >
+                <TextView
+                    android:id="@+id/tvDiagramCreditName"
+                    android:textSize="24sp"
+                    />
+            </TableRow>
+            <TableRow
+                android:layout_weight="1"
+                android:background="@color/colorPrimaryDark"
+                >
+                <TextView
+                    android:text="Дата"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    />
+                <TextView
+                    android:text="Выплата"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    />
+                <TextView
+                    android:text="Остаток"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+</ScrollView>

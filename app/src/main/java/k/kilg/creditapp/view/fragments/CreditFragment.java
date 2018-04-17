@@ -156,8 +156,14 @@ public class CreditFragment extends MvpLceViewStateFragment<RecyclerView, List<C
         }
     }
 
+    @Override
+    public void startDiagramForCredit(Credit credit) {
+        mListener.startDiagramForCredit(credit);
+    }
+
 
     public interface OnCreditFragmentInteractionListener {
         void startEditCredit(Credit credit);
+        void startDiagramForCredit(Credit credit);
     }
 }

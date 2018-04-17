@@ -25,6 +25,7 @@ public class AddCreditFragment extends Fragment {
 
     private static final String DATE_PICKER_TAG = "DatePickerTag";
 
+
     private static final String CREDIT_NAME_KEY = "CreditNameKey";
     private static final String CREDIT_AMOUNT_KEY = "CreditAmountKey";
     private static final String CREDIT_MONTH_COUNT_KEY = "CreditMonthCountKey";
@@ -52,7 +53,6 @@ public class AddCreditFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // todo: при повороте экрана вводимые данные не восстанавливаются
         setRetainInstance(true);
     }
 
@@ -171,6 +171,7 @@ public class AddCreditFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
 
     public interface OnAddCreditFragmentInteractionListener {
         void onAddCreditFragmentClose(Credit credit);

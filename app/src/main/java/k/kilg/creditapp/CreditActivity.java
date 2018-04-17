@@ -23,12 +23,14 @@ import com.google.firebase.auth.FirebaseUser;
 import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.view.fragments.AddCreditFragment;
 import k.kilg.creditapp.view.fragments.CreditFragment;
+import k.kilg.creditapp.view.fragments.DiagramFragment;
 import k.kilg.creditapp.view.fragments.PayoutFragment;
 
 public class CreditActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         CreditFragment.OnCreditFragmentInteractionListener,
-        AddCreditFragment.OnAddCreditFragmentInteractionListener {
+        AddCreditFragment.OnAddCreditFragmentInteractionListener,
+        DiagramFragment.OnDiagramFragmentInteractionListener {
 
     private static final String CREDIT_FRAGMENT_TAG = "CreditFragmentTag";
     private static final String ADD_CREDIT_SIMPLE_FRAGMENT_TAG = "AddCreditSimpleFragmentTag";
@@ -42,10 +44,12 @@ public class CreditActivity extends AppCompatActivity implements
     private static final String CREDIT_DATE_KEY = "CreditDateKey";
     private static final String CREDIT_DATABASE_KEY = "CreditDatabaseKey";
     private static final String CREDIT_TYPE_KEY = "CreditTypeKey";
+    private static final String DIAGRAM_FRAGMENT_TAG = "DiagramFragmentTag";
 
     CreditFragment creditFragment = new CreditFragment();
     AddCreditFragment addCreditFragment = new AddCreditFragment();
     PayoutFragment payoutFragment = new PayoutFragment();
+    DiagramFragment diagramFragment = new DiagramFragment();
 
 
     private FloatingActionButton fab;
@@ -236,5 +240,19 @@ public class CreditActivity extends AppCompatActivity implements
             addCreditFragment.setArguments(bundle);
             setFragment(addCreditFragment, ADD_CREDIT_SIMPLE_FRAGMENT_TAG);
         }
+    }
+
+    @Override
+    public void startDiagramForCredit(Credit credit) {
+        Bundle bundle = new Bundle();
+        bundle.putString("TEST", credit.getName());
+        diagramFragment.setArguments(bundle);
+        setFragment(diagramFragment, DIAGRAM_FRAGMENT_TAG);
+    }
+
+
+    @Override
+    public void onDiagramFragmentInteraction() {
+
     }
 }
