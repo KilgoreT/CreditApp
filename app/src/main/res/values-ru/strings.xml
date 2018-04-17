@@ -17,6 +17,13 @@
     <string name="ac_launch_alert_password_required">Введите пароль.</string>
     <string name="ac_launch_email_CS">Емейл</string>
     <string name="ac_launch_password_CS">Пароль</string>
+    <string name="ac_launch_error_weak_password">Слабый пароль. [ Должен состоять как минимум из 6 символов ]</string>
+    <string name="ac_launch_error_user_not_found">Учетной записи не найдено. Возможно, она была удалена.</string>
+    <string name="ac_launch_error_user_disabled">Учетная запись отключена администратором.</string>
+    <string name="ac_launch_error_email_already_in_use">Email адрес уже используется.</string>
+    <string name="ac_launch_error_wrong_password">Неверный пароль.</string>
+    <string name="ac_launch_error_invalid_email">Неправильный формат email адреса.</string>
+    <string name="ac_launch_virify_email">Пожалуйста, подтвердите email адрес.</string>
 
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -62,8 +69,9 @@
     <string name="fragment_add_type_differential">Дифференциальный</string>
     <string name="fragment_add_credit_amount">Сумма</string>
     <string name="fragment_add_credit_rate">Процент</string>
-    <string name="fragment_add_month_count">Количество месяцев</string>
+    <string name="fragment_add_month_count">Кол-во месяцев</string>
     <string name="fragment_add_credit_set_date">Укажите дату</string>
+    <string name="add_credit_credit_information">Информация о кредите</string>
 
     <string name="credit_adapter_annuity_CS">Аннуитетный</string>
     <string name="credit_adapter_differential_CS">Дифференциальный</string>

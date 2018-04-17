@@ -77,11 +77,11 @@ public class CreditActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.creditFragment);
-                if (fragment instanceof CreditFragment) {
+                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.creditFragment);
+                if (currentFragment instanceof CreditFragment) {
                     setFragment(addCreditFragment, ADD_CREDIT_SIMPLE_FRAGMENT_TAG);
-                } else if (fragment instanceof AddCreditFragment) {
-                    ((AddCreditFragment) fragment).onFabPressed();
+                } else if (currentFragment instanceof AddCreditFragment) {
+                    ((AddCreditFragment) currentFragment).onFabPressed();
                 }
             }
         });
@@ -102,7 +102,7 @@ public class CreditActivity extends AppCompatActivity implements
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         String currentFragmentTag = savedInstanceState.getString(CURRENT_FRAGMENT_KEY);
-        if (currentFragmentTag != null && currentFragmentTag.equals(ADD_CREDIT_SIMPLE_FRAGMENT_TAG)) {
+       if (currentFragmentTag != null && currentFragmentTag.equals(ADD_CREDIT_SIMPLE_FRAGMENT_TAG)) {
             setFragment(addCreditFragment, ADD_CREDIT_SIMPLE_FRAGMENT_TAG);
         }
     }
@@ -120,41 +120,33 @@ public class CreditActivity extends AppCompatActivity implements
     }
 
 
-    String msg;
+
     private void setFragment(Fragment fragment, String tag) {
 
         updateFab(fragment);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager()
+                .beginTransaction();
         Fragment currentFragment = getSupportFragmentManager()
                 .findFragmentById(R.id.creditFragment);
 
         if (currentFragment != null) {
             if (currentFragment.getTag().equals(fragment.getTag())) {
                 return;
-            }
-            if (currentFragment instanceof AddCreditFragment) {
+            } /*else if (currentFragment instanceof AddCreditFragment) {
                 getSupportFragmentManager().popBackStack();
                 return;
-            }
-                ft
-                        .replace(R.id.creditFragment, fragment, tag)
-                        .addToBackStack(null)
-                        .commit();
+            }*/
+
+            ft.replace(R.id.creditFragment, fragment, tag)
+                    //.addToBackStack(null)
+                    .commit();
+
         } else {
-            ft
-                    .add(R.id.creditFragment, fragment, tag)
+            ft.add(R.id.creditFragment, fragment, tag)
                     .commit();
         }
-        getBackStackStatus();
-
-
     }
 
-    private void getBackStackStatus() {
-        getSupportFragmentManager().executePendingTransactions();
-        msg = msg + " ... after tr: " + getSupportFragmentManager().getBackStackEntryCount();
-        //Log.d("###", msg);
-    }
 
     @Override
     public void onBackPressed() {
@@ -167,7 +159,6 @@ public class CreditActivity extends AppCompatActivity implements
             Intent intent = new Intent(this, LaunchActivity.class);
             startActivity(intent);
         }
-
     }
 
     private void updateFab(Fragment fragment) {

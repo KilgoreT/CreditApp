@@ -21,9 +21,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 
@@ -35,6 +32,7 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
     private static final String ERROR_EMAIL_ALREADY_IN_USE = "ERROR_EMAIL_ALREADY_IN_USE";
     private static final String ERROR_WRONG_PASSWORD = "ERROR_WRONG_PASSWORD";
     private static final String ERROR_INVALID_EMAIL = "ERROR_INVALID_EMAIL";
+
     private FirebaseAuth mAuth;
 
     private EditText mEtEmail;
@@ -115,24 +113,23 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
         } catch (FirebaseAuthException e) {
             String ERROR_CODE = e.getErrorCode();
             switch (ERROR_CODE) {
-                //todo: вынести сообщения в ресурсы, сделать локализацию на русском.
                 case ERROR_WEAK_PASSWORD:
-                    showToast("The given password is invalid. [ Password should be at least 6 characters ]");
+                    showToast(getString(R.string.ac_launch_error_weak_password));
                     break;
                 case ERROR_USER_NOT_FOUND:
-                    showToast("There is no user record corresponding to this identifier. The user may have been deleted.");
+                    showToast(getString(R.string.ac_launch_error_user_not_found));
                     break;
                 case ERROR_USER_DISABLED:
-                    showToast("The user account has been disabled by an administrator.");
+                    showToast(getString(R.string.ac_launch_error_user_disabled));
                     break;
                 case ERROR_EMAIL_ALREADY_IN_USE:
-                    showToast("The email address is already in use by another account.");
+                    showToast(getString(R.string.ac_launch_error_email_already_in_use));
                     break;
                 case ERROR_WRONG_PASSWORD:
-                    showToast("The password is invalid or the user does not have a password");
+                    showToast(getString(R.string.ac_launch_error_wrong_password));
                     break;
                 case ERROR_INVALID_EMAIL:
-                    showToast("The email address is badly formatted");
+                    showToast(getString(R.string.ac_launch_error_invalid_email));
                     break;
                 default:
                     showToast(e.getMessage());
@@ -178,7 +175,7 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getBaseContext(), R.string.ac_launch_alert_email_sent_successful, Toast.LENGTH_LONG).show();
+                            showToast(getResources().getString(R.string.ac_launch_alert_email_sent_successful));
                         } else {
                             showToast(task.getException().getMessage());
                         }
@@ -194,6 +191,7 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
             mEtEmail.setError(getResources().getString(R.string.ac_launch_alert_email_required));
             valid = false;
         }
+
         String password = mEtPassword.getText().toString();
         if (TextUtils.isEmpty(password)) {
             mEtPassword.setError(getResources().getString(R.string.ac_launch_alert_password_required));
@@ -208,8 +206,7 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             if (!user.isEmailVerified()) {
-                //todo: локализовать
-                showToast("Please, verify email.");
+                showToast(getString(R.string.ac_launch_virify_email));
                 return;
             }
             Intent intent = new Intent(this, CreditActivity.class);

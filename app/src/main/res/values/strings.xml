@@ -17,6 +17,13 @@
     <string name="ac_launch_alert_password_required">Password required.</string>
     <string name="ac_launch_email_CS">Email</string>
     <string name="ac_launch_password_CS">Password</string>
+    <string name="ac_launch_error_weak_password">The given password is invalid. [ Password should be at least 6 characters ]</string>
+    <string name="ac_launch_error_user_not_found">There is no user record corresponding to this identifier. The user may have been deleted.</string>
+    <string name="ac_launch_error_user_disabled">The user account has been disabled by an administrator.</string>
+    <string name="ac_launch_error_email_already_in_use">The email address is already in use by another account.</string>
+    <string name="ac_launch_error_wrong_password">The password is invalid or the user does not have a password</string>
+    <string name="ac_launch_error_invalid_email">The email address is badly formatted</string>
+    <string name="ac_launch_virify_email">Please, verify email.</string>
 
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -57,7 +64,7 @@
     <string name="item_payout_balance">balance:</string>
     <string name="item_payout_payout_amount">payout amount</string>
 
-    <string name="fragment_add_credit_name">Name</string>
+    <string name="fragment_add_credit_name">Credit Name</string>
     <string name="fragment_add_type_annuity">Annuity</string>
     <string name="fragment_add_type_differential">Differential</string>
     <string name="fragment_add_credit_amount">Amount</string>
@@ -65,6 +72,7 @@
     <string name="fragment_add_month_count">Month count</string>
     <string name="fragment_add_edit_date">Edit date</string>
     <string name="fragment_add_credit_set_date">Set Date</string>
+    <string name="add_credit_credit_information">Credit Information</string>
 
     <string name="credit_adapter_annuity_CS">Annuity</string>
     <string name="credit_adapter_differential_CS">Differential</string>

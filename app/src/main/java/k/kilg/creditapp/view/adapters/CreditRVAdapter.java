@@ -7,7 +7,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -63,7 +62,7 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
                 if (mModeEnabled) {
                     holder.changeSelectedList(getCreditByTitle(holder.getCreditName()), holder.getAdapterPosition());
                 } else {
-                    //todo: start diagramm here
+                    //todo: сюда вставить диаграму
                     //((CreditFragment)mListener).startEditCredit(getCreditByTitle(holder.getCreditName()));
                 }
             }

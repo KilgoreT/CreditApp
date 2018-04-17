@@ -32,7 +32,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/h30"
+            app:layout_constraintBottom_toTopOf="@+id/h25"
             app:layout_constraintDimensionRatio=""
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,7 @@
             tools:text="Имя какого-то очередного кредита для выплат" />
 
         <android.support.constraint.Guideline
-            android:id="@+id/h30"
+            android:id="@+id/h25"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -57,14 +57,14 @@
             android:text="@string/item_payout_payout_date"
             android:textColor="@android:color/black"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/h50"
+            app:layout_constraintBottom_toTopOf="@+id/h55"
             app:layout_constraintEnd_toStartOf="@+id/v50"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/h30"
+            app:layout_constraintTop_toBottomOf="@+id/h25"
             app:layout_constraintVertical_bias="0.9" />
 
         <android.support.constraint.Guideline
-            android:id="@+id/h50"
+            android:id="@+id/h55"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -80,14 +80,14 @@
             android:gravity="top|left"
             android:textColor="@android:color/black"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/h50"
+            app:layout_constraintBottom_toTopOf="@+id/h65"
             app:layout_constraintEnd_toStartOf="@+id/v50"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/h50"
+            app:layout_constraintTop_toBottomOf="@+id/h55"
             tools:text="2018-03-05" />
 
         <android.support.constraint.Guideline
-            android:id="@+id/h50"
+            android:id="@+id/h65"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -104,7 +104,7 @@
             android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tvBallance"
-            app:layout_constraintTop_toBottomOf="@+id/h50" />
+            app:layout_constraintTop_toBottomOf="@+id/h65" />
 
         <TextView
             android:id="@+id/tvBallance"
@@ -116,7 +116,7 @@
             android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/h50"
+            app:layout_constraintTop_toBottomOf="@+id/h65"
             tools:text="2034.23" />
 
         <android.support.constraint.Guideline
@@ -133,10 +133,10 @@
             android:text="@string/item_payout_payout_amount"
             android:textColor="@android:color/black"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/h50"
+            app:layout_constraintBottom_toTopOf="@+id/h55"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvTitleNextPayoutDate"
-            app:layout_constraintTop_toTopOf="@+id/h30" />
+            app:layout_constraintTop_toTopOf="@+id/h25" />
 
         <TextView
             android:id="@+id/tvNextMonthPayout"
@@ -145,9 +145,9 @@
             android:layout_marginBottom="4dp"
             android:textColor="@android:color/black"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/h50"
+            app:layout_constraintBottom_toTopOf="@+id/h65"
             app:layout_constraintStart_toEndOf="@+id/tvNextPayoutDate"
-            app:layout_constraintTop_toBottomOf="@+id/h50"
+            app:layout_constraintTop_toBottomOf="@+id/h55"
             tools:text="40000" />
 
         <TextView

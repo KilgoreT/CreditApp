@@ -20,7 +20,6 @@ import k.kilg.creditapp.R;
 import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.view.dialogs.DatePickerFragment;
 
-//todo: при редактировании задваиваются кредиты
 
 public class AddCreditFragment extends Fragment {
 
@@ -95,28 +94,24 @@ public class AddCreditFragment extends Fragment {
 
 
     public void onFabPressed() {
-        if (mListener != null) {
-            Credit credit = createCredit();
-            if (credit != null) {
-                if (mEditMode) {
-                    if (mListener != null) {
-                        mEditMode = false;
-                        mListener.onUpdateCreditFragmentClose(credit);
-                    }
-                } else {
-                    if (mListener != null) {
-                        mEditMode = false;
-                        clearFields();
-                        mListener.onAddCreditFragmentClose(credit);
-                    }
-                }
+        Credit credit = createCredit();
+        Log.d("###", "Credit is " + credit.getName());
+        Log.d("###", "Listener is " + mListener.toString());
+        Log.d("###", "EditMode is " + mEditMode);
+        if (credit != null && mListener != null) {
+            if (mEditMode) {
+                mEditMode = false;
+                mListener.onUpdateCreditFragmentClose(credit);
+            } else {
+                mEditMode = false;
+                clearFields();
+                mListener.onAddCreditFragmentClose(credit);
             }
         }
     }
 
     private Credit createCredit() {
         Credit credit = new Credit();
-        //todo: message with field name
         if (TextUtils.isEmpty(mEtCreditName.getText())) {
             showSnackbar("Field Name is empty!");
             return null;
@@ -134,18 +129,16 @@ public class AddCreditFragment extends Fragment {
             return null;
         }
         try {
-                credit.setName(mEtCreditName.getText().toString());
-                credit.setAmount(Integer.valueOf(mEtCreditAmount.getText().toString()));
-                credit.setAnnuity(mRgCreditType.getCheckedRadioButtonId() == R.id.addCredit_rgCreditAnnuity);
-                credit.setMonthCount(Integer.valueOf(mEtCreditMonthCount.getText().toString()));
-                credit.setRate(mEtCreditRate.getText().toString());
-                credit.setDate(mTvCreditDate.getText().toString());
-                if (mCreditDatabaseKey != null) {
-                    credit.setKey(mCreditDatabaseKey);
-                }
+            credit.setName(mEtCreditName.getText().toString());
+            credit.setAmount(Integer.valueOf(mEtCreditAmount.getText().toString()));
+            credit.setAnnuity(mRgCreditType.getCheckedRadioButtonId() == R.id.addCredit_rgCreditAnnuity);
+            credit.setMonthCount(Integer.valueOf(mEtCreditMonthCount.getText().toString()));
+            credit.setRate(mEtCreditRate.getText().toString());
+            credit.setDate(mTvCreditDate.getText().toString());
+            if (mCreditDatabaseKey != null) credit.setKey(mCreditDatabaseKey);
         } catch (IllegalArgumentException e) {
-            showSnackbar(e.getMessage());
-            return null;
+                showSnackbar(e.getMessage());
+                return null;
         }
         return credit;
     }
@@ -175,11 +168,6 @@ public class AddCreditFragment extends Fragment {
         }
     }
 
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
 
     @Override
     public void onDetach() {
