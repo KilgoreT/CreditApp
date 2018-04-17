@@ -20,11 +20,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 
 public class LaunchActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private static final String ERROR_WEAK_PASSWORD = "ERROR_WEAK_PASSWORD";
+    private static final String ERROR_USER_NOT_FOUND = "ERROR_USER_NOT_FOUND";
+    private static final String ERROR_USER_DISABLED = "ERROR_USER_DISABLED";
+    private static final String ERROR_EMAIL_ALREADY_IN_USE = "ERROR_EMAIL_ALREADY_IN_USE";
+    private static final String ERROR_WRONG_PASSWORD = "ERROR_WRONG_PASSWORD";
+    private static final String ERROR_INVALID_EMAIL = "ERROR_INVALID_EMAIL";
     private FirebaseAuth mAuth;
 
     private EditText mEtEmail;
@@ -92,11 +102,48 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
                                     .create()
                                     .show();
                         } else {
-                            Toast.makeText(getBaseContext(), R.string.ac_launch_alert_register_failed, Toast.LENGTH_LONG).show();
+                            showErrorMessage(task);
                             updateUI(null);
                         }
                     }
                 });
+    }
+
+    private void showErrorMessage(Task<AuthResult> task) {
+        try {
+            throw task.getException();
+        } catch (FirebaseAuthException e) {
+            String ERROR_CODE = e.getErrorCode();
+            switch (ERROR_CODE) {
+                //todo: вынести сообщения в ресурсы, сделать локализацию на русском.
+                case ERROR_WEAK_PASSWORD:
+                    showToast("The given password is invalid. [ Password should be at least 6 characters ]");
+                    break;
+                case ERROR_USER_NOT_FOUND:
+                    showToast("There is no user record corresponding to this identifier. The user may have been deleted.");
+                    break;
+                case ERROR_USER_DISABLED:
+                    showToast("The user account has been disabled by an administrator.");
+                    break;
+                case ERROR_EMAIL_ALREADY_IN_USE:
+                    showToast("The email address is already in use by another account.");
+                    break;
+                case ERROR_WRONG_PASSWORD:
+                    showToast("The password is invalid or the user does not have a password");
+                    break;
+                case ERROR_INVALID_EMAIL:
+                    showToast("The email address is badly formatted");
+                    break;
+                default:
+                    showToast(e.getMessage());
+            }
+        } catch (Exception e) {
+            showToast(e.getMessage());
+        }
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     private void signIn(String email, String password) {
@@ -112,7 +159,7 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
                             FirebaseUser currentUser = mAuth.getCurrentUser();
                             updateUI(currentUser);
                         } else {
-                            Toast.makeText(getBaseContext(), R.string.ac_launch_alert_auth_failed, Toast.LENGTH_LONG).show();
+                            showErrorMessage(task);
                             updateUI(null);
                         }
                     }
@@ -133,7 +180,7 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
                         if (task.isSuccessful()) {
                             Toast.makeText(getBaseContext(), R.string.ac_launch_alert_email_sent_successful, Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(getBaseContext(), R.string.ac_launch_alert_email_sent_fail, Toast.LENGTH_LONG).show();
+                            showToast(task.getException().getMessage());
                         }
                     }
                 });
@@ -146,14 +193,7 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
         if (TextUtils.isEmpty(email)) {
             mEtEmail.setError(getResources().getString(R.string.ac_launch_alert_email_required));
             valid = false;
-        } else {
-            mEtEmail.setError(null);
-            valid = Patterns.EMAIL_ADDRESS.matcher(mEtEmail.getText().toString()).matches();
-            if (!valid) {
-                mEtEmail.setError(getResources().getString(R.string.ac_launch_alert_email_not_valid));
-            }
         }
-
         String password = mEtPassword.getText().toString();
         if (TextUtils.isEmpty(password)) {
             mEtPassword.setError(getResources().getString(R.string.ac_launch_alert_password_required));
@@ -167,6 +207,11 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
+            if (!user.isEmailVerified()) {
+                //todo: локализовать
+                showToast("Please, verify email.");
+                return;
+            }
             Intent intent = new Intent(this, CreditActivity.class);
             startActivity(intent);
         }
