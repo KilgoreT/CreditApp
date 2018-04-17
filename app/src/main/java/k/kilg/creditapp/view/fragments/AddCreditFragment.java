@@ -20,6 +20,7 @@ import k.kilg.creditapp.R;
 import k.kilg.creditapp.entities.Credit;
 import k.kilg.creditapp.view.dialogs.DatePickerFragment;
 
+//todo: при редактировании задваиваются кредиты
 
 public class AddCreditFragment extends Fragment {
 
@@ -60,7 +61,7 @@ public class AddCreditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_add_credit_simple, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_credit, container, false);
         mEtCreditName = (EditText) v.findViewById(R.id.addCredit_etName);
         mRgCreditType = (RadioGroup) v.findViewById(R.id.addCredit_rgCreditType);
         mEtCreditAmount = (EditText) v.findViewById(R.id.addCredit_etAmount);
@@ -98,16 +99,15 @@ public class AddCreditFragment extends Fragment {
             Credit credit = createCredit();
             if (credit != null) {
                 if (mEditMode) {
-                    if (mListener != null)
+                    if (mListener != null) {
                         mEditMode = false;
                         mListener.onUpdateCreditFragmentClose(credit);
-                        clearFields();{
                     }
                 } else {
                     if (mListener != null) {
                         mEditMode = false;
-                        mListener.onAddCreditFragmentClose(credit);
                         clearFields();
+                        mListener.onAddCreditFragmentClose(credit);
                     }
                 }
             }
@@ -116,13 +116,24 @@ public class AddCreditFragment extends Fragment {
 
     private Credit createCredit() {
         Credit credit = new Credit();
-        if (!TextUtils.isEmpty(mEtCreditName.getText())
-                && !TextUtils.isEmpty(mEtCreditAmount.getText().toString())
-                && !TextUtils.isEmpty(mEtCreditMonthCount.getText().toString())
-                && !TextUtils.isEmpty(mEtCreditRate.getText().toString())
-                && !TextUtils.isEmpty(mTvCreditDate.getText().toString())
-                ) {
-            try {
+        //todo: message with field name
+        if (TextUtils.isEmpty(mEtCreditName.getText())) {
+            showSnackbar("Field Name is empty!");
+            return null;
+        } else if (TextUtils.isEmpty(mEtCreditAmount.getText().toString())) {
+            showSnackbar("Field Amount is empty!");
+            return null;
+        } else if (TextUtils.isEmpty(mEtCreditMonthCount.getText().toString())) {
+            showSnackbar("Field Month count is empty!");
+            return null;
+        } else if (TextUtils.isEmpty(mEtCreditRate.getText().toString())) {
+            showSnackbar("Field Rate is empty!");
+            return null;
+        } else if (TextUtils.isEmpty(mTvCreditDate.getText().toString())) {
+            showSnackbar("Field Date is empty!");
+            return null;
+        }
+        try {
                 credit.setName(mEtCreditName.getText().toString());
                 credit.setAmount(Integer.valueOf(mEtCreditAmount.getText().toString()));
                 credit.setAnnuity(mRgCreditType.getCheckedRadioButtonId() == R.id.addCredit_rgCreditAnnuity);
@@ -132,14 +143,8 @@ public class AddCreditFragment extends Fragment {
                 if (mCreditDatabaseKey != null) {
                     credit.setKey(mCreditDatabaseKey);
                 }
-
-            } catch (IllegalArgumentException e) {
-                showSnackbar(e.getMessage());
-                return null;
-            }
-
-        } else {
-            showSnackbar(getString(R.string.add_credit_empty_fields));
+        } catch (IllegalArgumentException e) {
+            showSnackbar(e.getMessage());
             return null;
         }
         return credit;
@@ -171,12 +176,14 @@ public class AddCreditFragment extends Fragment {
     }
 
 
-
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        //clearFields();
         mListener = null;
     }
 

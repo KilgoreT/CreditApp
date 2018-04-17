@@ -80,14 +80,14 @@
             android:gravity="top|left"
             android:textColor="@android:color/black"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/h80"
+            app:layout_constraintBottom_toTopOf="@+id/h50"
             app:layout_constraintEnd_toStartOf="@+id/v50"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/h50"
             tools:text="2018-03-05" />
 
         <android.support.constraint.Guideline
-            android:id="@+id/h80"
+            android:id="@+id/h50"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -104,7 +104,7 @@
             android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tvBallance"
-            app:layout_constraintTop_toBottomOf="@+id/h80" />
+            app:layout_constraintTop_toBottomOf="@+id/h50" />
 
         <TextView
             android:id="@+id/tvBallance"
@@ -116,7 +116,7 @@
             android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/h80"
+            app:layout_constraintTop_toBottomOf="@+id/h50"
             tools:text="2034.23" />
 
         <android.support.constraint.Guideline
@@ -145,7 +145,7 @@
             android:layout_marginBottom="4dp"
             android:textColor="@android:color/black"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/h80"
+            app:layout_constraintBottom_toTopOf="@+id/h50"
             app:layout_constraintStart_toEndOf="@+id/tvNextPayoutDate"
             app:layout_constraintTop_toBottomOf="@+id/h50"
             tools:text="40000" />
