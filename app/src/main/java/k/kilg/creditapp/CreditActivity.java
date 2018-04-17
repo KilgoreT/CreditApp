@@ -186,16 +186,15 @@ public class CreditActivity extends AppCompatActivity implements
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.menu_credits) {
-            setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
-        } else if (id == R.id.menu_payout) {
-            setFragment(payoutFragment, PAYOUT_FRAGMENT_TAG);
-        } else if (id == R.id.menu_signout) {
-            FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(this, LaunchActivity.class);
-            startActivity(intent);
-
+        switch (item.getItemId()) {
+            case R.id.menu_credits:
+                setFragment(creditFragment, CREDIT_FRAGMENT_TAG);
+                break;
+            case R.id.menu_signout:
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(this, LaunchActivity.class);
+                startActivity(intent);
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
