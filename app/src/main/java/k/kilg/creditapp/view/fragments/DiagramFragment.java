@@ -37,31 +37,24 @@ public class DiagramFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_diagram, container, false);
         mTableLayout = v.findViewById(R.id.tablelayout);
-        mTvCreditName = v.findViewById(R.id.tvDiagramCreditName);
+        //mTvCreditName = v.findViewById(R.id.tvDiagramCreditName);
         if (getArguments() != null) {
-            mTvCreditName.setText(getArguments().getString("TEST"));
+        //    mTvCreditName.setText(getArguments().getString("TEST"));
         }
-        TableRow tableRow = new TableRow(getContext());
-        tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
-                TableLayout.LayoutParams.WRAP_CONTENT));
-        /*TextView tv1 = new TextView(getContext());
-        tv1.setText("tv1");
-        TextView tv2 = new TextView(getContext());
-        tv2.setText("tv2");
-        tableRow.addView(tv1, 0);
-        tableRow.addView(tv2, 1);
-        mTableLayout.addView(tableRow, 0);*/
+        addRow("test1", "test2");
+        addRow("test3", "test4");
+
         return v;
     }
-/*    public void addRow(String cell0, String cell1) {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        TableRow tr = (TableRow) inflater.inflate(R.layout.table_row, null);
+    public void addRow(String cell0, String cell1) {
+        //LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        TableRow tr = (TableRow) LayoutInflater.from(getContext()).inflate(R.layout.item_payout_diagram, null);
         TextView tv = (TextView) tr.getChildAt(0);
         tv.setText(cell0);
         tv = (TextView) tr.getChildAt(1);
         tv.setText(cell1);
-        tableLayout.addView(tr);
-    }*/
+        mTableLayout.addView(tr);
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed() {
