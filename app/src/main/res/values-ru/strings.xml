@@ -71,7 +71,12 @@
     <string name="fragment_add_credit_rate">Процент</string>
     <string name="fragment_add_month_count">Кол-во месяцев</string>
     <string name="fragment_add_credit_set_date">Укажите дату</string>
-    <string name="add_credit_credit_information">Информация о кредите</string>
+    <string name="fragment_add_credit_credit_information">Информация о кредите</string>
+    <string name="fragment_add_empty_name">Не введено имя кредита!</string>
+    <string name="fragment_add_empty_amount">Не введена сумма кредита!</string>
+    <string name="fragment_add_empty_month_count">Не введен срок кредита!</string>
+    <string name="fragment_add_empty_rate">Не введен процент по кредиту!</string>
+    <string name="fragment_add_empty_date">Не введена дата кредита!</string>
 
     <string name="credit_adapter_annuity_CS">Аннуитетный</string>
     <string name="credit_adapter_differential_CS">Дифференциальный</string>

@@ -305,7 +305,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/add_credit_credit_information"
+        android:text="@string/fragment_add_credit_credit_information"
         android:textColor="@android:color/black"
         android:textSize="30sp"
         android:textStyle="bold"

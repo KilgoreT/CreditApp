@@ -72,7 +72,12 @@
     <string name="fragment_add_month_count">Month count</string>
     <string name="fragment_add_edit_date">Edit date</string>
     <string name="fragment_add_credit_set_date">Set Date</string>
-    <string name="add_credit_credit_information">Credit Information</string>
+    <string name="fragment_add_credit_credit_information">Credit Information</string>
+    <string name="fragment_add_empty_name">Field Name is empty!</string>
+    <string name="fragment_add_empty_amount">Field Amount is empty!</string>
+    <string name="fragment_add_empty_month_count">Field Month count is empty!</string>
+    <string name="fragment_add_empty_rate">Field Rate is empty!</string>
+    <string name="fragment_add_empty_date">Field Date is empty!</string>
 
     <string name="credit_adapter_annuity_CS">Annuity</string>
     <string name="credit_adapter_differential_CS">Differential</string>

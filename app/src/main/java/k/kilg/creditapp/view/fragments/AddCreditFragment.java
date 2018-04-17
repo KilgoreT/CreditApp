@@ -113,19 +113,19 @@ public class AddCreditFragment extends Fragment {
     private Credit createCredit() {
         Credit credit = new Credit();
         if (TextUtils.isEmpty(mEtCreditName.getText())) {
-            showSnackbar("Field Name is empty!");
+            showSnackbar(getString(R.string.fragment_add_empty_name));
             return null;
         } else if (TextUtils.isEmpty(mEtCreditAmount.getText().toString())) {
-            showSnackbar("Field Amount is empty!");
+            showSnackbar(getString(R.string.fragment_add_empty_amount));
             return null;
         } else if (TextUtils.isEmpty(mEtCreditMonthCount.getText().toString())) {
-            showSnackbar("Field Month count is empty!");
+            showSnackbar(getString(R.string.fragment_add_empty_month_count));
             return null;
         } else if (TextUtils.isEmpty(mEtCreditRate.getText().toString())) {
-            showSnackbar("Field Rate is empty!");
+            showSnackbar(getString(R.string.fragment_add_empty_rate));
             return null;
         } else if (TextUtils.isEmpty(mTvCreditDate.getText().toString())) {
-            showSnackbar("Field Date is empty!");
+            showSnackbar(getString(R.string.fragment_add_empty_date));
             return null;
         }
         try {
