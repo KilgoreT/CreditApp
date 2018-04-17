@@ -95,9 +95,6 @@ public class AddCreditFragment extends Fragment {
 
     public void onFabPressed() {
         Credit credit = createCredit();
-        Log.d("###", "Credit is " + credit.getName());
-        Log.d("###", "Listener is " + mListener.toString());
-        Log.d("###", "EditMode is " + mEditMode);
         if (credit != null && mListener != null) {
             if (mEditMode) {
                 mEditMode = false;
