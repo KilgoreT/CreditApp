@@ -62,7 +62,6 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
                 if (mModeEnabled) {
                     holder.changeSelectedList(getCreditByTitle(holder.getCreditName()), holder.getAdapterPosition());
                 } else {
-                    //todo: сюда вставить диаграму
                     ((CreditFragment)mListener).startDiagramForCredit(getCreditByTitle(holder.getCreditName()));
                 }
             }

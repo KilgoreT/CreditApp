@@ -2,21 +2,18 @@
 <TableRow
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="2dp"
+    android:background="@color/colorPrimaryDark"
     >
     <TextView
-        android:textColor="@color/black"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:textSize="18sp"
         android:gravity="center_horizontal|center_vertical"
         android:layout_weight="1"
         />
     <TextView
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:gravity="center_horizontal|center_vertical"
-        android:layout_weight="1"
-        />
-    <TextView
-        android:textColor="@color/black"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:textSize="18sp"
         android:gravity="center_horizontal|center_vertical"
         android:layout_weight="1"

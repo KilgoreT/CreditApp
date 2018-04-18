@@ -29,13 +29,12 @@ import k.kilg.creditapp.view.fragments.PayoutFragment;
 public class CreditActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         CreditFragment.OnCreditFragmentInteractionListener,
-        AddCreditFragment.OnAddCreditFragmentInteractionListener,
-        DiagramFragment.OnDiagramFragmentInteractionListener {
+        AddCreditFragment.OnAddCreditFragmentInteractionListener {
 
     private static final String CREDIT_FRAGMENT_TAG = "CreditFragmentTag";
     private static final String ADD_CREDIT_SIMPLE_FRAGMENT_TAG = "AddCreditSimpleFragmentTag";
     private static final String CURRENT_FRAGMENT_KEY = "CurrentFragmentKey";
-    private static final String PAYOUT_FRAGMENT_TAG = "PayoutFragmentTag";
+    //private static final String PAYOUT_FRAGMENT_TAG = "PayoutFragmentTag";
 
     private static final String CREDIT_NAME_KEY = "CreditNameKey";
     private static final String CREDIT_AMOUNT_KEY = "CreditAmountKey";
@@ -45,10 +44,11 @@ public class CreditActivity extends AppCompatActivity implements
     private static final String CREDIT_DATABASE_KEY = "CreditDatabaseKey";
     private static final String CREDIT_TYPE_KEY = "CreditTypeKey";
     private static final String DIAGRAM_FRAGMENT_TAG = "DiagramFragmentTag";
+    private static final String CREDIT_KEY = "CreditKey";
 
     CreditFragment creditFragment = new CreditFragment();
     AddCreditFragment addCreditFragment = new AddCreditFragment();
-    PayoutFragment payoutFragment = new PayoutFragment();
+    //PayoutFragment payoutFragment = new PayoutFragment();
     DiagramFragment diagramFragment = new DiagramFragment();
 
 
@@ -136,13 +136,9 @@ public class CreditActivity extends AppCompatActivity implements
         if (currentFragment != null) {
             if (currentFragment.getTag().equals(fragment.getTag())) {
                 return;
-            } /*else if (currentFragment instanceof AddCreditFragment) {
-                getSupportFragmentManager().popBackStack();
-                return;
-            }*/
+            }
 
             ft.replace(R.id.creditFragment, fragment, tag)
-                    //.addToBackStack(null)
                     .commit();
 
         } else {
@@ -245,14 +241,10 @@ public class CreditActivity extends AppCompatActivity implements
     @Override
     public void startDiagramForCredit(Credit credit) {
         Bundle bundle = new Bundle();
-        bundle.putString("TEST", credit.getName());
+        bundle.putParcelable(CREDIT_KEY, credit);
         diagramFragment.setArguments(bundle);
+        setFabVisible(false);
         setFragment(diagramFragment, DIAGRAM_FRAGMENT_TAG);
     }
 
-
-    @Override
-    public void onDiagramFragmentInteraction() {
-
-    }
 }

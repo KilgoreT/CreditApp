@@ -1,8 +1,8 @@
 package k.kilg.creditapp.view.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,78 +11,106 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.hannesdorfmann.mosby.mvp.lce.MvpLceFragment;
+
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
+
 import k.kilg.creditapp.R;
+import k.kilg.creditapp.entities.Credit;
+import k.kilg.creditapp.entities.Payout;
+import k.kilg.creditapp.entities.Resume;
+import k.kilg.creditapp.presenter.DiagramPresenter;
+import k.kilg.creditapp.presenter.DiagramPresenterInterface;
+import k.kilg.creditapp.view.DiagramViewInterface;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnDiagramFragmentInteractionListener} interface
- * to handle interaction events.
- */
-public class DiagramFragment extends Fragment {
 
-    private OnDiagramFragmentInteractionListener mListener;
+public class DiagramFragment extends MvpLceFragment<TableLayout, List<Object>, DiagramViewInterface, DiagramPresenterInterface> implements
+        DiagramViewInterface {
+
+    private static final String CREDIT_KEY = "CreditKey";
 
     private TableLayout mTableLayout;
-    private TextView mTvCreditName;
+    private Credit mCredit;
+    private List<Object> mPayoutList;
 
     public DiagramFragment() {
-        // Required empty public constructor
     }
 
+    @NonNull
+    @Override
+    public DiagramPresenterInterface createPresenter() {
+        return new DiagramPresenter(mCredit);
+    }
+
+    @Override
+    protected String getErrorMessage(Throwable e, boolean pullToRefresh) {
+        String message = e.getMessage();
+        return message == null ? getString(R.string.unknown_error_CS) : message;
+    }
+
+
+    @Override
+    public void setData(List<Object> data) {
+        mPayoutList = data;
+        for (Object o : mPayoutList) {
+            if (o instanceof  Payout) {
+                addRow((Payout) o);
+            } else if (o instanceof Resume) {
+                addRowResume(getContext().getResources().getString(R.string.item_resume_all_payments),((Resume) o).getAllPaymentAmount());
+                addRowResume(getContext().getResources().getString(R.string.item_resume_overpayments),((Resume) o).getAllOverpayment());
+            }
+        }
+    }
+
+    @Override
+    public void loadData(boolean pullToRefresh) {
+        getPresenter().loadData();
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mTableLayout = view.findViewById(R.id.contentView);
+        addRowTitle();
+        loadData(false);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_diagram, container, false);
-        mTableLayout = v.findViewById(R.id.tablelayout);
-        //mTvCreditName = v.findViewById(R.id.tvDiagramCreditName);
         if (getArguments() != null) {
-        //    mTvCreditName.setText(getArguments().getString("TEST"));
+            mCredit = getArguments().getParcelable(CREDIT_KEY);
         }
-        addRow("test1", "test2");
-        addRow("test3", "test4");
-
         return v;
     }
-    public void addRow(String cell0, String cell1) {
-        //LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        TableRow tr = (TableRow) LayoutInflater.from(getContext()).inflate(R.layout.item_payout_diagram, null);
-        TextView tv = (TextView) tr.getChildAt(0);
-        tv.setText(cell0);
-        tv = (TextView) tr.getChildAt(1);
-        tv.setText(cell1);
+
+    public void addRowTitle() {
+        TableRow tr = (TableRow) LayoutInflater.from(getContext()).inflate(R.layout.item_title_diagram, null);
+        mTableLayout.addView(tr);
+    }
+    public void addRowResume(String title, String value) {
+        TableRow tr = (TableRow) LayoutInflater.from(getContext()).inflate(R.layout.itemr_resume_diagram, null);
+        TextView tvTitle = (TextView) tr.getChildAt(0);
+        TextView tvValue = (TextView) tr.getChildAt(1);
+        tvTitle.setText(title);
+        tvValue.setText(value);
         mTableLayout.addView(tr);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed() {
-        if (mListener != null) {
-            mListener.onDiagramFragmentInteraction();
-        }
-    }
+    public void addRow(Payout payout) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        TableRow tr = (TableRow) LayoutInflater.from(getContext()).inflate(R.layout.item_payout_diagram, null);
+        TextView tvDate = (TextView) tr.getChildAt(0);
+        TextView tvPayout = (TextView) tr.getChildAt(1);
+        TextView tvBalance = (TextView) tr.getChildAt(2);
+        tvDate.setText(sdf.format(payout.getDate()));
+        tvPayout.setText(payout.getAmount());
+        tvBalance.setText(payout.getBalance());
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnDiagramFragmentInteractionListener) {
-            mListener = (OnDiagramFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnDiagramFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-
-    public interface OnDiagramFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onDiagramFragmentInteraction();
+        mTableLayout.addView(tr);
     }
 }

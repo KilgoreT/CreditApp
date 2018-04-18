@@ -99,5 +99,9 @@
     <string name="month_november">Ноябрь</string>
     <string name="month_december">Декабрь</string>
 
+    <string name="item_diagram_title_date">Дата</string>
+    <string name="item_diagram_title_payout">Выплата</string>
+    <string name="item_diagram_title_ballance">Остаток</string>
+
 
 </resources>

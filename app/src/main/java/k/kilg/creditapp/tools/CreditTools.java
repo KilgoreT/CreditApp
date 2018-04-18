@@ -29,6 +29,7 @@ public class CreditTools {
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
 
+    //todo: annuity очень долго высчитываются.
 
     //**********Annuity calculation**********//
 
@@ -127,7 +128,7 @@ public class CreditTools {
 
     //**********General calculation**********//
 
-    private static BigDecimal getFullCreditPayment(Credit credit) {
+    public static BigDecimal getFullCreditPayment(Credit credit) {
         if (credit.isAnnuity()) {
             return getAnnuityMonthPayoutAmount(credit).multiply(getCreditMonthCount(credit));
         } else {
@@ -160,7 +161,7 @@ public class CreditTools {
         return new BigDecimal(credit.getMonthCount());
     }
 
-    private static BigDecimal getCreditAmount(Credit credit) {
+    public static BigDecimal getCreditAmount(Credit credit) {
         return new BigDecimal(credit.getAmount());
     }
 
