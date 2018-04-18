@@ -1,9 +1,6 @@
 package k.kilg.creditapp.tools;
 
-import android.util.Log;
-
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,8 +26,6 @@ public class CreditTools {
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
 
-    //todo: annuity очень долго высчитываются.
-
     //**********Annuity calculation**********//
 
     public static List<Payout> getAnnuityMonthPayouts(Credit credit) {
@@ -50,7 +45,7 @@ public class CreditTools {
 
 
     public static BigDecimal getAnnuityMonthPayoutAmount(Credit credit) {
-        return getAnnuityCoeffitient(credit)
+        return getAnnuityCoefficient(credit)
                 .multiply(new BigDecimal(credit.getAmount()))
                 .setScale(SCALE_FOR_CURRENCY, RoundingMode.HALF_UP);
     }
@@ -59,24 +54,24 @@ public class CreditTools {
         return getFullCreditPayment(credit).subtract(getAnnuityMonthPayoutAmount(credit).multiply(new BigDecimal(paidMonths)));
     }
 
-    private static BigDecimal getAnnuityCoeffitient(Credit credit) {
-        return getAnnuityFirstCoeffitient(credit).divide(getAnnuitySecondCoeffitient(credit), RoundingMode.HALF_UP);
+    private static BigDecimal getAnnuityCoefficient(Credit credit) {
+        return getAnnuityFirstCoefficient(credit).divide(getAnnuitySecondCoefficient(credit), RoundingMode.HALF_UP);
     }
 
-    private static BigDecimal getAnnuityFirstCoeffitient(Credit credit) {
+    private static BigDecimal getAnnuityFirstCoefficient(Credit credit) {
         return getMonthPercent(credit)
                 .multiply((BigDecimal.ONE.add(getMonthPercent(credit)))
                         .pow(credit.getMonthCount()));
     }
 
-    private static BigDecimal getAnnuitySecondCoeffitient(Credit credit) {
+    private static BigDecimal getAnnuitySecondCoefficient(Credit credit) {
         return ((BigDecimal.ONE.add(getMonthPercent(credit))).pow(credit.getMonthCount())).subtract(BigDecimal.ONE);
     }
 
     private static BigDecimal getMonthPercent(Credit credit) {
         return (getCreditPercent(credit)
-                .divide(MONTHS_IN_YEAR, MathContext.DECIMAL128))
-                .divide(HUNDRED, MathContext.DECIMAL128);
+                .divide(MONTHS_IN_YEAR, SCALE_FOR_CURRENCY, RoundingMode.HALF_UP))
+                .divide(HUNDRED, SCALE_FOR_CURRENCY, RoundingMode.HALF_UP);
     }
 
 
@@ -112,7 +107,7 @@ public class CreditTools {
 
         return getDifferentialCreditBalance(credit, paidMonths)
                 .multiply(getCreditPercent(credit).
-                        divide(HUNDRED, MathContext.DECIMAL128)
+                        divide(HUNDRED, SCALE_FOR_CURRENCY, RoundingMode.HALF_UP)
                         .multiply(new BigDecimal(calendar.getActualMaximum(Calendar.DAY_OF_MONTH))))
                 .divide(new BigDecimal(calendar.getActualMaximum(Calendar.DAY_OF_YEAR)), SCALE_FOR_CURRENCY, RoundingMode.HALF_UP);
     }
