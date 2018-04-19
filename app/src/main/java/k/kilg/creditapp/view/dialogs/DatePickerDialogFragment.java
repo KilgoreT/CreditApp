@@ -17,14 +17,14 @@ import java.util.Locale;
 import k.kilg.creditapp.R;
 import k.kilg.creditapp.view.fragments.AddCreditFragment;
 
-public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+public class DatePickerDialogFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
 
     private static final int MIN_CALENDAR_YEAR = 2000;
     private static final int MIN_CALENDAR_MONTH = 0;
     private static final int MIN_CALENDAR_DATE = 1;
 
-    public DatePickerFragment() {
+    public DatePickerDialogFragment() {
     }
 
 

@@ -2,12 +2,10 @@ package k.kilg.creditapp.view.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,7 @@ import android.widget.TextView;
 
 import k.kilg.creditapp.R;
 import k.kilg.creditapp.entities.Credit;
-import k.kilg.creditapp.view.dialogs.DatePickerFragment;
+import k.kilg.creditapp.view.dialogs.DatePickerDialogFragment;
 
 
 public class AddCreditFragment extends Fragment {
@@ -71,7 +69,7 @@ public class AddCreditFragment extends Fragment {
         mBtnSetDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePickerDialog = new DatePickerFragment();
+                DialogFragment datePickerDialog = new DatePickerDialogFragment();
                 datePickerDialog
                         .show(getFragmentManager(), DATE_PICKER_TAG);
             }
