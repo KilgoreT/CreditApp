@@ -12,7 +12,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -166,10 +165,10 @@ public class CreditActivity extends AppCompatActivity implements
             return;
         } else if (fragment instanceof CreditFragment) {
             setFabVisible(true);
-            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add));
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_fab_add));
         } else if (fragment instanceof AddCreditFragment) {
             setFabVisible(true);
-            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_fab_done));
         } else if (fragment instanceof PayoutFragment) {
             setFabVisible(false);
         }
