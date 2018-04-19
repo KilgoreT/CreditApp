@@ -1,5 +1,7 @@
 package k.kilg.creditapp.tools;
 
+import android.util.Log;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
@@ -23,7 +25,7 @@ public class CreditTools {
     private static final BigDecimal MONTHS_IN_YEAR = new BigDecimal(12);
     private static final BigDecimal HUNDRED = new BigDecimal(100);
     private static final int SCALE_FOR_CURRENCY = 2;
-    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    private static SimpleDateFormat sSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
 
     //**********Annuity calculation**********//
@@ -170,9 +172,9 @@ public class CreditTools {
     public static Calendar getCalendar(Credit credit) {
         Calendar calendar = Calendar.getInstance(Locale.US);
         try {
-            calendar.setTime(sdf.parse(credit.getDate()));
+            calendar.setTime(sSimpleDateFormat.parse(credit.getDate()));
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.d("###", "ParseException: " + e.getMessage());
         }
         return calendar;
     }
@@ -192,7 +194,7 @@ public class CreditTools {
     public static String getNextPayoutDate(Credit credit) {
         Calendar calendar = getCalendar(credit);
         calendar.add(Calendar.MONTH, getPaymentPeriod(credit));
-        return sdf.format(calendar.getTime());
+        return sSimpleDateFormat.format(calendar.getTime());
     }
 
 }
