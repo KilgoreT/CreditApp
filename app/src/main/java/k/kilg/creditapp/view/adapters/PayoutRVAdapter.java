@@ -1,7 +1,5 @@
 package k.kilg.creditapp.view.adapters;
 
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,19 +32,19 @@ public class PayoutRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         switch (viewType) {
             case MONTH:
-                View vMonth = inflater.inflate(R.layout.rv_month_item, parent, false);
+                View vMonth = inflater.inflate(R.layout.item_month, parent, false);
                 viewHolder = new MonthHolder(vMonth);
                 break;
             case PAYOUT:
-                View vPayout = inflater.inflate(R.layout.rv_credit_item_nextpayout, parent, false);
+                View vPayout = inflater.inflate(R.layout.item_credit, parent, false);
                 viewHolder = new PayoutHolder(vPayout);
                 break;
             case RESUME:
-                View vResume = inflater.inflate(R.layout.rv_resume_item, parent, false);
+                View vResume = inflater.inflate(R.layout.item_resume, parent, false);
                 viewHolder = new ResumeHolder(vResume);
                 break;
              default:
-                 View v = inflater.inflate(R.layout.rv_default_item, parent, false);
+                 View v = inflater.inflate(R.layout.item_default, parent, false);
                  viewHolder = new DefaultHolder(v);
                  break;
         }

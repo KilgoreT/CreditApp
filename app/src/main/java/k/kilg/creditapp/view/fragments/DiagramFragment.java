@@ -3,7 +3,6 @@ package k.kilg.creditapp.view.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,11 +88,11 @@ public class DiagramFragment extends MvpLceFragment<TableLayout, List<Object>, D
     }
 
     public void addRowTitle() {
-        TableRow tr = (TableRow) LayoutInflater.from(getContext()).inflate(R.layout.item_title_diagram, null);
+        TableRow tr = (TableRow) LayoutInflater.from(getContext()).inflate(R.layout.item_title_diagram_tr, null);
         mTableLayout.addView(tr);
     }
     public void addRowResume(String title, String value) {
-        TableRow tr = (TableRow) LayoutInflater.from(getContext()).inflate(R.layout.itemr_resume_diagram, null);
+        TableRow tr = (TableRow) LayoutInflater.from(getContext()).inflate(R.layout.item_resume_diagram_tr, null);
         TextView tvTitle = (TextView) tr.getChildAt(0);
         TextView tvValue = (TextView) tr.getChildAt(1);
         tvTitle.setText(title);
@@ -103,7 +102,7 @@ public class DiagramFragment extends MvpLceFragment<TableLayout, List<Object>, D
 
     public void addRow(Payout payout) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        TableRow tr = (TableRow) LayoutInflater.from(getContext()).inflate(R.layout.item_payout_diagram, null);
+        TableRow tr = (TableRow) LayoutInflater.from(getContext()).inflate(R.layout.item_payout_diagram_tr, null);
         TextView tvDate = (TextView) tr.getChildAt(0);
         TextView tvPayout = (TextView) tr.getChildAt(1);
         TextView tvBalance = (TextView) tr.getChildAt(2);

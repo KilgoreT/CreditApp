@@ -48,7 +48,7 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
 
     @Override
     public CreditRVAdapter.CreditHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_credit_item_nextpayout, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_credit, parent, false);
         return new CreditHolder(v);
     }
 
@@ -156,7 +156,7 @@ public class CreditRVAdapter extends RecyclerView.Adapter<CreditRVAdapter.Credit
     private ActionMode.Callback callback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            mode.getMenuInflater().inflate(R.menu.action_mode_menu, menu);
+            mode.getMenuInflater().inflate(R.menu.action_mode, menu);
             mModeEnabled = true;
             return true;
         }
